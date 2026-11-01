@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6BE"/>
+      <stop offset="50%" stop-color="#C9A45C"/>
+      <stop offset="100%" stop-color="#8D6D2B"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#184E42"/>
+      <stop offset="100%" stop-color="#08221C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Disc -->
+  <circle cx="64" cy="64" r="60" fill="url(#emeraldGrad)" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  <circle cx="64" cy="64" r="54" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.7"/>
+
+  <!-- 8-Point Islamic Star (Khatim) -->
+  <g transform="translate(64,64)">
+    <!-- Square 1 -->
+    <rect x="-30" y="-30" width="60" height="60" fill="none" stroke="url(#goldGrad)" stroke-width="2" rx="2"/>
+    <!-- Square 2 rotated 45 deg -->
+    <rect x="-30" y="-30" width="60" height="60" fill="none" stroke="url(#goldGrad)" stroke-width="2" rx="2" transform="rotate(45)"/>
+    
+    <!-- Central decorative diamond -->
+    <rect x="-14" y="-14" width="28" height="28" fill="url(#goldGrad)" opacity="0.2" transform="rotate(45)"/>
+    
+    <!-- Elegant Monogram F & J in gold -->
+    <text x="0" y="7" font-family="'Cormorant Garamond', Georgia, serif" font-size="24" font-weight="700" fill="url(#goldGrad)" text-anchor="middle" letter-spacing="1">FJ</text>
+  </g>
+</svg>

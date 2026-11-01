@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <linearGradient id="heroBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14463B"/>
+      <stop offset="45%" stop-color="#0F3D33"/>
+      <stop offset="100%" stop-color="#08221C"/>
+    </linearGradient>
+    
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6BE"/>
+      <stop offset="35%" stop-color="#DFC385"/>
+      <stop offset="70%" stop-color="#C9A45C"/>
+      <stop offset="100%" stop-color="#8D6D2B"/>
+    </linearGradient>
+    
+    <linearGradient id="softGoldGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C9A45C" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#C9A45C" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Subtle Islamic Star Pattern Definition -->
+    <pattern id="islamicPattern" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M40 0 L48 24 L72 16 L64 40 L88 48 L64 56 L72 80 L48 72 L40 96 L32 72 L8 80 L16 56 L-8 48 L16 40 L8 16 L32 24 Z" 
+            fill="none" stroke="#C9A45C" stroke-width="0.75" stroke-opacity="0.12"/>
+      <circle cx="40" cy="40" r="14" fill="none" stroke="#C9A45C" stroke-width="0.5" stroke-opacity="0.1"/>
+      <circle cx="0" cy="0" r="10" fill="none" stroke="#C9A45C" stroke-width="0.5" stroke-opacity="0.08"/>
+      <circle cx="80" cy="0" r="10" fill="none" stroke="#C9A45C" stroke-width="0.5" stroke-opacity="0.08"/>
+      <circle cx="0" cy="80" r="10" fill="none" stroke="#C9A45C" stroke-width="0.5" stroke-opacity="0.08"/>
+      <circle cx="80" cy="80" r="10" fill="none" stroke="#C9A45C" stroke-width="0.5" stroke-opacity="0.08"/>
+    </pattern>
+    
+    <!-- Mihrab Arch Clip Path -->
+    <clipPath id="mihrabClip">
+      <path d="M60 960 L60 420 C60 210, 260 80, 400 40 C540 80, 740 210, 740 420 L740 960 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="1000" fill="url(#heroBg)"/>
+  
+  <!-- Subtle Islamic Wallpaper Pattern across entire canvas -->
+  <rect width="800" height="1000" fill="url(#islamicPattern)"/>
+
+  <!-- Mihrab Arch Silhouette Inner Glow -->
+  <path d="M70 950 L70 420 C70 220, 265 92, 400 52 C535 92, 730 220, 730 420 L730 950 Z" 
+        fill="url(#softGoldGlow)"/>
+
+  <!-- Outer Mihrab Arch Frame in Antique Gold -->
+  <path d="M60 960 L60 420 C60 210, 260 80, 400 40 C540 80, 740 210, 740 420 L740 960 Z" 
+        fill="none" stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Inner Delicate Dotted Arch Frame -->
+  <path d="M80 940 L80 430 C80 235, 275 110, 400 75 C525 110, 720 235, 720 430 L720 940 Z" 
+        fill="none" stroke="url(#goldGradient)" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.75"/>
+
+  <!-- Arch Apex Ornament (Finial / Star) -->
+  <g transform="translate(400, 36)">
+    <circle cx="0" cy="0" r="12" fill="#08221C" stroke="url(#goldGradient)" stroke-width="1.5"/>
+    <path d="M0 -7 L2 -2 L7 0 L2 2 L0 7 L-2 2 L-7 0 L-2 -2 Z" fill="url(#goldGradient)"/>
+  </g>
+
+  <!-- Central Arabesque Star Medallion -->
+  <g transform="translate(400, 410)">
+    <!-- Concentric Star Halo -->
+    <circle cx="0" cy="0" r="120" fill="#0A2D24" fill-opacity="0.6" stroke="url(#goldGradient)" stroke-width="1" stroke-dasharray="2 4"/>
+    <circle cx="0" cy="0" r="95" fill="none" stroke="url(#goldGradient)" stroke-width="1.5"/>
+    
+    <!-- 8-Point Star Outer -->
+    <rect x="-65" y="-65" width="130" height="130" fill="none" stroke="url(#goldGradient)" stroke-width="1.2" rx="4"/>
+    <rect x="-65" y="-65" width="130" height="130" fill="none" stroke="url(#goldGradient)" stroke-width="1.2" rx="4" transform="rotate(45)"/>
+    
+    <!-- Elegant Camera / Monogram Icon in Gold -->
+    <g transform="translate(0, -6)" stroke="url(#goldGradient)" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Camera Body -->
+      <path d="M-36 -8 C-36 -16, -30 -22, -22 -22 L-12 -22 L-8 -30 L8 -30 L12 -22 L22 -22 C30 -22, 36 -16, 36 -8 L36 28 C36 36, 30 42, 22 42 L-22 42 C-30 42, -36 36, -36 28 Z"/>
+      <!-- Lens -->
+      <circle cx="0" cy="10" r="18" stroke-width="2.5"/>
+      <circle cx="0" cy="10" r="8" fill="url(#goldGradient)" fill-opacity="0.3"/>
+      <!-- Flash/Indicator -->
+      <circle cx="22" cy="-10" r="2.5" fill="url(#goldGradient)"/>
+    </g>
+  </g>
+
+  <!-- Text & Typography Accents -->
+  <!-- "Our Wedding Photograph" -->
+  <text x="400" y="585" 
+        font-family="'Cormorant Garamond', 'Times New Roman', Georgia, serif" 
+        font-size="28" 
+        font-weight="600" 
+        letter-spacing="5" 
+        fill="url(#goldGradient)" 
+        text-anchor="middle">
+    OUR WEDDING PHOTOGRAPH
+  </text>
+
+  <!-- Thin Gold Divider -->
+  <g transform="translate(400, 615)">
+    <line x1="-120" y1="0" x2="-20" y2="0" stroke="url(#goldGradient)" stroke-width="1" opacity="0.8"/>
+    <circle cx="0" cy="0" r="3.5" fill="url(#goldGradient)"/>
+    <polygon points="-8,-4 0,-7 8,-4 0,7" fill="url(#goldGradient)" transform="scale(0.6) translate(0, -1)"/>
+    <line x1="20" y1="0" x2="120" y2="0" stroke="url(#goldGradient)" stroke-width="1" opacity="0.8"/>
+  </g>
+
+  <!-- Bangla Subtitle -->
+  <text x="400" y="655" 
+        font-family="'Hind Siliguri', 'Noto Serif Bengali', sans-serif" 
+        font-size="20" 
+        font-weight="500" 
+        letter-spacing="2" 
+        fill="#FCF9F2" 
+        fill-opacity="0.9" 
+        text-anchor="middle">
+    আমাদের স্মৃতিচিত্র
+  </text>
+
+  <!-- Couple Names in Soft Antique Gold -->
+  <text x="400" y="730" 
+        font-family="'Noto Serif Bengali', serif" 
+        font-size="34" 
+        font-weight="700" 
+        letter-spacing="1" 
+        fill="url(#goldGradient)" 
+        text-anchor="middle">
+    ফাহিম &amp; জয়ী
+  </text>
+  
+  <text x="400" y="775" 
+        font-family="'Cormorant Garamond', serif" 
+        font-size="22" 
+        font-style="italic" 
+        letter-spacing="3" 
+        fill="#FCF9F2" 
+        fill-opacity="0.75" 
+        text-anchor="middle">
+    Fahim &amp; Joyee
+  </text>
+
+  <!-- Event & Date Details -->
+  <g transform="translate(400, 835)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#08221C" fill-opacity="0.8" stroke="url(#goldGradient)" stroke-width="1"/>
+    <text x="0" y="6" 
+          font-family="'Hind Siliguri', sans-serif" 
+          font-size="16" 
+          font-weight="600" 
+          letter-spacing="2" 
+          fill="#DFC385" 
+          text-anchor="middle">
+      বৌভাত • ২৬ ডিসেম্বর ২০২৬
+    </text>
+  </g>
+
+  <!-- Corner Flourishes in Lower Corners -->
+  <g transform="translate(100, 920)" stroke="url(#goldGradient)" stroke-width="1" fill="none" opacity="0.6">
+    <path d="M0 0 L0 -30 A15 15 0 0 1 15 -45 L45 -45"/>
+    <circle cx="15" cy="-15" r="2.5" fill="url(#goldGradient)"/>
+  </g>
+  <g transform="translate(700, 920) scale(-1, 1)" stroke="url(#goldGradient)" stroke-width="1" fill="none" opacity="0.6">
+    <path d="M0 0 L0 -30 A15 15 0 0 1 15 -45 L45 -45"/>
+    <circle cx="15" cy="-15" r="2.5" fill="url(#goldGradient)"/>
+  </g>
+</svg>

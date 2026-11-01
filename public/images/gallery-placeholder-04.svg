@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E3D33"/>
+      <stop offset="100%" stop-color="#08221C"/>
+    </linearGradient>
+    <linearGradient id="gold4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6BE"/>
+      <stop offset="50%" stop-color="#C9A45C"/>
+      <stop offset="100%" stop-color="#8D6D2B"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="750" fill="url(#bg4)"/>
+  <rect x="25" y="25" width="550" height="700" fill="none" stroke="url(#gold4)" stroke-width="1.5" opacity="0.8"/>
+  <rect x="35" y="35" width="530" height="680" fill="none" stroke="url(#gold4)" stroke-width="0.75" stroke-dasharray="3 4" opacity="0.6"/>
+  <!-- Interlocking Rings & Crescent -->
+  <g transform="translate(300, 310)">
+    <circle cx="-25" cy="0" r="45" fill="none" stroke="url(#gold4)" stroke-width="2"/>
+    <circle cx="25" cy="0" r="45" fill="none" stroke="url(#gold4)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="24" fill="#0A2F25" stroke="url(#gold4)" stroke-width="1.2"/>
+    <text x="0" y="7" font-family="'Cormorant Garamond', serif" font-size="20" font-weight="700" fill="url(#gold4)" text-anchor="middle">04</text>
+  </g>
+  <text x="300" y="460" font-family="'Cormorant Garamond', serif" font-size="22" letter-spacing="4" fill="url(#gold4)" text-anchor="middle">BOUND BY LOVE</text>
+  <text x="300" y="495" font-family="'Hind Siliguri', sans-serif" font-size="16" letter-spacing="1" fill="#FCF9F2" fill-opacity="0.8" text-anchor="middle">অটুট বন্ধন ও আশীর্বাদ</text>
+  <line x1="220" y1="520" x2="380" y2="520" stroke="url(#gold4)" stroke-width="1" opacity="0.5"/>
+  <text x="300" y="560" font-family="'Inter', sans-serif" font-size="12" letter-spacing="2" fill="url(#gold4)" text-anchor="middle" opacity="0.7">FAHIM &amp; JOYEE • 2026</text>
+</svg>
