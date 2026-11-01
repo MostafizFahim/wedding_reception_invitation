@@ -1,8 +1,8 @@
 import React from 'react'
-import { MapPin, ExternalLink, Navigation } from 'lucide-react'
+import { MapPin, ExternalLink } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { CONTENT } from '../content'
-import { GoldDivider, IslamicStar } from '../assets/decorative-patterns'
+import { PastelDivider, IslamicStar } from '../assets/decorative-patterns'
 
 export const Venue: React.FC = () => {
   const { lang, t } = useLanguage()
@@ -10,82 +10,57 @@ export const Venue: React.FC = () => {
   if (!CONTENT.config.showMap) return null
 
   return (
-    <section
-      id="venue"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 bg-ivory text-ink border-t border-gold/30"
-    >
-      <div className="max-w-4xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-gold/40 bg-white mb-3 shadow-sm">
-            <IslamicStar size={14} className="text-gold" />
-            <span className="text-xs uppercase tracking-widest text-emerald-dark font-semibold">
-              {t.venue.badge}
+    <section id="venue" className="relative py-12 sm:py-16 px-4 bg-pink-50 text-ink">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white border border-pink-200 mb-2 shadow-sm">
+            <IslamicStar size={12} className="text-accent" />
+            <span className="text-[11px] uppercase tracking-widest font-semibold text-accent">
+              {lang === 'en' ? 'Location' : 'ভেন্যু'}
             </span>
-            <IslamicStar size={14} className="text-gold" />
+            <IslamicStar size={12} className="text-accent" />
           </div>
-          <h2 className="font-bangla-serif text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-dark">
-            {t.venue.sectionTitle}
+          <h2 className="font-bangla-serif text-2xl sm:text-3xl font-bold text-accent">
+            {t.venueHeading}
           </h2>
-          <GoldDivider width="max-w-xs" />
+          <PastelDivider width="max-w-[140px]" className="my-2" />
         </div>
 
-        {/* Venue Information Box */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-gold/30 shadow-ivory-card mb-8">
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 text-center md:text-left">
-            <div className="space-y-2">
-              <div className="flex items-center justify-center md:justify-start gap-2 text-gold">
-                <MapPin size={22} className="text-gold" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-ink-muted">
-                  {lang === 'bn' ? 'ভেন্যু অবস্থান' : 'Venue Location'}
-                </span>
-              </div>
-              <h3 className="font-bangla-serif text-2xl sm:text-3xl font-bold text-emerald-dark">
-                {CONTENT.venue.name[lang]}
-              </h3>
-              <p className="text-base sm:text-lg text-ink-muted font-medium">
-                {CONTENT.venue.address[lang]}
-              </p>
-            </div>
-
-            {/* Direct Action Link */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={CONTENT.venue.googleMapsDirectionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-emerald text-ivory hover:bg-emerald-light transition-colors font-semibold text-sm shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-              >
-                <Navigation size={16} className="text-gold" />
-                <span>{t.venue.getDirections}</span>
-              </a>
-              <a
-                href={`https://www.google.com/maps?q=${CONTENT.venue.latitude},${CONTENT.venue.longitude}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-gold/40 text-emerald-dark hover:bg-ivory-light transition-colors font-medium text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-              >
-                <ExternalLink size={16} className="text-gold" />
-                <span>{t.venue.viewFullMap}</span>
-              </a>
-            </div>
+        {/* Address Card */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-pink-200 shadow-pastel-card mb-4 text-center">
+          <div className="flex items-center justify-center gap-2 text-accent font-semibold text-sm sm:text-base mb-1">
+            <MapPin size={18} />
+            <span>{CONTENT.venue.name[lang]}</span>
           </div>
+          <p className="text-xs sm:text-sm text-ink-muted">
+            {CONTENT.venue.address[lang]}
+          </p>
+        </div>
 
-          {/* Embedded Google Maps Container */}
-          <div className="mt-8 relative w-full overflow-hidden rounded-2xl border border-gold/30 shadow-inner bg-ivory-dark aspect-[16/10] sm:aspect-[16/8]">
-            <iframe
-              title={
-                lang === 'bn'
-                  ? 'প্রকৌশলী কনভেনশন হল গুগল ম্যাপ অবস্থান'
-                  : 'Prokoushali Convention Hall Google Map'
-              }
-              src={CONTENT.venue.googleMapsEmbedUrl}
-              className="absolute inset-0 w-full h-full border-0"
-              loading="lazy"
-              allowFullScreen={false}
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+        {/* Compact Map Container (4/3 mobile, 16/9 desktop) */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] overflow-hidden rounded-2xl border border-pink-200 shadow-pastel-card bg-sky-100">
+          <iframe
+            title={lang === 'en' ? 'Prokoushali Convention Hall Google Map' : 'প্রকৌশলী কনভেনশন হল গুগল ম্যাপ'}
+            src={CONTENT.venue.googleMapsEmbedUrl}
+            className="absolute inset-0 w-full h-full border-0"
+            loading="lazy"
+            allowFullScreen={false}
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+
+        {/* Direct Link Below Map */}
+        <div className="mt-3 text-center">
+          <a
+            href={CONTENT.venue.googleMapsDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
+          >
+            <ExternalLink size={13} />
+            <span>{t.details.directionsBtn}</span>
+          </a>
         </div>
       </div>
     </section>

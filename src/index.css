@@ -3,24 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --color-emerald: #0F3D33;
-  --color-emerald-deep: #08221C;
-  --color-emerald-dark: #0B2F27;
-  --color-emerald-light: #1B5E50;
-  --color-emerald-subtle: #236E5E;
-  --color-ivory: #F7F1E3;
-  --color-ivory-light: #FCF9F2;
-  --color-ivory-dark: #EBE2CD;
-  --color-gold: #C9A45C;
-  --color-gold-light: #DFC385;
-  --color-gold-dark: #A68239;
-  --color-gold-shimmer: #F5E6BE;
-  --color-terracotta: #C97B63;
-  --color-ink: #1B1B1B;
-  --color-ink-muted: #5A5A5A;
+  --pink-50: #FFF5F8;
+  --pink-200: #F9D5E0;
+  --pink-400: #EFA9BF;
+  --sky-100: #E8F5FD;
+  --sky-200: #CDE8F8;
+  --sky-400: #8EC5E8;
+  --accent: #B04C6C;
+  --accent-hover: #983E5B;
+  --ink: #2E3A4D;
+  --ink-muted: #5C6B82;
+  --line: #E7C9D3;
 }
 
-/* Base Typographic Rendering */
 html {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   text-rendering: optimizeLegibility;
@@ -31,68 +26,36 @@ html {
 body {
   font-size: 16px;
   line-height: 1.6;
-  background-color: var(--color-emerald-deep);
-  color: var(--color-ink);
+  background-color: var(--pink-50);
+  color: var(--ink);
   overflow-x: hidden;
 }
 
-/* Gold Gradient Text */
-.text-gold-gradient {
-  background: linear-gradient(135deg, #F5E6BE 0%, #DFC385 35%, #C9A45C 75%, #96742B 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Faint Pastel Islamic Star Wallpaper Pattern */
+.bg-pastel-pattern {
+  background-image: radial-gradient(circle at 50% 50%, rgba(239, 169, 191, 0.18) 1px, transparent 1px),
+    radial-gradient(circle at 0% 0%, rgba(142, 197, 232, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.text-gold-subtle {
-  background: linear-gradient(135deg, #FFFDF8 0%, #EAD5A8 50%, #C9A45C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Soft Pastel Gradient Header */
+.bg-hero-gradient {
+  background: linear-gradient(180deg, #FFF5F8 0%, #F5F9FE 50%, #FFF5F8 100%);
 }
 
-/* Gold Shimmer Button */
-.gold-shimmer-btn {
-  background: linear-gradient(
-    110deg,
-    #B89047 0%,
-    #DFC385 25%,
-    #F5E6BE 45%,
-    #DFC385 65%,
-    #A68239 100%
-  );
-  background-size: 200% 100%;
+/* Subtle Shimmer for CTA */
+.btn-accent {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  transition: all 0.25s ease;
 }
 
-.gold-shimmer-btn:hover {
-  background-position: right center;
+.btn-accent:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
 }
 
-/* Subtle Geometric Star Pattern Backgrounds */
-.bg-islamic-pattern-dark {
-  background-color: var(--color-emerald);
-  background-image: radial-gradient(circle at 50% 50%, rgba(201, 164, 92, 0.08) 1.5px, transparent 1.5px),
-    radial-gradient(circle at 0% 0%, rgba(201, 164, 92, 0.05) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-.bg-islamic-pattern-light {
-  background-color: var(--color-ivory);
-  background-image: radial-gradient(circle at 50% 50%, rgba(201, 164, 92, 0.12) 1.5px, transparent 1.5px),
-    radial-gradient(circle at 0% 0%, rgba(15, 61, 51, 0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-/* Mihrab Arch Shape (Clip-Path & Borders) */
-.mihrab-arch-container {
-  border-top-left-radius: 50% 32%;
-  border-top-right-radius: 50% 32%;
-}
-
-.mihrab-pointed-card {
-  border-top-left-radius: 50% 25%;
-  border-top-right-radius: 50% 25%;
-}
-
-/* Reduced Motion Respect */
+/* Reduced Motion Fallback */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -104,7 +67,7 @@ body {
   }
 }
 
-/* Safe Area Inset Support for Mobile Devices */
+/* Mobile Safe Area Insets */
 .pb-safe {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
@@ -113,17 +76,17 @@ body {
   margin-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
-/* Custom Scrollbar for Smooth Luxury Feel */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-emerald-deep);
+  background: var(--pink-50);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gold);
-  border-radius: 4px;
+  background: var(--pink-400);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold-light);
+  background: var(--accent);
 }

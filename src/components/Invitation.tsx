@@ -1,91 +1,111 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Calendar, Clock, MapPin, Download, Navigation, Check } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
-import { GoldDivider, IslamicStar, ArabesqueCorner, ArchTopOrnament } from '../assets/decorative-patterns'
+import { CONTENT } from '../content'
+import { downloadCalendarInvite } from '../utils/calendar'
+import { PastelDivider, IslamicStar, PastelCorner } from '../assets/decorative-patterns'
 
 export const Invitation: React.FC = () => {
   const { lang, t } = useLanguage()
+  const [downloadSuccess, setDownloadSuccess] = useState(false)
+
+  const handleDownloadCalendar = () => {
+    downloadCalendarInvite(lang)
+    setDownloadSuccess(true)
+    setTimeout(() => setDownloadSuccess(false), 3500)
+  }
+
+  const detailRows = [
+    {
+      icon: <Calendar size={18} className="text-accent shrink-0" />,
+      text: t.details.date,
+    },
+    {
+      icon: <Clock size={18} className="text-accent shrink-0" />,
+      text: t.details.time,
+    },
+    {
+      icon: <MapPin size={18} className="text-accent shrink-0" />,
+      text: t.details.venue,
+    },
+  ]
 
   return (
     <section
       id="invitation"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 bg-islamic-pattern-light text-ink overflow-hidden"
+      className="relative py-12 sm:py-16 px-4 bg-sky-100/50 text-ink border-y border-pink-200/50"
     >
-      <div className="max-w-3xl mx-auto">
-        {/* Luxury Printed Wedding Card Frame */}
-        <div className="relative bg-white rounded-3xl p-6 sm:p-12 md:p-16 border-2 border-gold/40 shadow-ivory-card">
-          {/* Ornate Corner Accents */}
-          <div className="absolute top-4 left-4 text-gold/40">
-            <ArabesqueCorner position="tl" size={48} />
+      <div className="max-w-2xl mx-auto">
+        {/* Merged Invitation & Details Card */}
+        <div className="relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-pink-200 shadow-pastel-card">
+          <div className="absolute top-3 left-3 text-pink-400/40">
+            <PastelCorner position="tl" size={28} />
           </div>
-          <div className="absolute top-4 right-4 text-gold/40">
-            <ArabesqueCorner position="tr" size={48} />
-          </div>
-          <div className="absolute bottom-4 left-4 text-gold/40">
-            <ArabesqueCorner position="bl" size={48} />
-          </div>
-          <div className="absolute bottom-4 right-4 text-gold/40">
-            <ArabesqueCorner position="br" size={48} />
+          <div className="absolute top-3 right-3 text-pink-400/40">
+            <PastelCorner position="tr" size={28} />
           </div>
 
-          {/* Inner Delicate Dotted Trim */}
-          <div className="absolute inset-3 sm:inset-4 rounded-2xl border border-gold/20 pointer-events-none" />
-
-          {/* Card Top Arch Ornament */}
-          <ArchTopOrnament className="text-gold mb-2" />
-
-          {/* Bismillah in Amiri Arabic */}
-          <div className="text-center my-4">
-            <div
-              lang="ar"
-              dir="rtl"
-              className="font-arabic text-2xl sm:text-3xl text-emerald-dark font-medium select-none"
-            >
-              {t.bismillah}
+          {/* Heading */}
+          <div className="text-center mb-5">
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-50 border border-pink-200 mb-2">
+              <IslamicStar size={12} className="text-accent" />
+              <span className="text-[11px] uppercase tracking-widest font-semibold text-accent">
+                {lang === 'en' ? 'Warm Welcome' : 'আমন্ত্রণপত্র'}
+              </span>
+              <IslamicStar size={12} className="text-accent" />
             </div>
-            <p className="text-xs text-ink-muted/80 tracking-widest uppercase mt-1">
-              {t.bismillahTranslation}
-            </p>
-          </div>
-
-          <GoldDivider width="max-w-xs" />
-
-          {/* Section Badge & Title */}
-          <div className="text-center mb-8">
-            <span className="inline-block text-xs uppercase tracking-widest font-semibold text-gold-dark px-3 py-1 rounded-full bg-ivory border border-gold/30 mb-2">
-              {t.dawat.badge}
-            </span>
-            <h2 className="font-bangla-serif text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-dark tracking-tight">
-              {t.dawat.sectionTitle}
+            <h2 className="font-bangla-serif text-2xl sm:text-3xl font-bold text-accent">
+              {t.invitationHeading}
             </h2>
+            <PastelDivider width="max-w-[160px]" className="my-2" />
           </div>
 
-          {/* Main Invitation Card Letter Body */}
-          <div className="space-y-6 text-center max-w-2xl mx-auto">
-            {/* Salutation */}
-            <p className="font-bangla-serif text-xl sm:text-2xl font-semibold text-emerald-dark">
-              {t.dawat.salutation}
-            </p>
+          {/* Short Invitation Body */}
+          <p className="font-bangla-body text-sm sm:text-base text-ink/90 leading-relaxed text-center mb-6">
+            {t.invitationBody}
+          </p>
 
-            {/* Paragraph 1: Exact Invitation Text */}
-            <p className="font-bangla-body text-base sm:text-lg md:text-xl text-ink leading-relaxed sm:leading-loose text-justify sm:text-center">
-              {t.dawat.bodyP1}
-            </p>
-
-            {/* Paragraph 2: Request for gracious presence and prayers */}
-            <p className="font-bangla-body text-base sm:text-lg md:text-xl font-medium text-emerald-dark leading-relaxed">
-              {t.dawat.bodyP2}
-            </p>
+          {/* 3-Row Detail List */}
+          <div className="bg-pink-50/70 rounded-xl p-4 sm:p-5 border border-pink-200/70 space-y-3 mb-6">
+            {detailRows.map((row, idx) => (
+              <div key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-ink">
+                <div className="p-1.5 rounded-lg bg-white border border-pink-200">
+                  {row.icon}
+                </div>
+                <span>{row.text}</span>
+              </div>
+            ))}
           </div>
 
-          {/* Card Footer Divider & Star */}
-          <GoldDivider width="max-w-sm" />
+          {/* Two Prominent Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <button
+              type="button"
+              onClick={handleDownloadCalendar}
+              className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-5 py-2.5 rounded-full btn-accent text-xs sm:text-sm font-semibold shadow-pastel-btn focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              {downloadSuccess ? (
+                <>
+                  <Check size={16} />
+                  <span>{lang === 'en' ? 'Added!' : 'যুক্ত হয়েছে!'}</span>
+                </>
+              ) : (
+                <>
+                  <Download size={16} />
+                  <span>{t.details.calendarBtn}</span>
+                </>
+              )}
+            </button>
 
-          <div className="flex justify-center items-center gap-2 text-gold">
-            <IslamicStar size={16} />
-            <span className="text-xs tracking-widest uppercase text-ink-muted font-medium">
-              {lang === 'bn' ? 'ফাহিম ও জয়ী' : 'Fahim & Joyee'}
-            </span>
-            <IslamicStar size={16} />
+            <a
+              href={CONTENT.venue.googleMapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-accent/70 bg-white hover:bg-pink-100/60 text-accent text-xs sm:text-sm font-semibold shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              <Navigation size={16} />
+              <span>{t.details.directionsBtn}</span>
+            </a>
           </div>
         </div>
       </div>

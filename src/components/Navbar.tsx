@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, Globe } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
-import { CONTENT } from '../content'
 import { IslamicStar } from '../assets/decorative-patterns'
 
 export const Navbar: React.FC = () => {
@@ -11,7 +10,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40)
+      setIsScrolled(window.scrollY > 30)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -20,9 +19,7 @@ export const Navbar: React.FC = () => {
   const navItems = [
     { label: t.nav.home, href: '#hero' },
     { label: t.nav.invitation, href: '#invitation' },
-    { label: t.nav.event, href: '#event' },
     { label: t.nav.venue, href: '#venue' },
-    ...(CONTENT.config.showGallery ? [{ label: t.nav.gallery, href: '#gallery' }] : []),
     { label: t.nav.rsvp, href: '#rsvp' },
   ]
 
@@ -39,78 +36,77 @@ export const Navbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-emerald-deep/95 backdrop-blur-md shadow-lg border-b border-gold/20 py-2.5'
-          : 'bg-gradient-to-b from-emerald-deep/90 via-emerald-deep/60 to-transparent py-4'
+          ? 'bg-pink-50/90 backdrop-blur-md shadow-sm border-b border-pink-200/60 py-2'
+          : 'bg-gradient-to-b from-pink-50/90 via-pink-50/50 to-transparent py-3'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="max-w-4xl mx-auto px-4 flex items-center justify-between">
         {/* Monogram Brand */}
         <a
           href="#hero"
           onClick={(e) => handleLinkClick(e, '#hero')}
-          className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full px-1"
-          aria-label="Fahim & Joyee Wedding Invitation"
+          className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full px-1"
+          aria-label="Fahim & Joyee"
         >
           <div className="relative flex items-center justify-center">
-            <IslamicStar size={24} className="text-gold group-hover:rotate-45 transition-transform duration-500" />
-            <span className="absolute text-[10px] font-english-display font-bold text-gold-shimmer">
+            <IslamicStar size={20} className="text-accent group-hover:rotate-45 transition-transform duration-500" />
+            <span className="absolute text-[9px] font-english-display font-bold text-accent">
               FJ
             </span>
           </div>
-          <span className="font-english-display text-lg tracking-wider text-ivory group-hover:text-gold transition-colors font-semibold">
-            {lang === 'bn' ? 'ফাহিম & জয়ী' : 'Fahim & Joyee'}
+          <span className="font-english-display text-base sm:text-lg tracking-wider text-ink font-semibold">
+            {t.heroTitle}
           </span>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Main Navigation">
+        {/* Desktop Nav Links */}
+        <nav className="hidden md:flex items-center space-x-1" aria-label="Main Navigation">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={(e) => handleLinkClick(e, item.href)}
-              className="text-ivory/85 hover:text-gold-light hover:bg-emerald-light/30 px-3 py-1.5 rounded-full text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+              className="text-ink/80 hover:text-accent hover:bg-pink-200/40 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {/* Language Switcher & Mobile Menu Button */}
-        <div className="flex items-center gap-2.5">
+        {/* Language Switcher & Mobile Trigger */}
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full border border-gold/40 text-gold-shimmer hover:border-gold hover:bg-gold/10 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold shadow-sm"
-            aria-label={`Switch language to ${lang === 'bn' ? 'English' : 'Bangla'}`}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-pink-400/50 bg-white/80 hover:border-accent hover:bg-pink-100/60 text-accent text-xs font-semibold shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            aria-label={`Switch language to ${lang === 'en' ? 'Bangla' : 'English'}`}
           >
-            <Globe size={14} className="text-gold" />
+            <Globe size={13} className="text-accent" />
             <span>{t.nav.languageSwitch}</span>
           </button>
 
-          {/* Mobile Menu Trigger */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-ivory/90 hover:text-gold hover:bg-emerald-light/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+            className="md:hidden p-1.5 rounded-lg text-ink/80 hover:text-accent hover:bg-pink-200/30 transition-colors"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-emerald-deep/98 border-b border-gold/25 px-5 pt-3 pb-6 shadow-2xl backdrop-blur-xl animate-fade-in">
-          <nav className="flex flex-col space-y-2" aria-label="Mobile Navigation">
+        <div className="md:hidden bg-pink-50/95 border-b border-pink-200 px-5 pt-2 pb-5 shadow-lg backdrop-blur-md animate-fade-in">
+          <nav className="flex flex-col space-y-1">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleLinkClick(e, item.href)}
-                className="text-ivory hover:text-gold px-3 py-2 rounded-lg text-base font-medium hover:bg-emerald-subtle/20 transition-all"
+                className="text-ink hover:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-pink-200/30 transition-all"
               >
                 {item.label}
               </a>

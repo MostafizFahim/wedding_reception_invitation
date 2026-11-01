@@ -8,17 +8,13 @@ export const FloatingRSVP: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Only show after scrolling past the hero (e.g. 300px)
-      const scrolledEnough = window.scrollY > 300
-
-      // Check if RSVP or Footer is already visible on screen
+      const scrolledEnough = window.scrollY > 250
       const rsvpEl = document.getElementById('rsvp')
       const footerEl = document.getElementById('footer')
       let nearBottom = false
 
       if (rsvpEl) {
         const rect = rsvpEl.getBoundingClientRect()
-        // If RSVP is within viewport or above it
         if (rect.top < window.innerHeight && rect.bottom > 0) {
           nearBottom = true
         }
@@ -52,19 +48,17 @@ export const FloatingRSVP: React.FC = () => {
   return (
     <aside
       aria-label="Quick RSVP action"
-      className="fixed bottom-5 right-4 z-30 sm:hidden animate-fade-in"
+      className="fixed bottom-4 right-4 z-30 sm:hidden animate-fade-in"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
       <button
         type="button"
         onClick={scrollToRSVP}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-emerald-light to-emerald-dark text-gold-shimmer border border-gold/70 shadow-2xl backdrop-blur-md active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-        aria-label={t.rsvp.floatingBtn}
+        className="flex items-center gap-1.5 px-3.5 py-2 rounded-full btn-accent text-white shadow-pastel-btn border border-pink-200 active:scale-95 transition-all text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        aria-label={t.buttons.floatingRsvp}
       >
-        <MessageCircle size={18} className="text-[#25D366] fill-[#25D366]/20" />
-        <span className="text-xs font-bold uppercase tracking-wider font-bangla-serif">
-          {t.rsvp.floatingBtn}
-        </span>
+        <MessageCircle size={15} />
+        <span>{t.buttons.floatingRsvp}</span>
       </button>
     </aside>
   )

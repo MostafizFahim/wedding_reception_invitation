@@ -1,13 +1,13 @@
 import React from 'react'
 
 /**
- * 8-Point Islamic Geometric Star (Khatim)
+ * 8-Point Islamic Geometric Star (Khatim) in soft pastel line art
  */
 export const IslamicStar: React.FC<{
   className?: string
   size?: number
   strokeWidth?: number
-}> = ({ className = 'text-gold', size = 24, strokeWidth = 1.5 }) => {
+}> = ({ className = 'text-accent', size = 20, strokeWidth = 1.4 }) => {
   return (
     <svg
       width={size}
@@ -19,56 +19,55 @@ export const IslamicStar: React.FC<{
       aria-hidden="true"
     >
       <rect
-        x="8"
-        y="8"
-        width="24"
-        height="24"
+        x="9"
+        y="9"
+        width="22"
+        height="22"
         stroke="currentColor"
         strokeWidth={strokeWidth}
         rx="1"
       />
       <rect
-        x="8"
-        y="8"
-        width="24"
-        height="24"
+        x="9"
+        y="9"
+        width="22"
+        height="22"
         stroke="currentColor"
         strokeWidth={strokeWidth}
         rx="1"
         transform="rotate(45 20 20)"
       />
-      <circle cx="20" cy="20" r="3" fill="currentColor" />
+      <circle cx="20" cy="20" r="2.5" fill="currentColor" opacity="0.8" />
     </svg>
   )
 }
 
 /**
- * Elegant Thin Gold Divider with Islamic Diamond
+ * Soft Hairline Pastel Divider with Central Diamond
  */
-export const GoldDivider: React.FC<{
+export const PastelDivider: React.FC<{
   className?: string
   width?: string
 }> = ({ className = '', width = 'max-w-xs' }) => {
   return (
-    <div className={`flex items-center justify-center gap-3 w-full ${width} mx-auto my-6 ${className}`}>
-      <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gold to-gold/70" />
+    <div className={`flex items-center justify-center gap-3 w-full ${width} mx-auto my-4 ${className}`}>
+      <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-pink-400/50 to-pink-400/80" />
       <div className="relative flex items-center justify-center">
-        <div className="w-2.5 h-2.5 rotate-45 border border-gold bg-emerald-deep" />
-        <div className="absolute w-1 h-1 rounded-full bg-gold-shimmer" />
+        <div className="w-2 h-2 rotate-45 border border-accent bg-pink-50" />
       </div>
-      <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gold to-gold/70" />
+      <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-sky-400/50 to-sky-400/80" />
     </div>
   )
 }
 
 /**
- * Delicate Islamic Arabesque Corner
+ * Delicate Corner Flourish in soft rose
  */
-export const ArabesqueCorner: React.FC<{
+export const PastelCorner: React.FC<{
   className?: string
   position?: 'tl' | 'tr' | 'bl' | 'br'
   size?: number
-}> = ({ className = 'text-gold', position = 'tl', size = 48 }) => {
+}> = ({ className = 'text-pink-400/60', position = 'tl', size = 36 }) => {
   const getTransform = () => {
     switch (position) {
       case 'tr':
@@ -96,42 +95,10 @@ export const ArabesqueCorner: React.FC<{
       <path
         d="M2 48 V 16 C 2 8, 8 2, 16 2 H 48"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.2"
         strokeLinecap="round"
       />
-      <path
-        d="M8 48 V 20 C 8 13, 13 8, 20 8 H 48"
-        stroke="currentColor"
-        strokeWidth="0.75"
-        strokeDasharray="2 3"
-        strokeOpacity="0.7"
-      />
-      <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+      <circle cx="16" cy="16" r="2" fill="currentColor" />
     </svg>
-  )
-}
-
-/**
- * Arch Outline Graphic for Card Top
- */
-export const ArchTopOrnament: React.FC<{
-  className?: string
-}> = ({ className = 'text-gold' }) => {
-  return (
-    <div className={`w-full flex justify-center items-center py-2 ${className}`}>
-      <svg
-        viewBox="0 0 240 30"
-        className="w-48 h-6 stroke-current fill-none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <path
-          d="M 10 25 C 60 25, 90 6, 120 4 C 150 6, 180 25, 230 25"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-        />
-        <circle cx="120" cy="4" r="2.5" fill="currentColor" />
-      </svg>
-    </div>
   )
 }

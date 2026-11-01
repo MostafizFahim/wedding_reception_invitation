@@ -5,37 +5,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        emerald: {
-          DEFAULT: '#0F3D33',
-          deep: '#08221C',
-          dark: '#0B2F27',
-          light: '#1B5E50',
-          subtle: '#236E5E',
+        pink: {
+          50: 'var(--pink-50)',
+          200: 'var(--pink-200)',
+          400: 'var(--pink-400)',
         },
-        ivory: {
-          DEFAULT: '#F7F1E3',
-          light: '#FCF9F2',
-          dark: '#EBE2CD',
-          muted: '#DFD4BC',
+        sky: {
+          100: 'var(--sky-100)',
+          200: 'var(--sky-200)',
+          400: 'var(--sky-400)',
         },
-        gold: {
-          DEFAULT: '#C9A45C',
-          light: '#DFC385',
-          dark: '#A68239',
-          muted: '#8D6D2B',
-          shimmer: '#F5E6BE',
-        },
-        terracotta: {
-          DEFAULT: '#C97B63',
-          light: '#D9937E',
-          dark: '#AB614A',
+        accent: {
+          DEFAULT: 'var(--accent)',
+          hover: 'var(--accent-hover)',
         },
         ink: {
-          DEFAULT: '#1B1B1B',
-          light: '#2D2D2D',
-          muted: '#5A5A5A',
-          subtle: '#787878',
+          DEFAULT: 'var(--ink)',
+          muted: 'var(--ink-muted)',
         },
+        line: 'var(--line)',
       },
       fontFamily: {
         'bangla-serif': ['"Noto Serif Bengali"', 'serif'],
@@ -45,29 +33,33 @@ export default {
         'arabic': ['Amiri', 'serif'],
       },
       boxShadow: {
-        'gold-soft': '0 4px 20px -2px rgba(201, 164, 92, 0.18)',
-        'gold-glow': '0 0 25px rgba(201, 164, 92, 0.28)',
-        'emerald-card': '0 10px 30px -5px rgba(8, 34, 28, 0.35)',
-        'ivory-card': '0 12px 35px -8px rgba(27, 27, 27, 0.08), 0 4px 12px -2px rgba(201, 164, 92, 0.12)',
+        'pastel-card': '0 8px 24px -4px rgba(176, 76, 108, 0.08), 0 2px 8px -2px rgba(46, 58, 77, 0.04)',
+        'pastel-btn': '0 4px 14px -2px rgba(176, 76, 108, 0.25)',
       },
       keyframes: {
         'fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'float-slow': {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-6px)' },
+        'sway-gentle': {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(2deg)' },
         },
-        'shimmer': {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
+        'float-up': {
+          '0%': { transform: 'translateY(0) scale(0.8)', opacity: '0' },
+          '50%': { opacity: '0.6' },
+          '100%': { transform: 'translateY(-40px) scale(1.1)', opacity: '0' },
+        },
+        'twinkle': {
+          '0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
+          '50%': { opacity: '1', transform: 'scale(1.2)' },
         },
       },
       animation: {
-        'fade-in': 'fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'float-slow': 'float-slow 6s ease-in-out infinite',
-        'shimmer': 'shimmer 8s linear infinite',
+        'fade-in': 'fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'sway-gentle': 'sway-gentle 4s ease-in-out infinite',
+        'float-up': 'float-up 5s ease-in infinite',
+        'twinkle': 'twinkle 3s ease-in-out infinite',
       },
     },
   },

@@ -2,12 +2,8 @@ import React from 'react'
 import { LanguageProvider } from './hooks/useLanguage'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
-import { Countdown } from './components/Countdown'
 import { Invitation } from './components/Invitation'
-import { EventDetails } from './components/EventDetails'
 import { Venue } from './components/Venue'
-import { Gallery } from './components/Gallery'
-import { Hosts } from './components/Hosts'
 import { RSVP } from './components/RSVP'
 import { FloatingRSVP } from './components/FloatingRSVP'
 import { Footer } from './components/Footer'
@@ -15,41 +11,29 @@ import { Footer } from './components/Footer'
 export const App: React.FC = () => {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-emerald-deep text-ink flex flex-col font-bangla-body selection:bg-gold selection:text-emerald-deep">
+      <div className="min-h-screen bg-pink-50 text-ink flex flex-col font-bangla-body selection:bg-pink-200 selection:text-ink">
         {/* Sticky Accessible Navigation Bar */}
         <Navbar />
 
-        {/* Main Content Flow */}
+        {/* 4 Compact Sections (Max ~4 mobile screens of scrolling) */}
         <main className="flex-1 w-full">
-          {/* Section 1: Hero */}
+          {/* Section 1: Hero with Animated Illustration & Embedded Countdown */}
           <Hero />
 
-          {/* Section 2: Countdown Timer */}
-          <Countdown />
-
-          {/* Section 3: Printed Dawat Invitation Card */}
+          {/* Section 2: Merged Invitation Card + 3-Row Details & Calendar Actions */}
           <Invitation />
 
-          {/* Section 4: Event Details, .ics Add to Calendar & Directions */}
-          <EventDetails />
-
-          {/* Section 5: Venue & Interactive Google Maps */}
+          {/* Section 3: Compact Map & Directions */}
           <Venue />
 
-          {/* Section 6: Photo Gallery (Disabled by default, enabled via content.ts) */}
-          <Gallery />
-
-          {/* Section 7: Family Lineage, Cordially Invited By & Welcoming Committee */}
-          <Hosts />
-
-          {/* Section 8: RSVP & Inquiries */}
+          {/* Section 4: RSVP & Collapsible Hosts/Welcoming Committee Accordion */}
           <RSVP />
         </main>
 
-        {/* Section 9: Footer with Islamic Dua and Blessings */}
+        {/* Compact Footer */}
         <Footer />
 
-        {/* Discreet Mobile Floating RSVP Action Button */}
+        {/* Mobile Floating RSVP Button */}
         <FloatingRSVP />
       </div>
     </LanguageProvider>
