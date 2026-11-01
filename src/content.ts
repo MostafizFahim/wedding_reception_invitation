@@ -220,7 +220,7 @@ export const CONTENT: ContentConfig = {
   config: {
     defaultLanguage: 'en', // Revision 2: Default is English
     heroMode: 'illustration', // 'illustration' | 'photo'
-    heroPhoto: '/images/hero-couple-placeholder.svg', // Path to photograph when ready
+    heroPhoto: '/images/hero-couple.jpg', // Path to photograph when ready
     showMap: true,
     showFamilyAddresses: false,
   },
@@ -292,8 +292,8 @@ export const CONTENT: ContentConfig = {
       bn: 'আলহাজ্ব মোঃ আব্দুল জব্বার',
     },
     mother: {
-      en: 'Alhaj Mrs. Mahmuda Khatun',
-      bn: 'আলহাজ্ব মোছাঃ মাহমুদা খাতুন',
+      en: 'Alhajja Mahfuza Khatun',
+      bn: 'আলহাজ্ব মোছাঃ মাহফুজা খাতুন',
     },
   },
 

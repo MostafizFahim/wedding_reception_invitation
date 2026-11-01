@@ -68,6 +68,14 @@ export const HeroIllustration: React.FC<{ className?: string }> = ({ className =
               75% { opacity: 0.8; }
               100% { transform: translate(-8px, -60px) scale(1.1); opacity: 0; }
             }
+            @keyframes moonPulse {
+              0%, 100% { opacity: 0.75; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.08); }
+            }
+            .moon-glow {
+              transform-origin: 175px 44px;
+              animation: moonPulse 4s ease-in-out infinite;
+            }
             .lantern-l { transform-origin: 50px 70px; animation: lanternSwayL 5s ease-in-out infinite; }
             .lantern-r { transform-origin: 300px 70px; animation: lanternSwayR 5.5s ease-in-out infinite; }
             .dupatta-animated { transform-origin: 230px 180px; animation: dupattaWave 4s ease-in-out infinite; }
@@ -76,7 +84,7 @@ export const HeroIllustration: React.FC<{ className?: string }> = ({ className =
             .petal-3 { animation: petalFloat 6.5s ease-in infinite; animation-delay: 4.2s; }
 
             @media (prefers-reduced-motion: reduce) {
-              .arch-line, .lantern-l, .lantern-r, .dupatta-animated, .petal-1, .petal-2, .petal-3 {
+              .arch-line, .lantern-l, .lantern-r, .dupatta-animated, .petal-1, .petal-2, .petal-3, .moon-glow {
                 animation: none !important;
                 stroke-dashoffset: 0 !important;
               }
@@ -112,6 +120,17 @@ export const HeroIllustration: React.FC<{ className?: string }> = ({ className =
         <g transform="translate(175, 10)">
           <circle cx="0" cy="0" r="6" fill="#FFF5F8" stroke="#B04C6C" strokeWidth="1.2" />
           <path d="M 0 -4 L 1 -1 L 4 0 L 1 1 L 0 4 L -1 1 L -4 0 L -1 -1 Z" fill="#B04C6C" />
+        </g>
+
+        {/* Crescent Moon with Subtle Glow */}
+        <g className="moon-glow" transform="translate(175, 44)">
+          <path
+            d="M -6 -8 A 9 9 0 1 0 4 8 A 7 7 0 1 1 -6 -8 Z"
+            fill="#FFF5F8"
+            stroke="#B04C6C"
+            strokeWidth="0.8"
+          />
+          <circle cx="0" cy="-1" r="1.2" fill="#B04C6C" opacity="0.8" />
         </g>
 
         {/* Twinkling Stars in Sky */}

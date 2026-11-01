@@ -62,6 +62,7 @@ export const RSVP: React.FC = () => {
             type="button"
             data-testid="accordion-toggle"
             aria-label="Toggle Hosts & Welcome Committee"
+            aria-controls="hosts-accordion-content"
             onClick={() => setAccordionOpen(!accordionOpen)}
             aria-expanded={accordionOpen}
             className="w-full flex items-center justify-between p-4 sm:p-5 text-sm sm:text-base font-semibold text-ink hover:text-accent hover:bg-pink-50/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
@@ -79,7 +80,10 @@ export const RSVP: React.FC = () => {
           </button>
 
           {accordionOpen && (
-            <div className="p-4 sm:p-6 pt-0 border-t border-pink-100 text-xs sm:text-sm space-y-5 animate-fade-in">
+            <div
+              id="hosts-accordion-content"
+              className="p-4 sm:p-6 pt-0 border-t border-pink-100 text-xs sm:text-sm space-y-5 animate-fade-in"
+            >
               {/* Hosts (With love / দাওয়াতান্তে) */}
               <div>
                 <h4 className="font-semibold text-accent uppercase tracking-wider text-[11px] mb-2">

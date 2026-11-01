@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { MessageCircle } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
+import { CONTENT } from '../content'
 
 export const FloatingRSVP: React.FC = () => {
-  const { t } = useLanguage()
+  const { lang, t } = useLanguage()
   const [isVisible, setIsVisible] = useState(false)
+
+  const encodedMessage = encodeURIComponent(CONTENT.contact.whatsappMessage[lang])
+  const whatsappUrl = `https://wa.me/${CONTENT.contact.whatsappNumber}?text=${encodedMessage}`
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,13 +40,6 @@ export const FloatingRSVP: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToRSVP = () => {
-    const el = document.getElementById('rsvp')
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   if (!isVisible) return null
 
   return (
@@ -51,15 +48,17 @@ export const FloatingRSVP: React.FC = () => {
       className="fixed bottom-4 right-4 z-30 sm:hidden animate-fade-in"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
-      <button
-        type="button"
-        onClick={scrollToRSVP}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
         className="flex items-center gap-1.5 px-3.5 py-2 rounded-full btn-accent text-white shadow-pastel-btn border border-pink-200 active:scale-95 transition-all text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        aria-label={t.buttons.floatingRsvp}
+        aria-label={`${t.buttons.whatsapp}: ${CONTENT.contact.displayPhone}`}
       >
         <MessageCircle size={15} />
         <span>{t.buttons.floatingRsvp}</span>
-      </button>
+      </a>
     </aside>
   )
 }
+

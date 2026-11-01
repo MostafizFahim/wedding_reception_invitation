@@ -14,6 +14,9 @@
   --ink: #2E3A4D;
   --ink-muted: #5C6B82;
   --line: #E7C9D3;
+
+  --page-background: var(--pink-50);
+  --surface: #FFFFFF;
 }
 
 html {
