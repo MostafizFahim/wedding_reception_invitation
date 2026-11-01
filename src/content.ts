@@ -126,6 +126,10 @@ export interface ContentConfig {
       countdownFinished: string
       invitationHeading: string
       invitationBody: string
+      familyBlock: {
+        groomParentsTitle: string
+        brideParentsTitle: string
+      }
       details: {
         date: string
         time: string
@@ -177,6 +181,10 @@ export interface ContentConfig {
       countdownFinished: string
       invitationHeading: string
       invitationBody: string
+      familyBlock: {
+        groomParentsTitle: string
+        brideParentsTitle: string
+      }
       details: {
         date: string
         time: string
@@ -348,7 +356,11 @@ export const CONTENT: ContentConfig = {
       countdownFinished: "Today is the day. We can't wait to see you!",
       invitationHeading: "You're invited",
       invitationBody:
-        'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to the wedding reception of Engineer Mostafizur Rahman Fahim, only son of Alhaj Md. Abdur Rashid and Alhajja Delowara Begum, and Engineer Naeema Jannat Joyee, only daughter of Alhaj Md. Abdul Jabbar of Delduar. Your presence and duas would mean the world to us.',
+        'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to the wedding reception of Engineer Mostafizur Rahman Fahim, only son of Alhaj Md. Abdur Rashid and Alhajja Delowara Begum, and Engineer Naeema Jannat Joyee, only daughter of Alhaj Md. Abdul Jabbar and Alhajja Mahfuza Khatun of Delduar. Your presence and duas would mean the world to us.',
+      familyBlock: {
+        groomParentsTitle: "Groom's Parents",
+        brideParentsTitle: "Bride's Parents",
+      },
       details: {
         date: 'Saturday, 26 Dec 2026',
         time: 'Lunch at 1:00 PM',
@@ -401,7 +413,11 @@ export const CONTENT: ContentConfig = {
       countdownFinished: 'আজই সেই দিন। আপনার অপেক্ষায় আছি!',
       invitationHeading: 'দাওয়াত',
       invitationBody:
-        'আসসালামু আলাইকুম। আল্লাহর রহমতে আগামী ২৬ ডিসেম্বর ২০২৬, শনিবার, আমাদের একমাত্র পুত্র ইঞ্জিনিয়ার মোঃ মোস্তাফিজুর রহমান ফাহিম এবং দেলদুয়ার নিবাসী আলহাজ্ব মোঃ আব্দুল জব্বার সাহেবের একমাত্র কন্যা ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনার উপস্থিতি ও দোয়া কামনা করছি।',
+        'আসসালামু আলাইকুম। আল্লাহর রহমতে আগামী ২৬ ডিসেম্বর ২০২৬, শনিবার, আমাদের একমাত্র পুত্র ইঞ্জিনিয়ার মোঃ মোস্তাফিজুর রহমান ফাহিম, আলহাজ্ব মোঃ আব্দুর রশীদ ও আলহাজ্ব মোছাঃ দেলোয়ারা বেগমের সন্তান এবং দেলদুয়ার নিবাসী আলহাজ্ব মোঃ আব্দুল জব্বার ও আলহাজ্ব মোছাঃ মাহফুজা খাতুনের একমাত্র কন্যা ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনার উপস্থিতি ও দোয়া কামনা করছি।',
+      familyBlock: {
+        groomParentsTitle: 'বরের পিতা-মাতা',
+        brideParentsTitle: 'কনের পিতা-মাতা',
+      },
       details: {
         date: 'শনিবার, ২৬ ডিসেম্বর ২০২৬',
         time: 'প্রীতিভোজ: দুপুর ১.০০ ঘটিকা',

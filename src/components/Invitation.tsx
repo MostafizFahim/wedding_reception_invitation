@@ -65,6 +65,29 @@ export const Invitation: React.FC = () => {
             {t.invitationBody}
           </p>
 
+          {/* Family Details Block: Both Mothers and Fathers Visibly Displayed */}
+          <div className="mb-6 p-3.5 sm:p-4 rounded-xl bg-pink-50/50 border border-pink-200/80 shadow-sm text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Groom's Parents */}
+              <div className="p-3 rounded-lg bg-white/90 border border-pink-200/90 shadow-sm">
+                <span className="block text-[11px] font-bold uppercase tracking-wider text-accent mb-1">
+                  {t.familyBlock.groomParentsTitle}
+                </span>
+                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.groom.father[lang]}</p>
+                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.groom.mother[lang]}</p>
+              </div>
+
+              {/* Bride's Parents */}
+              <div className="p-3 rounded-lg bg-white/90 border border-sky-200/90 shadow-sm">
+                <span className="block text-[11px] font-bold uppercase tracking-wider text-accent mb-1">
+                  {t.familyBlock.brideParentsTitle}
+                </span>
+                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.bride.father[lang]}</p>
+                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.bride.mother[lang]}</p>
+              </div>
+            </div>
+          </div>
+
           {/* 3-Row Detail List */}
           <div className="bg-pink-50/70 rounded-xl p-4 sm:p-5 border border-pink-200/70 space-y-3 mb-6">
             {detailRows.map((row, idx) => (
