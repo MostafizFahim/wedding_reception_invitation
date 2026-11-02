@@ -3,20 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --pink-50: #FFF5F8;
-  --pink-200: #F9D5E0;
-  --pink-400: #EFA9BF;
-  --sky-100: #E8F5FD;
-  --sky-200: #CDE8F8;
-  --sky-400: #8EC5E8;
-  --accent: #B04C6C;
-  --accent-hover: #983E5B;
-  --ink: #2E3A4D;
-  --ink-muted: #5C6B82;
-  --line: #E7C9D3;
+  --ivory-50: #FBF6EA;
+  --ivory-100: #F6EEDC;
+  --ivory-200: #E9DCC0;
+  --gold-500: #B8913A;
+  --gold-700: #7A5C14;
+  --gold-300: #E3C77E;
+  --crimson-700: #7A1F2E;
+  --crimson-900: #5E1520;
+  --ink: #3A2A22;
+  --ink-muted: #6B5A4C;
 
-  --page-background: var(--pink-50);
-  --surface: #FFFFFF;
+  --page-background: var(--ivory-50);
+  --surface: var(--ivory-50);
 }
 
 html {
@@ -29,33 +28,95 @@ html {
 body {
   font-size: 16px;
   line-height: 1.6;
-  background-color: var(--pink-50);
+  background-color: var(--ivory-50);
   color: var(--ink);
   overflow-x: hidden;
 }
 
-/* Faint Pastel Islamic Star Wallpaper Pattern */
-.bg-pastel-pattern {
-  background-image: radial-gradient(circle at 50% 50%, rgba(239, 169, 191, 0.18) 1px, transparent 1px),
-    radial-gradient(circle at 0% 0%, rgba(142, 197, 232, 0.15) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Faint Paisley / Gold Ornament Watermark Pattern (~6% opacity) */
+.bg-watermark-pattern {
+  background-image: radial-gradient(circle at 50% 50%, rgba(184, 145, 58, 0.06) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
 }
 
-/* Soft Pastel Gradient Header */
-.bg-hero-gradient {
-  background: linear-gradient(180deg, #FFF5F8 0%, #F5F9FE 50%, #FFF5F8 100%);
+/* Printed Invitation Card Style with Double Border */
+.invitation-card {
+  background-color: var(--ivory-50);
+  border: 1px solid rgba(184, 145, 58, 0.6);
+  position: relative;
+  box-shadow: 0 10px 30px -5px rgba(94, 21, 32, 0.05), 0 4px 12px -2px rgba(58, 42, 34, 0.04);
 }
 
-/* Subtle Shimmer for CTA */
-.btn-accent {
-  background-color: var(--accent);
+.invitation-card::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(184, 145, 58, 0.35);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Primary Button: crimson-700 background, ivory-50 text */
+.btn-primary {
+  background-color: var(--crimson-700);
+  color: var(--ivory-50);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background-color: #671926;
+  transform: translateY(-1px);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
+/* Secondary Button: transparent with a 1px gold-700 border and gold-700 text */
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--gold-700);
+  color: var(--gold-700);
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(184, 145, 58, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--gold-700);
+  outline-offset: 2px;
+}
+
+/* WhatsApp RSVP Button: #0B5B4A background with white text */
+.btn-whatsapp {
+  background-color: #0B5B4A;
   color: #FFFFFF;
   transition: all 0.25s ease;
 }
 
-.btn-accent:hover {
-  background-color: var(--accent-hover);
+.btn-whatsapp:hover {
+  background-color: #084639;
   transform: translateY(-1px);
+}
+
+.btn-whatsapp:focus-visible {
+  outline: 2px solid #0B5B4A;
+  outline-offset: 2px;
+}
+
+/* Shimmer animation for arch frame */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 2.5s ease-out forwards;
 }
 
 /* Reduced Motion Fallback */
@@ -79,17 +140,17 @@ body {
   margin-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar in Ivory / Gold / Crimson */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--pink-50);
+  background: var(--ivory-50);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--pink-400);
+  background: var(--gold-500);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--crimson-700);
 }

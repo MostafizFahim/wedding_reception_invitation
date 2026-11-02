@@ -1,80 +1,77 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
-    <linearGradient id="ogEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14463B"/>
-      <stop offset="50%" stop-color="#0F3D33"/>
-      <stop offset="100%" stop-color="#08221C"/>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E3C77E"/>
+      <stop offset="50%" stop-color="#B8913A"/>
+      <stop offset="100%" stop-color="#7A5C14"/>
     </linearGradient>
-    <linearGradient id="ogGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F5E6BE"/>
-      <stop offset="40%" stop-color="#DFC385"/>
-      <stop offset="80%" stop-color="#C9A45C"/>
-      <stop offset="100%" stop-color="#8D6D2B"/>
-    </linearGradient>
-    <linearGradient id="ogIvory" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FCF9F2"/>
-      <stop offset="100%" stop-color="#F7F1E3"/>
-    </linearGradient>
-    <pattern id="ogPattern" width="60" height="60" patternUnits="userSpaceOnUse">
-      <path d="M30 0 L36 18 L54 12 L48 30 L66 36 L48 42 L54 60 L36 54 L30 72 L24 54 L6 60 L12 42 L-6 36 L12 30 L6 12 L24 18 Z" 
-            fill="none" stroke="#C9A45C" stroke-width="0.5" stroke-opacity="0.12"/>
+    <radialGradient id="ivoryBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="60%" stop-color="#FBF6EA"/>
+      <stop offset="100%" stop-color="#F6EEDC"/>
+    </radialGradient>
+    <pattern id="faintPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.2" fill="#B8913A" fill-opacity="0.1"/>
     </pattern>
   </defs>
 
-  <!-- Deep Emerald Backdrop -->
-  <rect width="1200" height="630" fill="url(#ogEmerald)"/>
-  <rect width="1200" height="630" fill="url(#ogPattern)"/>
+  <!-- Ivory Background -->
+  <rect width="1200" height="630" fill="url(#ivoryBg)"/>
+  <rect width="1200" height="630" fill="url(#faintPattern)"/>
 
-  <!-- Outer Double Gold Border -->
-  <rect x="35" y="35" width="1130" height="560" rx="12" fill="none" stroke="url(#ogGold)" stroke-width="2.5"/>
-  <rect x="47" y="47" width="1106" height="536" rx="8" fill="none" stroke="url(#ogGold)" stroke-width="1" stroke-dasharray="4 6" opacity="0.75"/>
+  <!-- Outer Double Gold Frame -->
+  <rect x="35" y="35" width="1130" height="560" rx="16" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  <rect x="47" y="47" width="1106" height="536" rx="10" fill="none" stroke="#B8913A" stroke-width="1" stroke-dasharray="4 6" opacity="0.6"/>
 
-  <!-- Corner 8-Point Stars -->
-  <g transform="translate(60, 60)"><rect x="-10" y="-10" width="20" height="20" fill="url(#ogGold)" transform="rotate(45)"/></g>
-  <g transform="translate(1140, 60)"><rect x="-10" y="-10" width="20" height="20" fill="url(#ogGold)" transform="rotate(45)"/></g>
-  <g transform="translate(60, 570)"><rect x="-10" y="-10" width="20" height="20" fill="url(#ogGold)" transform="rotate(45)"/></g>
-  <g transform="translate(1140, 570)"><rect x="-10" y="-10" width="20" height="20" fill="url(#ogGold)" transform="rotate(45)"/></g>
+  <!-- Corner Gold Star Ornaments -->
+  <g transform="translate(60, 60)"><rect x="-9" y="-9" width="18" height="18" fill="url(#goldGrad)" transform="rotate(45)"/><circle cx="0" cy="0" r="2.5" fill="#7A1F2E"/></g>
+  <g transform="translate(1140, 60)"><rect x="-9" y="-9" width="18" height="18" fill="url(#goldGrad)" transform="rotate(45)"/><circle cx="0" cy="0" r="2.5" fill="#7A1F2E"/></g>
+  <g transform="translate(60, 570)"><rect x="-9" y="-9" width="18" height="18" fill="url(#goldGrad)" transform="rotate(45)"/><circle cx="0" cy="0" r="2.5" fill="#7A1F2E"/></g>
+  <g transform="translate(1140, 570)"><rect x="-9" y="-9" width="18" height="18" fill="url(#goldGrad)" transform="rotate(45)"/><circle cx="0" cy="0" r="2.5" fill="#7A1F2E"/></g>
 
-  <!-- Center Luxury Card Surface (Ivory & Emerald Blend) -->
-  <rect x="180" y="80" width="840" height="470" rx="16" fill="#0A2D24" stroke="url(#ogGold)" stroke-width="1.5"/>
-  
-  <!-- Arabic Bismillah -->
-  <text x="600" y="145" font-family="'Amiri', 'Traditional Arabic', serif" font-size="30" fill="url(#ogGold)" text-anchor="middle" direction="rtl">
+  <!-- Center Card Surface with Gold Hairline -->
+  <rect x="160" y="75" width="880" height="480" rx="18" fill="#FBF6EA" stroke="#B8913A" stroke-width="1.5" stroke-opacity="0.6" filter="drop-shadow(0 12px 28px rgba(94, 21, 32, 0.08))"/>
+  <rect x="172" y="87" width="856" height="456" rx="12" fill="none" stroke="#B8913A" stroke-width="0.8" stroke-opacity="0.35"/>
+
+  <!-- Arabic Bismillah in Amiri Crimson -->
+  <text x="600" y="145" font-family="'Amiri', 'Traditional Arabic', serif" font-size="28" fill="#7A1F2E" text-anchor="middle" direction="rtl">
     بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
   </text>
 
-  <!-- Bou Bhat Tag -->
-  <g transform="translate(600, 195)">
-    <rect x="-110" y="-18" width="220" height="36" rx="18" fill="#14463B" stroke="url(#ogGold)" stroke-width="1"/>
-    <text x="0" y="6" font-family="'Hind Siliguri', sans-serif" font-size="16" font-weight="600" letter-spacing="3" fill="#F5E6BE" text-anchor="middle">
-      বিবাহোত্তর সংবর্ধনা • BOU BHAT
+  <!-- Badge Pill -->
+  <g transform="translate(600, 192)">
+    <rect x="-140" y="-17" width="280" height="34" rx="17" fill="#F6EEDC" stroke="#B8913A" stroke-width="1" stroke-opacity="0.7"/>
+    <text x="0" y="5" font-family="'Hind Siliguri', 'Inter', sans-serif" font-size="14" font-weight="600" letter-spacing="2.5" fill="#7A5C14" text-anchor="middle">
+      বিবাহোত্তর সংবর্ধনা • WEDDING RECEPTION
     </text>
   </g>
 
-  <!-- Couple Names -->
-  <text x="600" y="285" font-family="'Noto Serif Bengali', serif" font-size="56" font-weight="700" fill="url(#ogGold)" text-anchor="middle">
-    ফাহিম &amp; জয়ী
+  <!-- Couple Names in Crimson 700 -->
+  <text x="600" y="280" font-family="'Noto Serif Bengali', serif" font-size="52" font-weight="700" fill="#7A1F2E" text-anchor="middle">
+    ফাহিম <tspan font-family="'Cormorant Garamond', serif" font-weight="400" fill="#7A5C14" font-style="italic">&amp;</tspan> জয়ী
   </text>
-  <text x="600" y="340" font-family="'Cormorant Garamond', Georgia, serif" font-size="34" font-weight="600" letter-spacing="6" fill="#FCF9F2" text-anchor="middle">
+  <text x="600" y="336" font-family="'Cormorant Garamond', Georgia, serif" font-size="36" font-weight="600" letter-spacing="7" fill="#7A1F2E" text-anchor="middle">
     FAHIM &amp; JOYEE
   </text>
 
-  <!-- Delicate Gold Divider with Islamic Diamond -->
+  <!-- Center Gold Rings Ornament -->
   <g transform="translate(600, 375)">
-    <line x1="-180" y1="0" x2="-25" y2="0" stroke="url(#ogGold)" stroke-width="1.5" opacity="0.8"/>
-    <rect x="-8" y="-8" width="16" height="16" fill="url(#ogGold)" transform="rotate(45)"/>
-    <circle cx="0" cy="0" r="3" fill="#0A2D24"/>
-    <line x1="25" y1="0" x2="180" y2="0" stroke="url(#gold)" stroke-width="1.5" opacity="0.8"/>
+    <line x1="-160" y1="0" x2="-35" y2="0" stroke="url(#goldGrad)" stroke-width="1.2" opacity="0.8"/>
+    <!-- Interlocking rings -->
+    <circle cx="-10" cy="0" r="11" fill="none" stroke="url(#goldGrad)" stroke-width="2.2"/>
+    <circle cx="10" cy="0" r="11" fill="none" stroke="url(#goldGrad)" stroke-width="2.2"/>
+    <polygon points="-10,-14 -7,-11 -10,-8 -13,-11" fill="#E3C77E"/>
+    <line x1="35" y1="0" x2="160" y2="0" stroke="url(#goldGrad)" stroke-width="1.2" opacity="0.8"/>
   </g>
 
-  <!-- Date & Venue -->
-  <text x="600" y="430" font-family="'Noto Serif Bengali', serif" font-size="24" font-weight="600" fill="#DFC385" text-anchor="middle">
-    ২৬ ডিসেম্বর ২০২৬, রোজ শনিবার • দুপুর ১:০০ ঘটিকা
+  <!-- Date & Venue in Ink / Gold -->
+  <text x="600" y="428" font-family="'Noto Serif Bengali', serif" font-size="22" font-weight="600" fill="#7A5C14" text-anchor="middle">
+    শনিবার, ২৬ ডিসেম্বর ২০২৬ • দুপুর ১:০০ ঘটিকা
   </text>
-  <text x="600" y="470" font-family="'Hind Siliguri', sans-serif" font-size="20" fill="#FCF9F2" fill-opacity="0.9" text-anchor="middle">
+  <text x="600" y="468" font-family="'Hind Siliguri', sans-serif" font-size="19" font-weight="500" fill="#3A2A22" text-anchor="middle">
     প্রকৌশলী কনভেনশন হল, জয়দেবপুর, গাজীপুর
   </text>
-  <text x="600" y="505" font-family="'Inter', sans-serif" font-size="14" letter-spacing="3" fill="url(#ogGold)" text-anchor="middle">
-    SATURDAY, 26 DECEMBER 2026 • JOYDEBPUR, GAZIPUR
+  <text x="600" y="504" font-family="'Inter', sans-serif" font-size="13" font-weight="600" letter-spacing="2.5" fill="#6B5A4C" text-anchor="middle">
+    PROKOUSHALI CONVENTION HALL • JOYDEBPUR, GAZIPUR
   </text>
 </svg>

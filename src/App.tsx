@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { LanguageProvider } from './hooks/useLanguage'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
+import { CountdownStrip } from './components/CountdownStrip'
 import { Invitation } from './components/Invitation'
 import { Venue } from './components/Venue'
 import { RSVP } from './components/RSVP'
@@ -21,7 +22,7 @@ export const App: React.FC = () => {
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-pink-50 text-ink flex flex-col font-bangla-body selection:bg-pink-200 selection:text-ink">
+      <div className="min-h-screen bg-ivory-50 text-ink flex flex-col font-bangla-body selection:bg-gold-500/25 selection:text-ink">
         {/* Animated Introductory Digital Invitation Envelope */}
         <InvitationEnvelope
           isOpen={envelopeOpen}
@@ -37,8 +38,11 @@ export const App: React.FC = () => {
 
         {/* Main Content Sections */}
         <main className="flex-1 w-full">
-          {/* Section 1: Hero with Animated Illustration & Embedded Live Countdown */}
+          {/* Section 1: Hero with Painted Golden Wedding Arch */}
           <Hero />
+
+          {/* Slim Crimson Countdown Strip directly below Hero */}
+          <CountdownStrip />
 
           {/* Section 2: Merged Invitation Card + Connected Timeline & Calendar Actions */}
           <Invitation />
@@ -50,7 +54,7 @@ export const App: React.FC = () => {
           <RSVP />
         </main>
 
-        {/* Compact Footer */}
+        {/* Compact Footer in Crimson-900 */}
         <Footer />
 
         {/* Mobile Floating RSVP Button */}

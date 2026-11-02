@@ -7,32 +7,32 @@ export const Footer: React.FC = () => {
   const { lang, t } = useLanguage()
 
   return (
-    <footer id="footer" className="py-8 px-4 bg-pink-50 text-ink border-t border-pink-200/60 text-center">
-      <RevealSection className="max-w-xl mx-auto space-y-3">
+    <footer id="footer" className="py-10 px-4 bg-crimson-900 text-ivory-50 border-t border-gold-500/30 text-center">
+      <RevealSection className="max-w-xl mx-auto space-y-4">
         {/* Short Statement */}
-        <p className="font-bangla-serif text-sm sm:text-base font-semibold text-accent">
+        <p className="font-english-display sm:font-bangla-serif text-base sm:text-lg font-semibold text-gold-300">
           {t.footer.presence}
         </p>
 
         {/* Sacred Sunnah Dua */}
-        <div className="p-3 sm:p-4 rounded-xl bg-white/80 border border-pink-200 shadow-sm max-w-md mx-auto">
+        <div className="p-4 sm:p-5 rounded-xl bg-crimson-900/60 border border-gold-500/40 shadow-sm max-w-md mx-auto">
           <div
             lang="ar"
             dir="rtl"
-            className="font-arabic text-base sm:text-lg text-accent mb-1 leading-relaxed select-none"
+            className="font-arabic text-lg sm:text-xl text-gold-300 mb-1.5 leading-relaxed select-none"
           >
             {t.footer.duaArabic}
           </div>
-          <p className="text-[11px] sm:text-xs text-ink-muted leading-relaxed">
+          <p className="text-xs sm:text-sm text-ivory-100/90 leading-relaxed font-bangla-body">
             {t.footer.duaTranslation}
           </p>
         </div>
 
         {/* Understated Monogram & Year */}
-        <div className="flex items-center justify-center gap-1.5 text-xs text-ink-muted/80 pt-2">
-          <IslamicStar size={11} className="text-accent" />
-          <span>{lang === 'en' ? 'Fahim & Joyee' : 'ফাহিম ও জয়ী'} • 2026</span>
-          <IslamicStar size={11} className="text-accent" />
+        <div className="flex items-center justify-center gap-1.5 text-xs text-gold-300/80 pt-2">
+          <IslamicStar size={11} className="text-gold-500" />
+          <span className="font-english-sans tracking-wider">{lang === 'en' ? 'Fahim & Joyee' : 'ফাহিম ও জয়ী'} • 2026</span>
+          <IslamicStar size={11} className="text-gold-500" />
         </div>
       </RevealSection>
     </footer>

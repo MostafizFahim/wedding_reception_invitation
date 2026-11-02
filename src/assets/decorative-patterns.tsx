@@ -1,73 +1,52 @@
 import React from 'react'
 
 /**
- * 8-Point Islamic Geometric Star (Khatim) in soft pastel line art
+ * Elegant Gold Divider with Leaf or Ring Ornament
+ * Thin gold line (gold-500 hairline at ~60% opacity) with central ornament
  */
-export const IslamicStar: React.FC<{
-  className?: string
-  size?: number
-  strokeWidth?: number
-}> = ({ className = 'text-accent', size = 20, strokeWidth = 1.4 }) => {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect
-        x="9"
-        y="9"
-        width="22"
-        height="22"
-        stroke="currentColor"
-        strokeWidth={strokeWidth}
-        rx="1"
-      />
-      <rect
-        x="9"
-        y="9"
-        width="22"
-        height="22"
-        stroke="currentColor"
-        strokeWidth={strokeWidth}
-        rx="1"
-        transform="rotate(45 20 20)"
-      />
-      <circle cx="20" cy="20" r="2.5" fill="currentColor" opacity="0.8" />
-    </svg>
-  )
-}
-
-/**
- * Soft Hairline Pastel Divider with Central Diamond
- */
-export const PastelDivider: React.FC<{
+export const GoldDivider: React.FC<{
   className?: string
   width?: string
-}> = ({ className = '', width = 'max-w-xs' }) => {
+  variant?: 'leaf' | 'ring'
+}> = ({ className = '', width = 'max-w-xs', variant = 'leaf' }) => {
   return (
-    <div className={`flex items-center justify-center gap-3 w-full ${width} mx-auto my-4 ${className}`}>
-      <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-pink-400/50 to-pink-400/80" />
-      <div className="relative flex items-center justify-center">
-        <div className="w-2 h-2 rotate-45 border border-accent bg-pink-50" />
+    <div className={`flex items-center justify-center gap-3 w-full ${width} mx-auto my-4 ${className}`} aria-hidden="true">
+      <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gold-500/50 to-gold-500/80" />
+      <div className="relative flex items-center justify-center text-gold-500">
+        {variant === 'leaf' ? (
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none" className="text-gold-500">
+            <path
+              d="M10 11C10 7 7 3 2 2C6 5 8 8 10 11Z"
+              fill="currentColor"
+              fillOpacity="0.75"
+            />
+            <path
+              d="M10 11C10 7 13 3 18 2C14 5 12 8 10 11Z"
+              fill="currentColor"
+              fillOpacity="0.75"
+            />
+            <circle cx="10" cy="11" r="1.5" fill="currentColor" />
+          </svg>
+        ) : (
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" className="text-gold-500">
+            <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.2" />
+            <circle cx="11" cy="7" r="5" stroke="currentColor" strokeWidth="1.2" />
+          </svg>
+        )}
       </div>
-      <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-sky-400/50 to-sky-400/80" />
+      <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gold-500/50 to-gold-500/80" />
     </div>
   )
 }
 
 /**
- * Delicate Corner Flourish in soft rose
+ * Gold Corner Flourish
  */
-export const PastelCorner: React.FC<{
+export const GoldCorner: React.FC<{
   className?: string
   position?: 'tl' | 'tr' | 'bl' | 'br'
   size?: number
-}> = ({ className = 'text-pink-400/60', position = 'tl', size = 36 }) => {
+}> = ({ className = 'text-gold-500/40', position = 'tl', size = 32 }) => {
   const getTransform = () => {
     switch (position) {
       case 'tr':
@@ -98,7 +77,51 @@ export const PastelCorner: React.FC<{
         strokeWidth="1.2"
         strokeLinecap="round"
       />
-      <circle cx="16" cy="16" r="2" fill="currentColor" />
+      <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+    </svg>
+  )
+}
+
+/**
+ * Backward-compatible aliases for existing components
+ */
+export const PastelDivider = GoldDivider
+export const PastelCorner = GoldCorner
+export const IslamicStar: React.FC<{
+  className?: string
+  size?: number
+  strokeWidth?: number
+}> = ({ className = 'text-gold-500', size = 18, strokeWidth = 1.2 }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect
+        x="9"
+        y="9"
+        width="22"
+        height="22"
+        stroke="currentColor"
+        strokeWidth={strokeWidth}
+        rx="1"
+      />
+      <rect
+        x="9"
+        y="9"
+        width="22"
+        height="22"
+        stroke="currentColor"
+        strokeWidth={strokeWidth}
+        rx="1"
+        transform="rotate(45 20 20)"
+      />
+      <circle cx="20" cy="20" r="2" fill="currentColor" opacity="0.8" />
     </svg>
   )
 }

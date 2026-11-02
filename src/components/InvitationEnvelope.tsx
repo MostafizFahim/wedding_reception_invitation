@@ -83,23 +83,23 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
         role="dialog"
         aria-modal="true"
         aria-label={t.envelope.tagline}
-        className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-pink-950/60 backdrop-blur-md overflow-hidden select-none"
+        className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-crimson-950/75 backdrop-blur-md overflow-hidden select-none"
       >
         {/* Top Control Bar: Skip button */}
         <div className="absolute top-4 right-4 z-50">
           <button
             type="button"
             onClick={handleSkip}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white text-ink hover:text-accent border border-pink-200 text-xs font-semibold shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-ivory-50/90 hover:bg-ivory-100 text-crimson-700 border border-gold-500/50 text-xs font-semibold shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 cursor-pointer"
             aria-label="Skip envelope introduction"
           >
             <span>{t.envelope.skipButton}</span>
-            <X size={14} className="text-accent" />
+            <X size={14} className="text-crimson-700" />
           </button>
         </div>
 
-        {/* Ambient Warm Glow */}
-        <div className="absolute -inset-10 bg-radial from-pink-400/20 via-pink-200/10 to-transparent pointer-events-none blur-3xl" />
+        {/* Ambient Warm Golden Glow */}
+        <div className="absolute -inset-10 bg-radial from-gold-500/20 via-crimson-900/10 to-transparent pointer-events-none blur-3xl" />
 
         {/* Outer Wrapper */}
         <div className="w-full max-w-[340px] sm:max-w-[420px] flex flex-col items-center">
@@ -108,12 +108,12 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-3 text-pink-100"
+            className="text-center mb-3 text-ivory-50"
           >
-            <p lang="ar" dir="rtl" className="font-arabic text-lg sm:text-xl text-amber-200 tracking-wide mb-0.5">
+            <p lang="ar" dir="rtl" className="font-arabic text-lg sm:text-xl text-gold-300 tracking-wide mb-0.5">
               {t.envelope.bismillah}
             </p>
-            <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-pink-200/90">
+            <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-ivory-100/90">
               {t.envelope.tagline}
             </p>
           </motion.div>
@@ -121,9 +121,9 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
           {/* 3D Envelope Container */}
           <div className="relative w-full aspect-[4/3] [perspective:1000px]">
             {/* The Envelope Base / Backplate */}
-            <div className="absolute inset-0 bg-[#F9ECEF] rounded-2xl border-2 border-pink-300/80 shadow-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-[#F6EEDC] rounded-2xl border-2 border-gold-500/50 shadow-2xl overflow-hidden">
               {/* Subtle Paper Texture Lines */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-pink-200/30 via-white/40 to-pink-100/20" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/10 via-ivory-50/60 to-gold-300/10" />
             </div>
 
             {/* The Inner Invitation Card (Slides Upward when Opening) */}
@@ -134,23 +134,23 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
                   ? { y: -72, opacity: 1, transition: { delay: 0.45, duration: 0.7, ease: [0.22, 1, 0.36, 1] } }
                   : { y: 0, opacity: 0.9 }
               }
-              className="absolute inset-x-4 top-4 bottom-4 bg-[#FFFDF9] rounded-xl border border-amber-300/60 shadow-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center z-10"
+              className="absolute inset-x-4 top-4 bottom-4 bg-[#FBF6EA] rounded-xl border border-gold-500/60 shadow-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center z-10"
             >
               {/* Card Gold Trim Border */}
-              <div className="w-full h-full rounded-lg border border-amber-200/70 p-3 flex flex-col items-center justify-between">
-                <IslamicStar size={14} className="text-amber-500" />
+              <div className="w-full h-full rounded-lg border border-gold-500/35 p-3 flex flex-col items-center justify-between">
+                <IslamicStar size={14} className="text-gold-700" />
                 <div>
-                  <span className="block text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-accent mb-0.5">
+                  <span className="block text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-crimson-700 mb-0.5">
                     {lang === 'en' ? 'Wedding Reception' : 'বৌভাত অনুষ্ঠান'}
                   </span>
-                  <h3 className="font-bangla-serif text-lg sm:text-2xl font-bold text-ink">
+                  <h3 className="font-english-display sm:font-bangla-serif text-lg sm:text-2xl font-bold text-crimson-700">
                     {t.envelope.coupleNames}
                   </h3>
                   <p className="text-[11px] sm:text-xs text-ink-muted mt-0.5 font-medium">
                     {t.dateLine}
                   </p>
                 </div>
-                <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+                <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-gold-500 to-transparent" />
               </div>
             </motion.div>
 
@@ -158,17 +158,17 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
             <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-2xl">
               {/* Left Triangle Fold */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
-                <polygon points="0,0 0,300 200,165" fill="#F4DEE4" />
+                <polygon points="0,0 0,300 200,165" fill="#EFE3CA" />
                 {/* Right Triangle Fold */}
-                <polygon points="400,0 400,300 200,165" fill="#EED2DA" />
+                <polygon points="400,0 400,300 200,165" fill="#E8D9BD" />
                 {/* Bottom Triangle Fold */}
-                <polygon points="0,300 400,300 200,150" fill="#FFF2F5" />
-                <path d="M0,300 L200,150 L400,300" stroke="#F9D5E0" strokeWidth="1.5" fill="none" />
+                <polygon points="0,300 400,300 200,150" fill="#FBF6EA" />
+                <path d="M0,300 L200,150 L400,300" stroke="#DFCFAB" strokeWidth="1.5" fill="none" />
               </svg>
 
               {/* Monogram on Bottom Flap when closed */}
               <div className="absolute bottom-3 inset-x-0 text-center">
-                <span className="font-english-display text-xs sm:text-sm font-bold tracking-widest text-accent/75 uppercase">
+                <span className="font-english-display text-xs sm:text-sm font-bold tracking-widest text-crimson-700/80 uppercase">
                   Fahim &amp; Joyee
                 </span>
               </div>
@@ -189,8 +189,8 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               className="absolute inset-x-0 top-0 h-[52%] z-30 pointer-events-none"
             >
               <svg className="w-full h-full drop-shadow-md" viewBox="0 0 400 156" preserveAspectRatio="none">
-                <polygon points="0,0 400,0 200,156" fill="#F6E4E9" />
-                <path d="M0,0 L200,156 L400,0" stroke="#EFA9BF" strokeWidth="1.5" fill="none" />
+                <polygon points="0,0 400,0 200,156" fill="#F2E6CE" />
+                <path d="M0,0 L200,156 L400,0" stroke="#DFCFAB" strokeWidth="1.5" fill="none" />
               </svg>
             </motion.div>
 
@@ -207,12 +207,12 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
                       }
                     : { scale: 1, opacity: 1 }
                 }
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#C45E7A] via-[#9B3754] to-[#78233C] text-amber-100 border-2 border-amber-300/80 shadow-xl flex items-center justify-center p-1 pointer-events-auto"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#8F2336] via-[#7A1F2E] to-[#5E1520] text-gold-300 border-2 border-gold-300/85 shadow-xl flex items-center justify-center p-1 pointer-events-auto"
               >
                 {/* Wax Seal Outer Ruffled Rim */}
-                <div className="w-full h-full rounded-full border border-amber-200/40 flex flex-col items-center justify-center">
-                  <IslamicStar size={10} className="text-amber-200/90 mb-0.5" />
-                  <span className="font-english-display text-sm sm:text-base font-bold tracking-wider text-amber-100 leading-none">
+                <div className="w-full h-full rounded-full border border-gold-300/40 flex flex-col items-center justify-center">
+                  <IslamicStar size={10} className="text-gold-300/90 mb-0.5" />
+                  <span className="font-english-display text-sm sm:text-base font-bold tracking-wider text-gold-300 leading-none">
                     F&amp;J
                   </span>
                 </div>
@@ -233,22 +233,22 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               onClick={handleStartOpen}
               whileHover={prefersReducedMotion ? {} : { scale: 1.04 }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full btn-accent text-white font-bold text-sm sm:text-base shadow-pastel-btn flex items-center justify-center gap-2.5 border border-pink-300/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer transition-all disabled:opacity-75"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full btn-primary text-ivory-50 font-bold text-sm sm:text-base shadow-crimson-btn flex items-center justify-center gap-2.5 border border-gold-500/40 cursor-pointer transition-all disabled:opacity-75"
             >
               {isOpening ? (
                 <>
-                  <Sparkles size={18} className="animate-spin text-amber-200" />
+                  <Sparkles size={18} className="animate-spin text-gold-300" />
                   <span>{lang === 'en' ? 'Opening...' : 'খুলছে...'}</span>
                 </>
               ) : (
                 <>
-                  <Mail size={18} className="text-pink-100" />
+                  <Mail size={18} className="text-gold-300" />
                   <span>{t.envelope.openButton}</span>
                 </>
               )}
             </motion.button>
 
-            <p className="text-[11px] text-pink-200/80 font-normal">
+            <p className="text-[11px] text-ivory-100/80 font-normal">
               {lang === 'en' ? 'Click to open or press Enter' : 'খুলতে ক্লিক করুন অথবা Enter চাপুন'}
             </p>
           </motion.div>

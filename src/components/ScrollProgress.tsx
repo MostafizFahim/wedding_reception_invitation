@@ -19,7 +19,7 @@ export const ScrollProgress: React.FC = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-300 via-accent to-sky-400 z-50 origin-left pointer-events-none shadow-[0_1px_4px_rgba(176,76,108,0.2)] motion-reduce:hidden"
+      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-gold-500 via-crimson-700 to-gold-300 z-50 origin-left pointer-events-none shadow-[0_1px_4px_rgba(184,145,58,0.3)] motion-reduce:hidden"
       style={{ scaleX }}
       aria-hidden="true"
     />

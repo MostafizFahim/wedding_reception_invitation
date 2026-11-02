@@ -1,84 +1,101 @@
-# 🌸 Fahim & Joyee — Premium Bilingual Wedding Reception (Bou Bhat) Invitation Website
+# ⚜️ Fahim & Joyee — Luxury Wedding Reception (Bou Bhat) Invitation Website
 
 > A bespoke, luxury, mobile-first, bilingual wedding invitation website for **Engineer Mostafizur Rahman Fahim & Engineer Naeema Jannat Joyee**.
-> Designed in an airy, pastel color palette (Baby Pink & Light Sky Blue) with delicate Islamic architectural geometry, modern typography, and original animated vector illustration.
+> Designed in an exquisite **Ivory, Gold & Crimson** palette with a painted golden wedding arch hero, interactive digital invitation envelope, live wedding countdown strip, and authentic bilingual typography.
 
 ---
 
 ## 📑 Table of Contents
 
-1. [Project Overview & Key Features](#1-project-overview--key-features)
-2. [Color Palette & Theme Customization](#2-color-palette--theme-customization)
-3. [Page Structure (~3-4 Mobile Screens)](#3-page-structure-3-4-mobile-screens)
+1. [Revision 3 Architecture & Features](#1-revision-3-architecture--features)
+2. [Color Palette & WCAG AA Contrast Compliance](#2-color-palette--wcag-aa-contrast-compliance)
+3. [Page Structure](#3-page-structure)
 4. [Centralized Content (`src/content.ts`)](#4-centralized-content-srccontentts)
-5. [Switching between Vector Illustration & Photo](#5-switching-between-vector-illustration--photo)
-6. [Bilingual Switching & LocalStorage](#6-bilingual-switching--localstorage)
-7. [Calendar Export (.ics) & Google Maps](#7-calendar-export-ics--google-maps)
-8. [RSVP & Collapsible Hosts Accordion](#8-rsvp--collapsible-hosts-accordion)
-9. [Local Development & Production Build](#9-local-development--production-build)
-10. [Vercel Deployment (Zero Config)](#10-vercel-deployment-zero-config)
-11. [GitHub Pages Deployment Alternative](#11-github-pages-deployment-alternative)
+5. [Hero Painting & Scaled Text Architecture](#5-hero-painting--scaled-text-architecture)
+6. [Countdown Strip Directly Below Hero](#6-countdown-strip-directly-below-hero)
+7. [Bilingual Switching & LocalStorage](#7-bilingual-switching--localstorage)
+8. [Calendar Export (.ics) & Google Maps](#8-calendar-export-ics--google-maps)
+9. [RSVP & Collapsible Hosts Accordion](#9-rsvp--collapsible-hosts-accordion)
+10. [Local Development & Production Build](#10-local-development--production-build)
 
 ---
 
-## 1. Project Overview & Key Features
+## 1. Revision 3 Architecture & Features
 
-- **Soft Pastel Aesthetics**: Baby pink (`#FFF5F8`, `#F9D5E0`) and light sky blue (`#E8F5FD`, `#CDE8F8`), accented with deep rose (`#B04C6C`) passing WCAG AA contrast.
-- **Default Language**: English (`en`) on first visit, with instant toggle to Bangla (`bn`) in the top navigation. Remembers selection in `localStorage`.
-- **Original Vector Hero Art**: Built-in SVG + CSS/Framer Motion animated illustration of the bride and groom under a pastel Mihrab arch (faceless, respectful, idle swaying dupatta, drifting rose petals, and swinging lanterns).
-- **Embedded Countdown**: Directly integrated into the Hero under the date as a compact 4-tile row (Days, Hours, Min, Sec), formatted with Bengali numerals in Bangla mode.
-- **Privacy & Security**: Zero backend, zero cookies, zero tracking scripts. Search engine crawlers blocked via `public/robots.txt` and `<meta name="robots" content="noindex, nofollow" />`.
-- **Ultra Compact**: Merged 4-section layout fitting within ~3.3 mobile screens of scrolling.
+- **Painted Wedding Arch Hero**: Portrait 9:16 painting asset (`public/images/hero/hero-background.webp`, ~152KB, 900x1600).
+  - **Mobile (<768px)**: Spans full width at natural 9:16 aspect ratio without any cropping.
+  - **Desktop (>=768px)**: Centered framed panel (max-height `100svh`, 9:16, gold border, soft shadow) with enlarged, heavily blurred background copy.
+  - **Scaled Text Zone**: Text sits strictly in the empty ivory area (top 28% to 58%, max width ~70%), with zero overlap on the chandelier (top 8-28%) or the couple (bottom 62-100%).
+- **Ambient Micro-Animations**:
+  - Gentle candle-glow pulse over the chandelier flames.
+  - 10–14 drifting gold leaves, deep-red rose petals, and gold sparkle glints strictly along the side margins and upper arch.
+  - Very slow Ken Burns zoom on the painting panel.
+  - First-load soft gold shimmer sweep across the arch frame.
+  - High performance: pauses when the browser tab is hidden; respects `prefers-reduced-motion`.
+- **Slim Crimson Countdown Strip**: Directly below the hero in `#5E1520` background with ivory numbers (`#FBF6EA`) and gold labels (`#E3C77E`).
+- **Interactive Digital Invitation Envelope**: Luxury stationery envelope with centered `F&J` wax seal, flap-opening physics, and smooth transition to the main invitation.
+- **Privacy First**: Zero backend, zero tracking, crawler blocking via `public/robots.txt` and `noindex, nofollow`.
 
 ---
 
-## 2. Color Palette & Theme Customization
+## 2. Color Palette & WCAG AA Contrast Compliance
 
-All colors are controlled exclusively through CSS variables defined in [`src/index.css`](file:///e:/invitaion_web/src/index.css):
+All colors are controlled exclusively through CSS variables defined in [`src/index.css`](file:///e:/invitaion_web/src/index.css) and mapped in `tailwind.config.ts`:
 
 ```css
 :root {
-  --pink-50: #FFF5F8;       /* Primary page background */
-  --pink-200: #F9D5E0;      /* Baby pink card & accent tint */
-  --pink-400: #EFA9BF;      /* Soft rose decorative borders */
-  --sky-100: #E8F5FD;       /* Light sky blue section background */
-  --sky-200: #CDE8F8;       /* Groom sherwani & border accent */
-  --sky-400: #8EC5E8;       /* Sky blue highlight */
-  --accent: #B04C6C;        /* Deeper rose for buttons/links (WCAG AA compliant) */
-  --accent-hover: #983E5B;  /* Button hover state */
-  --ink: #2E3A4D;           /* Soft navy body text */
-  --ink-muted: #5C6B82;     /* Subtitle & secondary text */
-  --line: #E7C9D3;          /* Hairline dividers */
+  --ivory-50: #FBF6EA;      /* Page background, cards */
+  --ivory-100: #F6EEDC;     /* Alternating section background */
+  --ivory-200: #E9DCC0;     /* Tints, soft borders */
+  --gold-500: #B8913A;      /* Lines, dividers, ornaments ONLY (not for text) */
+  --gold-700: #7A5C14;      /* Gold text and icons on ivory */
+  --gold-300: #E3C77E;      /* Gold text on dark crimson */
+  --crimson-700: #7A1F2E;   /* Primary buttons, names, headings, links */
+  --crimson-900: #5E1520;   /* Countdown strip, footer, dark sections */
+  --ink: #3A2A22;           /* Body text */
+  --ink-muted: #6B5A4C;     /* Secondary text */
 }
 ```
 
-To adjust any tone, simply modify the hex values in `src/index.css`.
+### Contrast Compliance Report (sRGB Relative Luminance)
+
+| Text / Foreground Element | Background | Hex Values | Contrast Ratio | WCAG AA Status |
+| :--- | :--- | :--- | :--- | :--- |
+| Body Text (`--ink`) | Ivory 50 | `#3A2A22` on `#FBF6EA` | **12.69:1** | ✅ AAA Pass |
+| Primary Names / Headings (`--crimson-700`) | Ivory 50 | `#7A1F2E` on `#FBF6EA` | **9.44:1** | ✅ AAA Pass |
+| Secondary Text (`--ink-muted`) | Ivory 50 | `#6B5A4C` on `#FBF6EA` | **6.10:1** | ✅ AA Pass |
+| Gold Text / Icons (`--gold-700`) | Ivory 50 | `#7A5C14` on `#FBF6EA` | **5.78:1** | ✅ AA Pass |
+| Primary Button Text (`--ivory-50`) | Crimson 700 | `#FBF6EA` on `#7A1F2E` | **9.44:1** | ✅ AAA Pass |
+| WhatsApp RSVP Text (White) | Dark Green | `#FFFFFF` on `#0B5B4A` | **8.05:1** | ✅ AAA Pass |
+| Countdown Numbers (`--ivory-50`) | Crimson 900 | `#FBF6EA` on `#5E1520` | **12.14:1** | ✅ AAA Pass |
+| Countdown Labels (`--gold-300`) | Crimson 900 | `#E3C77E` on `#5E1520` | **7.94:1** | ✅ AAA Pass |
+| Headings on Alternating Section | Ivory 100 | `#7A1F2E` on `#F6EEDC` | **8.81:1** | ✅ AAA Pass |
+| Body Text on Alternating Section | Ivory 100 | `#3A2A22` on `#F6EEDC` | **11.85:1** | ✅ AAA Pass |
 
 ---
 
-## 3. Page Structure (~3-4 Mobile Screens)
-
-The website is structured into 4 compact, high-impact sections:
+## 3. Page Structure
 
 1. **HERO**:
-   - Sacred Bismillah in Amiri Arabic (`dir="rtl"`).
-   - Animated vector wedding illustration (or photo mode).
-   - Couple names ("Fahim & Joyee" / "ফাহিম & জয়ী").
-   - Event subtitle ("Wedding Reception · Bou Bhat").
-   - Date badge ("Saturday, 26 December 2026").
-   - Compact single-row countdown timer (4 tiles).
-2. **INVITATION + DETAILS (Merged Card)**:
-   - Heartfelt invitation letter.
-   - 3-row detail list: Date, Reception time (1:00 PM), Venue.
-   - Action buttons: "Add to Calendar" (`.ics` download) and "Directions".
-3. **VENUE**:
-   - Google Maps iframe container (aspect ratio 4/3 mobile, 16/9 desktop).
-   - Address and directions button for mobile navigation.
-4. **RSVP + FAMILY ACCORDION**:
-   - Prominent WhatsApp confirmation button (`https://wa.me/8801785227997`) with prefilled greeting.
-   - Event information telephone call action (`tel:+8801711697240`).
-   - Collapsible accordion for "Hosts & Welcome Committee" (closed by default).
-   - Minimalist footer with Sunnah Dua.
+   - 9:16 portrait painted wedding arch.
+   - Scaled HTML text overlay: Sacred Bismillah, Tagline, Couple Names ("Fahim & Joyee"), Subtitle ("Wedding Reception · Bou Bhat"), and Date.
+2. **COUNTDOWN STRIP**:
+   - Sits directly below the hero in crimson-900.
+   - 4 units: Days, Hours, Minutes, Seconds with Bengali numeral support.
+   - Dynamic states for Event Day and Post-Event gratitude.
+3. **INVITATION CARD + TIMELINE**:
+   - Printed double-hairline card in ivory-50 with gold-500 borders.
+   - Parents' names and family addresses block.
+   - 3-step connected milestone progression (Date, Reception Lunch 1:00 PM, Venue).
+   - "Add to Calendar" (.ics export) and "Directions" buttons.
+4. **VENUE & MAP**:
+   - Prokoushali Convention Hall address details.
+   - Embedded Google Map with 1px gold frame.
+5. **RSVP & WELCOMING COMMITTEE**:
+   - Contrast-compliant WhatsApp RSVP (`#0B5B4A`) and telephone call.
+   - Expandable Hosts and Welcoming Committee accordion.
+6. **FOOTER**:
+   - Crimson-900 background with ivory text, gold-300 accents, and sacred Sunnah Dua.
 
 ---
 
@@ -87,21 +104,19 @@ The website is structured into 4 compact, high-impact sections:
 All content, dates, names, translations, phone numbers, and coordinates live in:  
 👉 [`src/content.ts`](file:///e:/invitaion_web/src/content.ts)
 
-You never need to touch React components to edit wedding details!
-
 ```ts
 export const CONTENT: ContentConfig = {
   config: {
-    defaultLanguage: 'en', // 'en' or 'bn'
-    heroMode: 'animated-image', // 'animated-image' | 'photo'
-    heroImages: {
-      desktop: '/images/hero/couple-main.webp',
-      mobile: '/images/hero/couple-mobile.webp',
-      background: '/images/hero/hero-background.webp',
+    defaultLanguage: 'en',
+    heroImage: '/images/hero/hero-background.webp',
+    heroImageWidth: 900,
+    heroImageHeight: 1600,
+    heroAlt: {
+      en: 'Painted golden wedding arch with a bride in red and a groom in ivory walking beneath a chandelier',
+      bn: 'একটি সোনালী খিলান ও ঝাড়বাতির নিচে লাল শাড়িতে কনে ও আইভরি পোশাকে বরের চিত্রকর্ম',
     },
-    heroPhoto: '/images/hero-couple.jpg',
     showMap: true,
-    showFamilyAddresses: false,
+    showFamilyAddresses: true,
   },
   // ...
 }
@@ -109,89 +124,21 @@ export const CONTENT: ContentConfig = {
 
 ---
 
-## 5. Premium Animated Wedding Hero & Custom Artwork
-
-The hero features `AnimatedWeddingHero.tsx` with atmospheric animations (breathing motion, floating rose petals, glowing bokeh, swaying Moroccan lanterns, and ambient shimmer).
-
-### Supplying or Updating Couple Artwork:
-1. Place your exported couple artwork in `public/images/hero/`:
-   - `couple-main.webp` (Desktop/Tablet, recommended 1200 × 1400 px or larger)
-   - `couple-mobile.webp` (Mobile, recommended 900 × 1200 px or larger)
-   - `hero-background.webp` (Optional backdrop, recommended 1600 × 1200 px or larger)
-2. See [`public/images/hero/README.md`](file:///e:/invitaion_web/public/images/hero/README.md) for full image specifications.
-3. If no artwork is placed, an elegant pastel gradient placeholder with graceful fallback is automatically rendered with zero broken image icons.
-
----
-
-## 6. Bilingual Switching & LocalStorage
-
-- **English default**: First-time visitors see English immediately.
-- **Instant Toggle**: Clicking the `বাংলা` button in the navigation switches the entire site to Bengali, formatting numbers to Bengali digits (`১, ২, ৩...`) and updating `document.documentElement.lang`.
-- **Persistent**: Guest preference is saved to browser `localStorage` and automatically restored on subsequent visits.
-
----
-
-## 7. Calendar Export (.ics) & Google Maps
-
-- **Client-Side .ics**: Clicking "Add to Calendar" downloads a valid RFC 5545 `.ics` file with UTC timestamps (`20261226T070000Z`), venue, and alarms.
-- **Confirmed Venue Coordinates**:
-  - Venue: *Prokoushali Convention Hall, Joydebpur, Gazipur*
-  - Coordinates: `23.9999571, 90.4220385`
-  - Directions URL: `https://www.google.com/maps?dir/?api=1&destination=23.9999571,90.4220385`
-
----
-
-## 8. RSVP & Collapsible Hosts Accordion
-
-- **WhatsApp Action**: Automatically encodes the prefilled message (`https://wa.me/8801785227997`):
-  - English: *"Assalamu Alaikum. I am confirming my attendance for Fahim & Joyee's Bou Bhat reception ceremony."*
-  - Bangla: *"আসসালামু আলাইকুম। ফাহিম ও জয়ীর বৌভাত অনুষ্ঠানে উপস্থিত থাকার বিষয়ে জানাচ্ছি।"*
-- **Event Information Call**: `tel:+8801711697240`.
-- **Collapsible Accordion**:
-  - Closed by default to maintain a compact page height.
-  - Hosts: Alhaj Md. Abdur Rashid & Alhajja Delowara Begum.
-  - Welcoming Committee: Sohag, Sumi, Rumi, Urmi, Ayaan, Anas, Ayash, Sara, Zara.
-
----
-
-## 9. Local Development & Production Build
+## 5. Local Development & Production Build
 
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Start local development server
+# 2. Run local development server
 npm run dev
 
-# 3. Test production build
+# 3. Build for production (TypeScript check + Vite bundle)
 npm run build
+
+# 4. Preview production build
 npm run preview
 ```
-
----
-
-## 10. Vercel Deployment (Zero Config)
-
-1. Push this repository to your GitHub account:
-   ```bash
-   git add .
-   git commit -m "feat: Revision 2 pastel theme, compact layout, illustration hero"
-   git push -u origin main
-   ```
-2. In [Vercel](https://vercel.com), click **Add New Project**, select the repository.
-3. Vercel detects Vite automatically:
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-4. Click **Deploy**.
-
----
-
-## 11. GitHub Pages Deployment Alternative
-
-If hosting under a GitHub repository subpath (e.g. `https://<user>.github.io/<repo-name>/`):
-1. In `vite.config.ts`, set `base: '/<repo-name>/'`.
-2. Run `npm run build` and deploy the `dist/` directory.
 
 ---
 

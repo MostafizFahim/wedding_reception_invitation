@@ -59,7 +59,7 @@ export const FloatingRSVP: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         whileTap={prefersReducedMotion ? {} : { scale: 0.94 }}
-        className="flex items-center gap-1.5 px-3.5 py-2 rounded-full btn-accent text-white shadow-pastel-btn border border-pink-200 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="flex items-center gap-1.5 px-3.5 py-2 rounded-full btn-whatsapp text-white shadow-lg border border-gold-500/40 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500"
         aria-label={`${t.buttons.whatsapp}: ${CONTENT.contact.whatsappRsvp.display}`}
       >
         <MessageCircle size={15} />

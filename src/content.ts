@@ -10,13 +10,13 @@
 export interface ContentConfig {
   config: {
     defaultLanguage: 'en' | 'bn'
-    heroMode: 'animated-image' | 'illustration' | 'photo'
-    heroImages: {
-      desktop: string
-      mobile: string
-      background: string
+    heroImage: string
+    heroImageWidth: number
+    heroImageHeight: number
+    heroAlt: {
+      en: string
+      bn: string
     }
-    heroPhoto: string
     showMap: boolean
     showFamilyAddresses: boolean
   }
@@ -295,14 +295,14 @@ export interface ContentConfig {
 
 export const CONTENT: ContentConfig = {
   config: {
-    defaultLanguage: 'en', // Revision 2: Default is English
-    heroMode: 'animated-image', // 'animated-image' | 'illustration' | 'photo'
-    heroImages: {
-      desktop: '/images/hero/couple-main.webp',
-      mobile: '/images/hero/couple-mobile.webp',
-      background: '/images/hero/hero-background.webp',
+    defaultLanguage: 'en', // Default is English
+    heroImage: '/images/hero/hero-background.webp',
+    heroImageWidth: 900,
+    heroImageHeight: 1600,
+    heroAlt: {
+      en: 'Painted golden wedding arch with a bride in red and a groom in ivory walking beneath a chandelier',
+      bn: 'একটি সোনালী খিলান ও ঝাড়বাতির নিচে লাল শাড়িতে কনে ও আইভরি পোশাকে বরের চিত্রকর্ম',
     },
-    heroPhoto: '/images/hero-couple.jpg', // Path to photograph when ready
     showMap: true,
     showFamilyAddresses: true,
   },
