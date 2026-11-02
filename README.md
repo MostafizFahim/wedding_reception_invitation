@@ -150,7 +150,7 @@ The hero features `AnimatedWeddingHero.tsx` with atmospheric animations (breathi
 - **Collapsible Accordion**:
   - Closed by default to maintain a compact page height.
   - Hosts: Alhaj Md. Abdur Rashid & Alhajja Delowara Begum.
-  - Welcoming Committee: Sohag, Sumi, Rumi, Umi, Ayaan, Anas, Ayash, Sara, Zara.
+  - Welcoming Committee: Sohag, Sumi, Rumi, Urmi, Ayaan, Anas, Ayash, Sara, Zara.
 
 ---
 

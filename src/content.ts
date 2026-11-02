@@ -423,7 +423,7 @@ export const CONTENT: ContentConfig = {
       { en: 'Sohag', bn: 'সোহাগ' },
       { en: 'Sumi', bn: 'সুমি' },
       { en: 'Rumi', bn: 'রুমি' },
-      { en: 'Umi', bn: 'উমি' },
+      { en: 'Urmi', bn: 'উর্মি' },
       { en: 'Ayaan', bn: 'আয়ান' },
       { en: 'Anas', bn: 'আনাস' },
       { en: 'Ayash', bn: 'আয়াশ' },
