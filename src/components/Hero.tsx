@@ -56,7 +56,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative w-full overflow-hidden bg-ivory-50 flex items-center justify-center min-h-[auto]"
+      className="relative w-full overflow-hidden bg-ivory-50 flex items-center justify-center min-h-[auto] scroll-mt-14 md:scroll-mt-16"
     >
       {/* Desktop Heavily Blurred Backdrop using the SAME image */}
       <div
@@ -79,7 +79,7 @@ export const Hero: React.FC = () => {
       <div
         role="img"
         aria-label={CONTENT.config.heroAlt[lang]}
-        className="relative w-full aspect-[9/16] md:w-auto md:h-[100svh] md:max-h-[100svh] md:aspect-[9/16] md:border md:border-gold-500/40 md:shadow-2xl overflow-hidden bg-ivory-100 flex items-center justify-center mx-auto"
+        className="relative w-full aspect-[9/16] md:w-auto md:h-[calc(100svh-64px)] md:max-h-[calc(100svh-64px)] md:aspect-[9/16] md:border md:border-gold-500/40 md:shadow-2xl overflow-hidden bg-ivory-100 flex items-center justify-center mx-auto"
       >
         {/* Painting Image with gentle Ken Burns zoom */}
         <motion.img

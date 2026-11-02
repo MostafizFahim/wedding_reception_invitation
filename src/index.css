@@ -23,6 +23,14 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  scroll-padding-top: 56px;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 64px;
+  }
 }
 
 body {
