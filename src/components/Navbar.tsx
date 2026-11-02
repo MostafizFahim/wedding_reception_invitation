@@ -9,20 +9,27 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
   const { lang, toggleLanguage, t } = useLanguage()
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isPastHero, setIsPastHero] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const prefersReducedMotion = useReducedMotion()
   const menuRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  // Track active section and scroll state
+  // Track whether the hero has scrolled out of view and which section is active
   useEffect(() => {
+    const heroEl = document.getElementById('hero')
     const sections = ['hero', 'invitation', 'venue', 'rsvp']
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 12)
 
-      const scrollPos = window.scrollY + 120
+    const handleScroll = () => {
+      // Detect when scrolled past the hero
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect()
+        setIsPastHero(rect.bottom <= 64)
+      }
+
+      // Detect active section
+      const scrollPos = window.scrollY + 140
       for (let i = sections.length - 1; i >= 0; i--) {
         const id = sections[i]
         const el = document.getElementById(id)
@@ -38,7 +45,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    // IntersectionObserver for hero boundary
+    let observer: IntersectionObserver | null = null
+    if (heroEl && typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0]
+          if (entry) {
+            setIsPastHero(entry.boundingClientRect.bottom <= 64)
+          }
+        },
+        {
+          rootMargin: '-64px 0px 0px 0px',
+          threshold: [0, 0.05, 0.1, 0.5, 1],
+        }
+      )
+      observer.observe(heroEl)
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer?.disconnect()
+    }
   }, [])
 
   // Close mobile menu on desktop resize
@@ -101,41 +130,84 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
   const isBn = lang === 'bn'
   const linkFontSize = isBn ? 'text-[16px]' : 'text-[15px]'
 
+  // Glass pill styles (over hero)
+  const glassPillClass =
+    'bg-[rgba(251,246,234,0.92)] supports-[backdrop-filter]:bg-[rgba(251,246,234,0.72)] backdrop-blur-[8px] [-webkit-backdrop-filter:blur(8px)] border border-[rgba(184,145,58,0.5)] rounded-full shadow-xs'
+
+  // Text halo style for extra safety over gold arch
+  const haloStyle: React.CSSProperties = !isPastHero
+    ? {
+        textShadow:
+          '0 0 6px rgba(251, 246, 234, 0.9), 0 0 2px rgba(251, 246, 234, 0.9)',
+        letterSpacing: '0.01em',
+      }
+    : { letterSpacing: '0.01em' }
+
   return (
     <header
       style={{
         paddingTop: 'env(safe-area-inset-top, 0px)',
       }}
-      className={`sticky top-0 left-0 right-0 z-50 w-full transition-shadow duration-300 bg-[var(--ivory-50)] supports-[backdrop-filter]:bg-[rgba(251,246,234,0.94)] backdrop-blur-[10px] border-b border-[rgba(184,145,58,0.6)] ${
-        isScrolled ? 'shadow-[0_4px_20px_-2px_rgba(58,42,34,0.06)]' : ''
+      className={`fixed top-0 left-0 right-0 z-50 w-full ${
+        prefersReducedMotion ? '' : 'transition-all duration-200'
+      } ${
+        isPastHero
+          ? 'bg-[var(--ivory-50)] supports-[backdrop-filter]:bg-[rgba(251,246,234,0.94)] backdrop-blur-[10px] [-webkit-backdrop-filter:blur(10px)] border-b border-[rgba(184,145,58,0.6)] shadow-[0_4px_20px_-2px_rgba(58,42,34,0.06)]'
+          : 'bg-transparent border-b-transparent shadow-none'
       }`}
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-[56px] md:h-16 flex items-center justify-between">
+      {/* Light top scrim behind the navbar only (height ~64px + safe area inset) */}
+      <div
+        className={`absolute inset-x-0 top-0 pointer-events-none ${
+          prefersReducedMotion ? '' : 'transition-opacity duration-200'
+        } ${isPastHero ? 'opacity-0' : 'opacity-100'}`}
+        style={{
+          background:
+            'linear-gradient(to bottom, rgba(251, 246, 234, 0.55) 0%, rgba(251, 246, 234, 0) 100%)',
+          height: 'calc(64px + env(safe-area-inset-top, 0px))',
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative max-w-5xl mx-auto px-2.5 sm:px-6 h-[56px] md:h-16 flex items-center justify-between">
         {/* Brand Monogram */}
         <a
           href="#hero"
           onClick={(e) => handleLinkClick(e, '#hero')}
-          className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 rounded-md py-1 px-0.5"
+          className={`flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 rounded-full transition-all ${
+            !isPastHero
+              ? `${glassPillClass} min-h-[44px] px-3.5 py-1.5 hover:border-gold-700`
+              : 'px-2 py-1'
+          }`}
           aria-label="Fahim & Joyee"
         >
-          {/* Mobile: compact monogram "F & J" (crimson, serif) */}
-          <span className="md:hidden font-english-display text-xl font-bold text-crimson-700 tracking-wider">
+          {/* Mobile Monogram: F & J */}
+          <span
+            style={haloStyle}
+            className="md:hidden font-english-display text-lg font-bold text-crimson-700 tracking-wider whitespace-nowrap"
+          >
             F <span className="font-light italic text-gold-700 text-sm">&amp;</span> J
           </span>
 
-          {/* Desktop: Full monogram + couple names */}
+          {/* Desktop Brand */}
           <div className="hidden md:flex items-center gap-2">
-            <span className="w-8 h-8 rounded-full border border-gold-500/60 bg-ivory-100 flex items-center justify-center font-english-display text-sm font-bold text-crimson-700 shadow-xs">
+            <span className="w-7 h-7 rounded-full border border-gold-500/60 bg-ivory-100 flex items-center justify-center font-english-display text-xs font-bold text-crimson-700 shadow-xs">
               FJ
             </span>
-            <span className="font-english-display text-lg tracking-wider text-crimson-700 font-bold">
+            <span
+              style={haloStyle}
+              className="font-english-display text-lg tracking-wider text-crimson-700 font-bold whitespace-nowrap"
+            >
               {t.heroTitle}
             </span>
           </div>
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Main Navigation">
+        <nav
+          className="hidden md:flex items-center space-x-1 lg:space-x-2"
+          aria-label="Main Navigation"
+        >
           {navItems.map((item) => {
             const isActive = activeSection === item.id
             return (
@@ -143,14 +215,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleLinkClick(e, item.href)}
-                className={`relative px-3.5 py-2 rounded-md font-semibold ${linkFontSize} transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 ${
-                  isActive
-                    ? 'text-crimson-700'
-                    : 'text-ink hover:text-crimson-700 hover:bg-gold-500/10'
+                style={haloStyle}
+                className={`relative font-semibold ${linkFontSize} transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 whitespace-nowrap ${
+                  !isPastHero
+                    ? `${glassPillClass} min-h-[40px] px-3.5 py-1.5 ${
+                        isActive
+                          ? 'text-crimson-700 border-gold-700 shadow-sm'
+                          : 'text-ink hover:text-crimson-700 hover:border-gold-700'
+                      }`
+                    : `px-3.5 py-2 rounded-md ${
+                        isActive
+                          ? 'text-crimson-700'
+                          : 'text-ink hover:text-crimson-700 hover:bg-gold-500/10'
+                      }`
                 }`}
               >
                 {item.label}
-                {isActive && (
+                {/* Active indicator underline when on solid bar */}
+                {isPastHero && isActive && (
                   <motion.span
                     layoutId="desktop-active-indicator"
                     className="absolute bottom-0.5 left-3.5 right-3.5 h-[2px] bg-gold-500 rounded-full"
@@ -162,39 +244,62 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
           })}
         </nav>
 
-        {/* Actions Cluster: Replay, Language Toggle, and Mobile Hamburger */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Action Controls Cluster */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
           {/* Envelope Replay Button */}
           {onReplayEnvelope && (
             <button
               type="button"
               onClick={onReplayEnvelope}
-              className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-full border border-gold-500/50 bg-ivory-50/90 hover:border-gold-700 hover:bg-gold-500/15 text-crimson-700 text-xs font-semibold shadow-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 cursor-pointer flex items-center gap-1.5"
+              style={haloStyle}
+              className={`min-h-[44px] flex items-center justify-center gap-1.5 text-crimson-700 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 cursor-pointer ${
+                prefersReducedMotion ? '' : 'transition-all duration-200'
+              } ${
+                !isPastHero
+                  ? `${glassPillClass} px-3 py-1.5 hover:border-gold-700`
+                  : 'p-1.5 sm:px-2.5 sm:py-1.5 rounded-full border border-gold-500/50 bg-ivory-50 hover:bg-gold-500/15 shadow-xs'
+              }`}
               title={t.envelope.replayButton}
               aria-label={t.envelope.replayButton}
             >
-              <Mail size={14} className="text-crimson-700" />
-              <span className="hidden sm:inline text-xs">{t.envelope.replayButton}</span>
+              <Mail size={14} className="text-crimson-700 shrink-0" />
+              <span className="hidden sm:inline text-xs whitespace-nowrap">
+                {t.envelope.replayButton}
+              </span>
             </button>
           )}
 
-          {/* Language Switcher (Always visible on mobile & desktop) */}
+          {/* Language Toggle (Frosted Glass Pill over hero; sleek pill past hero) */}
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gold-500/60 bg-ivory-50/90 hover:border-gold-700 hover:bg-gold-500/15 text-crimson-700 text-xs sm:text-[13px] font-semibold shadow-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 cursor-pointer"
+            style={haloStyle}
+            className={`min-h-[44px] flex items-center justify-center gap-1.5 text-crimson-700 text-xs sm:text-[13px] font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 cursor-pointer whitespace-nowrap ${
+              prefersReducedMotion ? '' : 'transition-all duration-200'
+            } ${
+              !isPastHero
+                ? `${glassPillClass} px-3 sm:px-3.5 py-1.5 hover:border-gold-700`
+                : 'px-3 py-1.5 rounded-full border border-gold-500/60 bg-ivory-50 hover:bg-gold-500/15 shadow-xs'
+            }`}
             aria-label={`Switch language to ${lang === 'en' ? 'Bangla' : 'English'}`}
           >
             <Globe size={13} className="text-gold-700 shrink-0" />
-            <span className="tracking-wide">{lang === 'en' ? 'বাংলা' : 'EN'}</span>
+            <span className="font-semibold">{lang === 'en' ? 'বাংলা' : 'EN'}</span>
           </button>
 
-          {/* Hamburger Button (Mobile only: 44x44px touch target) */}
+          {/* Mobile Hamburger Pill (44x44px target on mobile) */}
           <button
             ref={buttonRef}
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-ink hover:text-crimson-700 hover:bg-gold-500/15 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 cursor-pointer"
+            style={haloStyle}
+            className={`md:hidden min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-700 cursor-pointer ${
+              prefersReducedMotion ? '' : 'transition-all duration-200'
+            } ${
+              !isPastHero
+                ? `${glassPillClass} text-ink hover:text-crimson-700 hover:border-gold-700`
+                : 'rounded-lg text-ink hover:text-crimson-700 hover:bg-gold-500/15'
+            }`}
             aria-label={
               lang === 'bn'
                 ? mobileMenuOpen
@@ -207,12 +312,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation-menu"
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu Panel */}
+      {/* Mobile Menu Panel opened by Hamburger */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -221,10 +326,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, height: 0 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden overflow-hidden bg-[var(--ivory-50)] border-b border-[rgba(184,145,58,0.6)] shadow-lg"
           >
-            <nav className="flex flex-col py-2 px-3 divide-y divide-gold-500/20" aria-label="Mobile Navigation">
+            <nav
+              className="flex flex-col py-2 px-3 divide-y divide-gold-500/20"
+              aria-label="Mobile Navigation"
+            >
               {navItems.map((item) => {
                 const isActive = activeSection === item.id
                 return (
@@ -242,7 +350,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
                   >
                     <span>{item.label}</span>
                     {isActive && (
-                      <span className="w-2 h-2 rounded-full bg-gold-500" aria-hidden="true" />
+                      <span
+                        className="w-2 h-2 rounded-full bg-gold-500"
+                        aria-hidden="true"
+                      />
                     )}
                   </a>
                 )
