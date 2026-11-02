@@ -37,8 +37,8 @@ export const App: React.FC = () => {
 
         {/* Main Content Sections */}
         <main className="flex-1 w-full">
-          {/* Section 1: Hero with Animated Illustration, Live Countdown & Replay Button */}
-          <Hero onReplayEnvelope={() => setEnvelopeOpen(true)} />
+          {/* Section 1: Hero with Animated Illustration & Embedded Live Countdown */}
+          <Hero />
 
           {/* Section 2: Merged Invitation Card + Connected Timeline & Calendar Actions */}
           <Invitation />

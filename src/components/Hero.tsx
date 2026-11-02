@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Calendar, Sparkles, Mail } from 'lucide-react'
+import { Calendar, Sparkles } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { useCountdown } from '../hooks/useCountdown'
 import { CONTENT } from '../content'
@@ -8,11 +8,7 @@ import { formatNumber, padZero } from '../utils/formatters'
 import { AnimatedWeddingHero } from './AnimatedWeddingHero'
 import { PastelDivider, PastelCorner, IslamicStar } from '../assets/decorative-patterns'
 
-interface HeroProps {
-  onReplayEnvelope?: () => void
-}
-
-export const Hero: React.FC<HeroProps> = ({ onReplayEnvelope }) => {
+export const Hero: React.FC = () => {
   const { lang, t } = useLanguage()
   const { days, hours, minutes, seconds, isEventDay, isPostEvent } = useCountdown()
   const prefersReducedMotion = useReducedMotion()
@@ -180,20 +176,6 @@ export const Hero: React.FC<HeroProps> = ({ onReplayEnvelope }) => {
             <span>{t.countdownStates.postEvent}</span>
             <IslamicStar size={14} className="text-accent shrink-0" />
           </motion.div>
-        )}
-
-        {/* Replay Envelope Option */}
-        {onReplayEnvelope && (
-          <div className="mt-3">
-            <button
-              type="button"
-              onClick={onReplayEnvelope}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 hover:bg-white border border-pink-200 text-[11px] font-semibold text-accent/90 hover:text-accent shadow-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
-            >
-              <Mail size={12} className="text-accent" />
-              <span>{t.envelope.replayButton}</span>
-            </button>
-          </div>
         )}
       </div>
     </section>
