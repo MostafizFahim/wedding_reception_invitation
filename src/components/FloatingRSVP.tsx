@@ -8,7 +8,7 @@ export const FloatingRSVP: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   const encodedMessage = encodeURIComponent(CONTENT.contact.whatsappMessage[lang])
-  const whatsappUrl = `https://wa.me/${CONTENT.contact.whatsappNumber}?text=${encodedMessage}`
+  const whatsappUrl = `${CONTENT.contact.whatsappRsvp.url}?text=${encodedMessage}`
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,7 +53,7 @@ export const FloatingRSVP: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-1.5 px-3.5 py-2 rounded-full btn-accent text-white shadow-pastel-btn border border-pink-200 active:scale-95 transition-all text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        aria-label={`${t.buttons.whatsapp}: ${CONTENT.contact.displayPhone}`}
+        aria-label={`${t.buttons.whatsapp}: ${CONTENT.contact.whatsappRsvp.display}`}
       >
         <MessageCircle size={15} />
         <span>{t.buttons.floatingRsvp}</span>

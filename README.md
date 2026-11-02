@@ -75,8 +75,8 @@ The website is structured into 4 compact, high-impact sections:
    - Google Maps iframe container (aspect ratio 4/3 mobile, 16/9 desktop).
    - Address and directions button for mobile navigation.
 4. **RSVP + FAMILY ACCORDION**:
-   - Prominent WhatsApp chat button with prefilled greeting.
-   - Direct telephone call action (`tel:+8801711672740`).
+   - Prominent WhatsApp confirmation button (`https://wa.me/8801785227997`) with prefilled greeting.
+   - Event information telephone call action (`tel:+8801711697240`).
    - Collapsible accordion for "Hosts & Welcome Committee" (closed by default).
    - Minimalist footer with Sunnah Dua.
 
@@ -143,10 +143,10 @@ The hero features `AnimatedWeddingHero.tsx` with atmospheric animations (breathi
 
 ## 8. RSVP & Collapsible Hosts Accordion
 
-- **WhatsApp Action**: Automatically encodes the prefilled message:
+- **WhatsApp Action**: Automatically encodes the prefilled message (`https://wa.me/8801785227997`):
   - English: *"Assalamu Alaikum. I am confirming my attendance for Fahim & Joyee's Bou Bhat reception ceremony."*
   - Bangla: *"আসসালামু আলাইকুম। ফাহিম ও জয়ীর বৌভাত অনুষ্ঠানে উপস্থিত থাকার বিষয়ে জানাচ্ছি।"*
-- **Direct Call**: `tel:+8801711672740`.
+- **Event Information Call**: `tel:+8801711697240`.
 - **Collapsible Accordion**:
   - Closed by default to maintain a compact page height.
   - Hosts: Alhaj Md. Abdur Rashid & Alhajja Delowara Begum.

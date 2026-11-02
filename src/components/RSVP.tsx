@@ -6,18 +6,18 @@ import { PastelDivider, IslamicStar } from '../assets/decorative-patterns'
 
 export const RSVP: React.FC = () => {
   const { lang, t } = useLanguage()
-  const [accordionOpen, setAccordionOpen] = useState(false)
+  const [accordionOpen, setAccordionOpen] = useState(true)
 
   const encodedMessage = encodeURIComponent(CONTENT.contact.whatsappMessage[lang])
-  const whatsappUrl = `https://wa.me/${CONTENT.contact.whatsappNumber}?text=${encodedMessage}`
-  const phoneUrl = `tel:${CONTENT.contact.internationalPhone}`
+  const whatsappUrl = `${CONTENT.contact.whatsappRsvp.url}?text=${encodedMessage}`
+  const phoneUrl = CONTENT.contact.informationPhone.telUrl
 
   return (
     <section id="rsvp" className="relative py-12 sm:py-16 px-4 bg-sky-100/40 text-ink border-t border-pink-200/50">
       <div className="max-w-xl mx-auto text-center">
-        {/* Primary Elevated RSVP Card - 100% Visible & Never Collapsed */}
+        {/* Primary Elevated RSVP Card - 100% Permanently Visible without Toggle */}
         <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-pink-200 shadow-pastel-card mb-6">
-          {/* Badge */}
+          {/* Card Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pink-50 border border-pink-200 mb-2 shadow-sm">
             <IslamicStar size={12} className="text-accent" />
             <span className="text-[11px] uppercase tracking-widest font-semibold text-accent">
@@ -26,16 +26,18 @@ export const RSVP: React.FC = () => {
             <IslamicStar size={12} className="text-accent" />
           </div>
 
-          {/* Heading & Helper */}
+          {/* Heading */}
           <h2 className="font-bangla-serif text-2xl sm:text-3xl font-bold text-accent">
             {t.rsvpHeading}
           </h2>
-          <p className="text-xs sm:text-sm text-ink-muted mt-1.5 max-w-md mx-auto">
+
+          {/* Helper Text */}
+          <p className="text-xs sm:text-sm text-ink-muted mt-1.5 max-w-md mx-auto font-normal">
             {t.rsvpHelper}
           </p>
           <PastelDivider width="max-w-[140px]" className="my-3" />
 
-          {/* WhatsApp & Call Action Buttons (Open and Visible Immediately) */}
+          {/* WhatsApp & Call Action Buttons (Permanently Visible) */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 my-4">
             {/* WhatsApp RSVP */}
             <a
@@ -43,36 +45,38 @@ export const RSVP: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              aria-label={`${t.buttons.whatsapp}: ${CONTENT.contact.displayPhone}`}
+              aria-label={`${t.buttons.whatsapp}: ${CONTENT.contact.whatsappRsvp.display}`}
             >
               <MessageCircle size={19} className="fill-white/20 stroke-white" />
               <span>{t.buttons.whatsapp}</span>
             </a>
 
-            {/* Direct Telephone Call */}
+            {/* Direct Telephone Call for Event Information */}
             <a
               href={phoneUrl}
               className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full border border-accent bg-white hover:bg-pink-100/60 text-accent font-bold text-sm shadow-sm transition-all transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              aria-label={`${t.buttons.call}: ${CONTENT.contact.displayPhone}`}
+              aria-label={`${t.buttons.call}: ${CONTENT.contact.informationPhone.display}`}
             >
               <Phone size={18} className="text-accent" />
               <span>{t.buttons.call}</span>
             </a>
           </div>
 
-          {/* Phone Number Display Info */}
+          {/* Event Information Phone Number Display Info */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-50/70 border border-pink-200/60 text-xs text-ink-muted">
             <CheckCircle2 size={14} className="text-accent" />
             <span>
-              {lang === 'en' ? 'Direct phone & WhatsApp:' : 'সরাসরি ফোন ও WhatsApp:'}{' '}
+              {t.rsvpContactLabel}
               <strong className="text-accent tracking-wider font-semibold">
-                {lang === 'en' ? CONTENT.contact.displayPhone : '০১৭১১-৬৭২৭৪০'}
+                {lang === 'en'
+                  ? CONTENT.contact.informationPhone.display
+                  : CONTENT.contact.informationPhone.displayBn}
               </strong>
             </span>
           </div>
         </div>
 
-        {/* Optional Collapsible Accordion: Hosts & Welcome Committee Only */}
+        {/* Collapsible Hosts & Welcome Committee Accordion (Starts Expanded by Default) */}
         <div className="bg-white/90 rounded-2xl border border-pink-200/90 shadow-sm overflow-hidden text-left">
           <button
             type="button"

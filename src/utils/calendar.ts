@@ -46,15 +46,15 @@ export function downloadCalendarInvite(lang: 'bn' | 'en'): void {
 
   const summary =
     lang === 'bn'
-      ? 'ফাহিম ও জয়ীর বিবাহোত্তর সংবর্ধনা (বৌভাত)'
-      : "Fahim & Joyee's Bou Bhat (Wedding Reception)"
+      ? 'বৌভাত অনুষ্ঠান — ফাহিম ও জয়ী'
+      : 'Wedding Reception — Fahim & Joyee'
 
   const location = `${CONTENT.venue.name[lang]}, ${CONTENT.venue.address[lang]}`
 
   const description =
     lang === 'bn'
-      ? `${CONTENT.translations.bn.invitationBody}\n\nঅনুষ্ঠানস্থল: ${location}\nতারিখ: ${CONTENT.translations.bn.details.date}\nপ্রীতিভোজ: ${CONTENT.translations.bn.details.time}\nগুগল ম্যাপ: ${CONTENT.venue.googleMapsDirectionsUrl}\nযোগাযোগ: ${CONTENT.contact.displayPhone}`
-      : `${CONTENT.translations.en.invitationBody}\n\nVenue: ${location}\nDate: ${CONTENT.translations.en.details.date}\nTime: ${CONTENT.translations.en.details.time}\nGoogle Maps: ${CONTENT.venue.googleMapsDirectionsUrl}\nInquiries: ${CONTENT.contact.internationalPhone}`
+      ? `${CONTENT.translations.bn.invitationBody}\n\nস্থান: ${location}\nতারিখ: ${CONTENT.translations.bn.details.date}\nপ্রীতিভোজ: ${CONTENT.translations.bn.details.time}\nগুগল ম্যাপ: ${CONTENT.venue.googleMapsDirectionsUrl}`
+      : `${CONTENT.translations.en.invitationBody}\n\nVenue: ${location}\nDate: ${CONTENT.translations.en.details.date}\nTime: ${CONTENT.translations.en.details.time}\nGoogle Maps: ${CONTENT.venue.googleMapsDirectionsUrl}`
 
   const icsLines = [
     'BEGIN:VCALENDAR',

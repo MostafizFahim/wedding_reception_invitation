@@ -61,29 +61,67 @@ export const Invitation: React.FC = () => {
           </div>
 
           {/* Short Invitation Body */}
-          <p className="font-bangla-body text-sm sm:text-base text-ink/90 leading-relaxed text-center mb-6">
+          <p className="font-bangla-body text-sm sm:text-base font-normal text-ink/90 leading-relaxed text-center mb-6">
             {t.invitationBody}
           </p>
 
-          {/* Family Details Block: Both Mothers and Fathers Visibly Displayed */}
+          {/* Family Details Block: Both Parents and Family Addresses */}
           <div className="mb-6 p-3.5 sm:p-4 rounded-xl bg-pink-50/50 border border-pink-200/80 shadow-sm text-left">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* Groom's Parents */}
-              <div className="p-3 rounded-lg bg-white/90 border border-pink-200/90 shadow-sm">
-                <span className="block text-[11px] font-bold uppercase tracking-wider text-accent mb-1">
-                  {t.familyBlock.groomParentsTitle}
-                </span>
-                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.groom.father[lang]}</p>
-                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.groom.mother[lang]}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {/* Groom's Family */}
+              <div className="p-3 sm:p-3.5 rounded-lg bg-white/95 border border-pink-200 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span className="block text-[11px] font-bold uppercase tracking-wider text-accent mb-2">
+                    {t.familyBlock.groomParentsTitle}
+                  </span>
+                  <div className="space-y-1 mb-2.5">
+                    <p className="text-xs sm:text-sm text-ink">
+                      <span className="text-ink-muted text-[11px] sm:text-xs font-normal">{t.familyBlock.fatherLabel}</span>
+                      <strong className="font-semibold text-ink">{CONTENT.groom.father[lang]}</strong>
+                    </p>
+                    <p className="text-xs sm:text-sm text-ink">
+                      <span className="text-ink-muted text-[11px] sm:text-xs font-normal">{t.familyBlock.motherLabel}</span>
+                      <strong className="font-semibold text-ink">{CONTENT.groom.mother[lang]}</strong>
+                    </p>
+                  </div>
+                </div>
+                {CONTENT.config.showFamilyAddresses && (
+                  <div className="pt-2 border-t border-pink-100 flex items-start gap-1.5 text-xs">
+                    <MapPin size={13} className="text-accent shrink-0 mt-0.5" />
+                    <p className="text-[11px] sm:text-xs leading-relaxed text-ink/85">
+                      <strong className="font-semibold text-accent">{t.familyBlock.addressLabel} </strong>
+                      <span className="font-normal text-ink-muted">{CONTENT.groom.address[lang]}</span>
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Bride's Parents */}
-              <div className="p-3 rounded-lg bg-white/90 border border-sky-200/90 shadow-sm">
-                <span className="block text-[11px] font-bold uppercase tracking-wider text-accent mb-1">
-                  {t.familyBlock.brideParentsTitle}
-                </span>
-                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.bride.father[lang]}</p>
-                <p className="font-semibold text-xs sm:text-sm text-ink">{CONTENT.bride.mother[lang]}</p>
+              {/* Bride's Family */}
+              <div className="p-3 sm:p-3.5 rounded-lg bg-white/95 border border-sky-200 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span className="block text-[11px] font-bold uppercase tracking-wider text-accent mb-2">
+                    {t.familyBlock.brideParentsTitle}
+                  </span>
+                  <div className="space-y-1 mb-2.5">
+                    <p className="text-xs sm:text-sm text-ink">
+                      <span className="text-ink-muted text-[11px] sm:text-xs font-normal">{t.familyBlock.fatherLabel}</span>
+                      <strong className="font-semibold text-ink">{CONTENT.bride.father[lang]}</strong>
+                    </p>
+                    <p className="text-xs sm:text-sm text-ink">
+                      <span className="text-ink-muted text-[11px] sm:text-xs font-normal">{t.familyBlock.motherLabel}</span>
+                      <strong className="font-semibold text-ink">{CONTENT.bride.mother[lang]}</strong>
+                    </p>
+                  </div>
+                </div>
+                {CONTENT.config.showFamilyAddresses && (
+                  <div className="pt-2 border-t border-sky-100 flex items-start gap-1.5 text-xs">
+                    <MapPin size={13} className="text-accent shrink-0 mt-0.5" />
+                    <p className="text-[11px] sm:text-xs leading-relaxed text-ink/85">
+                      <strong className="font-semibold text-accent">{t.familyBlock.addressLabel} </strong>
+                      <span className="font-normal text-ink-muted">{CONTENT.bride.address[lang]}</span>
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -91,11 +129,11 @@ export const Invitation: React.FC = () => {
           {/* 3-Row Detail List */}
           <div className="bg-pink-50/70 rounded-xl p-4 sm:p-5 border border-pink-200/70 space-y-3 mb-6">
             {detailRows.map((row, idx) => (
-              <div key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-ink">
+              <div key={idx} className="flex items-center gap-3 text-xs sm:text-sm text-ink">
                 <div className="p-1.5 rounded-lg bg-white border border-pink-200">
                   {row.icon}
                 </div>
-                <span>{row.text}</span>
+                <strong className="font-semibold text-ink">{row.text}</strong>
               </div>
             ))}
           </div>

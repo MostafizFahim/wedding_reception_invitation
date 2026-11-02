@@ -31,9 +31,19 @@ export interface ContentConfig {
   }
 
   contact: {
-    displayPhone: string
-    internationalPhone: string
-    whatsappNumber: string
+    whatsappRsvp: {
+      number: string
+      display: string
+      international: string
+      url: string
+    }
+    informationPhone: {
+      number: string
+      display: string
+      displayBn: string
+      international: string
+      telUrl: string
+    }
     whatsappMessage: {
       en: string
       bn: string
@@ -72,6 +82,10 @@ export interface ContentConfig {
       en: string
       bn: string
     }
+    address: {
+      en: string
+      bn: string
+    }
   }
 
   bride: {
@@ -88,6 +102,10 @@ export interface ContentConfig {
       bn: string
     }
     mother: {
+      en: string
+      bn: string
+    }
+    address: {
       en: string
       bn: string
     }
@@ -134,6 +152,9 @@ export interface ContentConfig {
       familyBlock: {
         groomParentsTitle: string
         brideParentsTitle: string
+        fatherLabel: string
+        motherLabel: string
+        addressLabel: string
       }
       details: {
         date: string
@@ -145,6 +166,7 @@ export interface ContentConfig {
       venueHeading: string
       rsvpHeading: string
       rsvpHelper: string
+      rsvpContactLabel: string
       buttons: {
         whatsapp: string
         call: string
@@ -189,6 +211,9 @@ export interface ContentConfig {
       familyBlock: {
         groomParentsTitle: string
         brideParentsTitle: string
+        fatherLabel: string
+        motherLabel: string
+        addressLabel: string
       }
       details: {
         date: string
@@ -200,6 +225,7 @@ export interface ContentConfig {
       venueHeading: string
       rsvpHeading: string
       rsvpHelper: string
+      rsvpContactLabel: string
       buttons: {
         whatsapp: string
         call: string
@@ -240,7 +266,7 @@ export const CONTENT: ContentConfig = {
     },
     heroPhoto: '/images/hero-couple.jpg', // Path to photograph when ready
     showMap: true,
-    showFamilyAddresses: false,
+    showFamilyAddresses: true,
   },
 
   event: {
@@ -253,9 +279,19 @@ export const CONTENT: ContentConfig = {
   },
 
   contact: {
-    displayPhone: '01711-672740',
-    internationalPhone: '+8801711672740',
-    whatsappNumber: '8801711672740',
+    whatsappRsvp: {
+      number: '8801785227997',
+      display: '01785227997',
+      international: '+8801785227997',
+      url: 'https://wa.me/8801785227997',
+    },
+    informationPhone: {
+      number: '8801711697240',
+      display: '01711697240',
+      displayBn: '০১৭১১৬৯৭২৪০',
+      international: '+8801711697240',
+      telUrl: 'tel:+8801711697240',
+    },
     whatsappMessage: {
       en: "Assalamu Alaikum. I am confirming my attendance for Fahim & Joyee's Bou Bhat reception ceremony.",
       bn: 'আসসালামু আলাইকুম। ফাহিম ও জয়ীর বৌভাত অনুষ্ঠানে উপস্থিত থাকার বিষয়ে জানাচ্ছি।',
@@ -294,6 +330,10 @@ export const CONTENT: ContentConfig = {
       en: 'Alhajja Delowara Begum',
       bn: 'আলহাজ্ব মোছাঃ দেলোয়ারা বেগম',
     },
+    address: {
+      en: 'J.R.P Tower, Flats 9/A and 9/B, GreatWall City, Chandona, Chowrasta, Gazipur Metropolitan City, Gazipur.',
+      bn: 'জে.আর.পি টাওয়ার, ফ্ল্যাট ৯/এ ও ৯/বি, গ্রেটওয়াল সিটি, চান্দনা, চৌরাস্তা, গাজীপুর মহানগর, গাজীপুর।',
+    },
   },
 
   bride: {
@@ -312,6 +352,10 @@ export const CONTENT: ContentConfig = {
     mother: {
       en: 'Alhajja Mahfuza Khatun',
       bn: 'আলহাজ্ব মোছাঃ মাহফুজা খাতুন',
+    },
+    address: {
+      en: 'Lalhara, Delduar, Tangail.',
+      bn: 'লালহাড়া, দেলদুয়ার, টাঙ্গাইল।',
     },
   },
 
@@ -366,24 +410,28 @@ export const CONTENT: ContentConfig = {
       countdownFinished: "Today is the day. We can't wait to see you!",
       invitationHeading: "You're invited",
       invitationBody:
-        'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to the wedding reception of Engineer Mostafizur Rahman Fahim, only son of Alhaj Md. Abdur Rashid and Alhajja Delowara Begum, and Engineer Naeema Jannat Joyee, only daughter of Alhaj Md. Abdul Jabbar and Alhajja Mahfuza Khatun of Delduar. Your presence and duas would mean the world to us.',
+        'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to celebrate the wedding reception of Engineer Mostafizur Rahman Fahim and Engineer Naeema Jannat Joyee. Your presence and duas would make our celebration truly special.',
       familyBlock: {
         groomParentsTitle: "Groom's Parents",
         brideParentsTitle: "Bride's Parents",
+        fatherLabel: 'Father: ',
+        motherLabel: 'Mother: ',
+        addressLabel: 'Family Address:',
       },
       details: {
-        date: 'Saturday, 26 Dec 2026',
+        date: 'Saturday, 26 December 2026',
         time: 'Lunch at 1:00 PM',
-        venue: 'Prokoushali Convention Hall, Joydebpur, Gazipur',
+        venue: 'Prokoushali Convention Hall',
         calendarBtn: 'Add to Calendar',
         directionsBtn: 'Directions',
       },
       venueHeading: 'Find us',
       rsvpHeading: 'Will you join us?',
       rsvpHelper: 'A quick message helps us plan. Thank you!',
+      rsvpContactLabel: 'For event information: ',
       buttons: {
         whatsapp: 'RSVP on WhatsApp',
-        call: 'Call',
+        call: 'Call for Information',
         calendar: 'Add to Calendar',
         directions: 'Directions',
         floatingRsvp: 'RSVP',
@@ -423,24 +471,28 @@ export const CONTENT: ContentConfig = {
       countdownFinished: 'আজই সেই দিন। আপনার অপেক্ষায় আছি!',
       invitationHeading: 'দাওয়াত',
       invitationBody:
-        'আসসালামু আলাইকুম। আল্লাহর রহমতে আগামী ২৬ ডিসেম্বর ২০২৬, শনিবার, আমাদের একমাত্র পুত্র ইঞ্জিনিয়ার মোঃ মোস্তাফিজুর রহমান ফাহিম, আলহাজ্ব মোঃ আব্দুর রশীদ ও আলহাজ্ব মোছাঃ দেলোয়ারা বেগমের সন্তান এবং দেলদুয়ার নিবাসী আলহাজ্ব মোঃ আব্দুল জব্বার ও আলহাজ্ব মোছাঃ মাহফুজা খাতুনের একমাত্র কন্যা ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনার উপস্থিতি ও দোয়া কামনা করছি।',
+        'আসসালামু আলাইকুম। মহান আল্লাহর অশেষ রহমতে আমাদের প্রিয় সন্তান ইঞ্জিনিয়ার মোঃ মোস্তাফিজুর রহমান ফাহিম ও ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনাকে আন্তরিক আমন্ত্রণ জানাচ্ছি। আপনার উপস্থিতি ও দোয়া আমাদের আনন্দকে পূর্ণতা দেবে।',
       familyBlock: {
         groomParentsTitle: 'বরের পিতা-মাতা',
         brideParentsTitle: 'কনের পিতা-মাতা',
+        fatherLabel: 'পিতা: ',
+        motherLabel: 'মাতা: ',
+        addressLabel: 'ঠিকানা:',
       },
       details: {
         date: 'শনিবার, ২৬ ডিসেম্বর ২০২৬',
         time: 'প্রীতিভোজ: দুপুর ১.০০ ঘটিকা',
-        venue: 'প্রকৌশলী কনভেনশন হল, জয়দেবপুর, গাজীপুর',
+        venue: 'প্রকৌশলী কনভেনশন হল',
         calendarBtn: 'ক্যালেন্ডারে যুক্ত করুন',
         directionsBtn: 'রুট দেখুন',
       },
       venueHeading: 'অনুষ্ঠানের স্থান',
       rsvpHeading: 'আপনি কি আসছেন?',
       rsvpHelper: 'একটি ছোট্ট বার্তা আমাদের আয়োজনে সাহায্য করবে। ধন্যবাদ!',
+      rsvpContactLabel: 'অনুষ্ঠান সংক্রান্ত তথ্য: ',
       buttons: {
         whatsapp: 'WhatsApp-এ জানান',
-        call: 'কল করুন',
+        call: 'তথ্যের জন্য কল করুন',
         calendar: 'ক্যালেন্ডারে যুক্ত করুন',
         directions: 'রুট দেখুন',
         floatingRsvp: 'উপস্থিতি জানান',
