@@ -158,9 +158,9 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
             <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-2xl">
               {/* Left Triangle Fold */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
-                <polygon points="0,0 0,300 200,165" fill="#F4DEE4" opacity="0.9" />
+                <polygon points="0,0 0,300 200,165" fill="#F4DEE4" />
                 {/* Right Triangle Fold */}
-                <polygon points="400,0 400,300 200,165" fill="#EED2DA" opacity="0.95" />
+                <polygon points="400,0 400,300 200,165" fill="#EED2DA" />
                 {/* Bottom Triangle Fold */}
                 <polygon points="0,300 400,300 200,150" fill="#FFF2F5" />
                 <path d="M0,300 L200,150 L400,300" stroke="#F9D5E0" strokeWidth="1.5" fill="none" />
@@ -168,7 +168,7 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
 
               {/* Monogram on Bottom Flap when closed */}
               <div className="absolute bottom-3 inset-x-0 text-center">
-                <span className="font-english-display text-xs sm:text-sm font-bold tracking-widest text-accent/70 uppercase">
+                <span className="font-english-display text-xs sm:text-sm font-bold tracking-widest text-accent/75 uppercase">
                   Fahim &amp; Joyee
                 </span>
               </div>
@@ -194,21 +194,21 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               </svg>
             </motion.div>
 
-            {/* Refined Wax Seal with Initials F & J */}
-            <motion.div
-              initial={{ scale: 1, opacity: 1 }}
-              animate={
-                isOpening
-                  ? {
-                      scale: 1.25,
-                      opacity: 0,
-                      transition: { duration: 0.35, ease: 'easeOut' },
-                    }
-                  : { scale: 1, opacity: 1 }
-              }
-              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40"
-            >
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#C45E7A] via-[#9B3754] to-[#78233C] text-amber-100 border-2 border-amber-300/80 shadow-xl flex items-center justify-center p-1">
+            {/* Centered Wax Seal with Initials F & J positioned dead-center */}
+            <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none">
+              <motion.div
+                initial={{ scale: 1, opacity: 1 }}
+                animate={
+                  isOpening
+                    ? {
+                        scale: 1.25,
+                        opacity: 0,
+                        transition: { duration: 0.35, ease: 'easeOut' },
+                      }
+                    : { scale: 1, opacity: 1 }
+                }
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#C45E7A] via-[#9B3754] to-[#78233C] text-amber-100 border-2 border-amber-300/80 shadow-xl flex items-center justify-center p-1 pointer-events-auto"
+              >
                 {/* Wax Seal Outer Ruffled Rim */}
                 <div className="w-full h-full rounded-full border border-amber-200/40 flex flex-col items-center justify-center">
                   <IslamicStar size={10} className="text-amber-200/90 mb-0.5" />
@@ -216,8 +216,8 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
                     F&amp;J
                   </span>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
 
           {/* Primary Action Button: Open Invitation */}
