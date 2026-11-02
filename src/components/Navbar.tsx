@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Globe } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Menu, X, Globe, Mail } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { IslamicStar } from '../assets/decorative-patterns'
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onReplayEnvelope?: () => void
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
   const { lang, toggleLanguage, t } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,22 +79,39 @@ export const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Language Switcher & Mobile Trigger */}
-        <div className="flex items-center gap-2">
-          <button
+        {/* Action Controls: Envelope Replay, Language Switcher & Mobile Trigger */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {onReplayEnvelope && (
+            <motion.button
+              type="button"
+              onClick={onReplayEnvelope}
+              whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+              className="p-1.5 sm:px-2.5 sm:py-1 rounded-full border border-pink-300/60 bg-white/80 hover:border-accent hover:bg-pink-100/60 text-accent text-xs font-semibold shadow-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer flex items-center gap-1"
+              title={t.envelope.replayButton}
+              aria-label={t.envelope.replayButton}
+            >
+              <Mail size={13} className="text-accent" />
+              <span className="hidden sm:inline text-[11px]">{t.envelope.replayButton}</span>
+            </motion.button>
+          )}
+
+          <motion.button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-pink-400/50 bg-white/80 hover:border-accent hover:bg-pink-100/60 text-accent text-xs font-semibold shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            whileHover={prefersReducedMotion ? {} : { scale: 1.04 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-pink-400/50 bg-white/80 hover:border-accent hover:bg-pink-100/60 text-accent text-xs font-semibold shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
             aria-label={`Switch language to ${lang === 'en' ? 'Bangla' : 'English'}`}
           >
             <Globe size={13} className="text-accent" />
             <span>{t.nav.languageSwitch}</span>
-          </button>
+          </motion.button>
 
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-lg text-ink/80 hover:text-accent hover:bg-pink-200/30 transition-colors"
+            className="md:hidden p-1.5 rounded-lg text-ink/80 hover:text-accent hover:bg-pink-200/30 transition-colors cursor-pointer"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
           >

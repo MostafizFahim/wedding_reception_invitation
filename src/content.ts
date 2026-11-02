@@ -147,6 +147,18 @@ export interface ContentConfig {
         sec: string
       }
       countdownFinished: string
+      countdownStates: {
+        eventDay: string
+        postEvent: string
+      }
+      envelope: {
+        bismillah: string
+        tagline: string
+        coupleNames: string
+        openButton: string
+        skipButton: string
+        replayButton: string
+      }
       invitationHeading: string
       invitationBody: string
       familyBlock: {
@@ -162,6 +174,13 @@ export interface ContentConfig {
         venue: string
         calendarBtn: string
         directionsBtn: string
+      }
+      timeline: {
+        title: string
+        dateStep: string
+        timeStep: string
+        venueStep: string
+        lunchReception: string
       }
       venueHeading: string
       rsvpHeading: string
@@ -206,6 +225,18 @@ export interface ContentConfig {
         sec: string
       }
       countdownFinished: string
+      countdownStates: {
+        eventDay: string
+        postEvent: string
+      }
+      envelope: {
+        bismillah: string
+        tagline: string
+        coupleNames: string
+        openButton: string
+        skipButton: string
+        replayButton: string
+      }
       invitationHeading: string
       invitationBody: string
       familyBlock: {
@@ -221,6 +252,13 @@ export interface ContentConfig {
         venue: string
         calendarBtn: string
         directionsBtn: string
+      }
+      timeline: {
+        title: string
+        dateStep: string
+        timeStep: string
+        venueStep: string
+        lunchReception: string
       }
       venueHeading: string
       rsvpHeading: string
@@ -408,6 +446,18 @@ export const CONTENT: ContentConfig = {
         sec: 'Sec',
       },
       countdownFinished: "Today is the day. We can't wait to see you!",
+      countdownStates: {
+        eventDay: 'Today is the Celebration!',
+        postEvent: 'A Beautiful Celebration Begins a New Chapter',
+      },
+      envelope: {
+        bismillah: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        tagline: 'A Special Invitation',
+        coupleNames: 'Fahim & Joyee',
+        openButton: 'Open Invitation',
+        skipButton: 'Skip to Invitation',
+        replayButton: 'View Envelope',
+      },
       invitationHeading: "You're invited",
       invitationBody:
         'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to celebrate the wedding reception of Engineer Mostafizur Rahman Fahim and Engineer Naeema Jannat Joyee. Your presence and duas would make our celebration truly special.',
@@ -420,10 +470,17 @@ export const CONTENT: ContentConfig = {
       },
       details: {
         date: 'Saturday, 26 December 2026',
-        time: 'Lunch at 1:00 PM',
+        time: '1:00 PM',
         venue: 'Prokoushali Convention Hall',
         calendarBtn: 'Add to Calendar',
         directionsBtn: 'Directions',
+      },
+      timeline: {
+        title: 'Event Timeline',
+        dateStep: 'Date',
+        timeStep: 'Time',
+        venueStep: 'Venue',
+        lunchReception: 'Lunch Reception',
       },
       venueHeading: 'Find us',
       rsvpHeading: 'Will you join us?',
@@ -469,6 +526,18 @@ export const CONTENT: ContentConfig = {
         sec: 'সেকেন্ড',
       },
       countdownFinished: 'আজই সেই দিন। আপনার অপেক্ষায় আছি!',
+      countdownStates: {
+        eventDay: 'আজ আমাদের আনন্দের দিন!',
+        postEvent: 'একটি সুন্দর আয়োজনের স্মৃতিতে শুরু হোক নতুন অধ্যায়।',
+      },
+      envelope: {
+        bismillah: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        tagline: 'একটি বিশেষ আমন্ত্রণ',
+        coupleNames: 'ফাহিম ও জয়ী',
+        openButton: 'আমন্ত্রণটি খুলুন',
+        skipButton: 'সরাসরি দেখুন',
+        replayButton: 'খাম দেখুন',
+      },
       invitationHeading: 'দাওয়াত',
       invitationBody:
         'আসসালামু আলাইকুম। মহান আল্লাহর অশেষ রহমতে আমাদের প্রিয় সন্তান ইঞ্জিনিয়ার মোঃ মোস্তাফিজুর রহমান ফাহিম ও ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনাকে আন্তরিক আমন্ত্রণ জানাচ্ছি। আপনার উপস্থিতি ও দোয়া আমাদের আনন্দকে পূর্ণতা দেবে।',
@@ -480,11 +549,18 @@ export const CONTENT: ContentConfig = {
         addressLabel: 'ঠিকানা:',
       },
       details: {
-        date: 'শনিবার, ২৬ ডিসেম্বর ২০২৬',
-        time: 'প্রীতিভোজ: দুপুর ১.০০ ঘটিকা',
+        date: '২৬ ডিসেম্বর ২০২৬, রোজ শনিবার',
+        time: 'দুপুর ১.০০ ঘটিকা',
         venue: 'প্রকৌশলী কনভেনশন হল',
         calendarBtn: 'ক্যালেন্ডারে যুক্ত করুন',
         directionsBtn: 'রুট দেখুন',
+      },
+      timeline: {
+        title: 'অনুষ্ঠান সূচি',
+        dateStep: 'তারিখ',
+        timeStep: 'সময়',
+        venueStep: 'স্থান',
+        lunchReception: 'প্রীতিভোজ',
       },
       venueHeading: 'অনুষ্ঠানের স্থান',
       rsvpHeading: 'আপনি কি আসছেন?',

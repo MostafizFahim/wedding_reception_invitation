@@ -1,13 +1,14 @@
 import React from 'react'
 import { useLanguage } from '../hooks/useLanguage'
 import { IslamicStar } from '../assets/decorative-patterns'
+import { RevealSection } from './ScrollReveal'
 
 export const Footer: React.FC = () => {
   const { lang, t } = useLanguage()
 
   return (
     <footer id="footer" className="py-8 px-4 bg-pink-50 text-ink border-t border-pink-200/60 text-center">
-      <div className="max-w-xl mx-auto space-y-3">
+      <RevealSection className="max-w-xl mx-auto space-y-3">
         {/* Short Statement */}
         <p className="font-bangla-serif text-sm sm:text-base font-semibold text-accent">
           {t.footer.presence}
@@ -33,7 +34,7 @@ export const Footer: React.FC = () => {
           <span>{lang === 'en' ? 'Fahim & Joyee' : 'ফাহিম ও জয়ী'} • 2026</span>
           <IslamicStar size={11} className="text-accent" />
         </div>
-      </div>
+      </RevealSection>
     </footer>
   )
 }
