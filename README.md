@@ -93,8 +93,13 @@ You never need to touch React components to edit wedding details!
 export const CONTENT: ContentConfig = {
   config: {
     defaultLanguage: 'en', // 'en' or 'bn'
-    heroMode: 'illustration', // 'illustration' | 'photo'
-    heroPhoto: '/images/hero-couple-placeholder.svg',
+    heroMode: 'animated-image', // 'animated-image' | 'photo'
+    heroImages: {
+      desktop: '/images/hero/couple-main.webp',
+      mobile: '/images/hero/couple-mobile.webp',
+      background: '/images/hero/hero-background.webp',
+    },
+    heroPhoto: '/images/hero-couple.jpg',
     showMap: true,
     showFamilyAddresses: false,
   },
@@ -104,21 +109,17 @@ export const CONTENT: ContentConfig = {
 
 ---
 
-## 5. Switching between Vector Illustration & Photo
+## 5. Premium Animated Wedding Hero & Custom Artwork
 
-By default, the website uses the bespoke animated vector illustration (`HeroIllustration.tsx`).
+The hero features `AnimatedWeddingHero.tsx` with atmospheric animations (breathing motion, floating rose petals, glowing bokeh, swaying Moroccan lanterns, and ambient shimmer).
 
-### To switch to an actual photograph:
-1. Place your photograph (in `.webp` or `.jpg`) in `public/images/` (e.g. `public/images/couple.webp`).
-2. In `src/content.ts`, change:
-   ```ts
-   config: {
-     heroMode: 'photo', // <-- set to 'photo'
-     heroPhoto: '/images/couple.webp', // <-- set to your image path
-     // ...
-   }
-   ```
-3. Run `npm run build` to recompile.
+### Supplying or Updating Couple Artwork:
+1. Place your exported couple artwork in `public/images/hero/`:
+   - `couple-main.webp` (Desktop/Tablet, recommended 1200 × 1400 px or larger)
+   - `couple-mobile.webp` (Mobile, recommended 900 × 1200 px or larger)
+   - `hero-background.webp` (Optional backdrop, recommended 1600 × 1200 px or larger)
+2. See [`public/images/hero/README.md`](file:///e:/invitaion_web/public/images/hero/README.md) for full image specifications.
+3. If no artwork is placed, an elegant pastel gradient placeholder with graceful fallback is automatically rendered with zero broken image icons.
 
 ---
 

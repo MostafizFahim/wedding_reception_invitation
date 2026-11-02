@@ -10,7 +10,12 @@
 export interface ContentConfig {
   config: {
     defaultLanguage: 'en' | 'bn'
-    heroMode: 'illustration' | 'photo'
+    heroMode: 'animated-image' | 'illustration' | 'photo'
+    heroImages: {
+      desktop: string
+      mobile: string
+      background: string
+    }
     heroPhoto: string
     showMap: boolean
     showFamilyAddresses: boolean
@@ -227,7 +232,12 @@ export interface ContentConfig {
 export const CONTENT: ContentConfig = {
   config: {
     defaultLanguage: 'en', // Revision 2: Default is English
-    heroMode: 'illustration', // 'illustration' | 'photo'
+    heroMode: 'animated-image', // 'animated-image' | 'illustration' | 'photo'
+    heroImages: {
+      desktop: '/images/hero/couple-main.webp',
+      mobile: '/images/hero/couple-mobile.webp',
+      background: '/images/hero/hero-background.webp',
+    },
     heroPhoto: '/images/hero-couple.jpg', // Path to photograph when ready
     showMap: true,
     showFamilyAddresses: false,

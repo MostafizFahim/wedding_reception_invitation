@@ -4,7 +4,7 @@ import { useLanguage } from '../hooks/useLanguage'
 import { useCountdown } from '../hooks/useCountdown'
 import { CONTENT } from '../content'
 import { formatNumber, padZero } from '../utils/formatters'
-import { HeroIllustration } from './HeroIllustration'
+import { AnimatedWeddingHero } from './AnimatedWeddingHero'
 import { PastelDivider, PastelCorner } from '../assets/decorative-patterns'
 
 export const Hero: React.FC = () => {
@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
           {t.heroTagline}
         </p>
 
-        {/* Hero Illustration or Photo */}
+        {/* Animated Wedding Hero Artwork */}
         <div className="my-2 w-full flex justify-center">
           {CONTENT.config.heroMode === 'photo' ? (
             <div className="relative overflow-hidden rounded-t-[50%_35%] rounded-b-2xl border-2 border-pink-400 max-w-[280px] aspect-[4/5] shadow-pastel-card">
@@ -58,7 +58,7 @@ export const Hero: React.FC = () => {
               />
             </div>
           ) : (
-            <HeroIllustration />
+            <AnimatedWeddingHero />
           )}
         </div>
 
