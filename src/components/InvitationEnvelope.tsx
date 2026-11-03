@@ -233,9 +233,14 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               )}
             </motion.button>
 
-            <p className="text-[11px] text-ivory-100/80 font-normal">
-              {lang === 'en' ? 'Click to open or press Enter' : 'খুলতে ক্লিক করুন অথবা Enter চাপুন'}
-            </p>
+            <div className="mt-1">
+              <span
+                style={{ color: '#000000' }}
+                className="inline-block px-3.5 py-1 rounded-full bg-[#FBF6EA] border border-gold-500/40 shadow-sm text-xs font-semibold tracking-wide text-black select-none"
+              >
+                {lang === 'en' ? 'Click to open or press Enter' : 'খুলতে ক্লিক করুন অথবা Enter চাপুন'}
+              </span>
+            </div>
           </motion.div>
         </div>
       </motion.div>
