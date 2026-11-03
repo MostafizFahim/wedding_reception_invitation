@@ -34,7 +34,10 @@ export const App: React.FC = () => {
         <ScrollProgress />
 
         {/* Sticky Accessible Navigation Bar */}
-        <Navbar onReplayEnvelope={() => setEnvelopeOpen(true)} />
+        <Navbar
+          onReplayEnvelope={() => setEnvelopeOpen(true)}
+          isVisible={!envelopeOpen}
+        />
 
         {/* Main Content Sections */}
         <main className="flex-1 w-full">

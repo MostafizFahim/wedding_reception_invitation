@@ -5,9 +5,13 @@ import { useLanguage } from '../hooks/useLanguage'
 
 interface NavbarProps {
   onReplayEnvelope?: () => void
+  isVisible?: boolean
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onReplayEnvelope,
+  isVisible = true,
+}) => {
   const { lang, toggleLanguage, t } = useLanguage()
   const [isPastHero, setIsPastHero] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -111,6 +115,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [mobileMenuOpen])
 
+  // Close mobile menu when navbar is hidden
+  useEffect(() => {
+    if (!isVisible) {
+      setMobileMenuOpen(false)
+    }
+  }, [isVisible])
+
   const navItems = [
     { id: 'hero', label: t.nav.home, href: '#hero' },
     { id: 'invitation', label: t.nav.invitation, href: '#invitation' },
@@ -144,18 +155,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
     : { letterSpacing: '0.01em' }
 
   return (
-    <header
-      style={{
-        paddingTop: 'env(safe-area-inset-top, 0px)',
-      }}
-      className={`fixed top-0 left-0 right-0 z-50 w-full ${
-        prefersReducedMotion ? '' : 'transition-all duration-200'
-      } ${
-        isPastHero
-          ? 'bg-[var(--ivory-50)] supports-[backdrop-filter]:bg-[rgba(251,246,234,0.94)] backdrop-blur-[10px] [-webkit-backdrop-filter:blur(10px)] border-b border-[rgba(184,145,58,0.6)] shadow-[0_4px_20px_-2px_rgba(58,42,34,0.06)]'
-          : 'bg-transparent border-b-transparent shadow-none'
-      }`}
-    >
+    <AnimatePresence>
+      {isVisible && (
+        <motion.header
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          style={{
+            paddingTop: 'env(safe-area-inset-top, 0px)',
+          }}
+          className={`fixed top-0 left-0 right-0 z-50 w-full ${
+            prefersReducedMotion ? '' : 'transition-all duration-200'
+          } ${
+            isPastHero
+              ? 'bg-[var(--ivory-50)] supports-[backdrop-filter]:bg-[rgba(251,246,234,0.94)] backdrop-blur-[10px] [-webkit-backdrop-filter:blur(10px)] border-b border-[rgba(184,145,58,0.6)] shadow-[0_4px_20px_-2px_rgba(58,42,34,0.06)]'
+              : 'bg-transparent border-b-transparent shadow-none'
+          }`}
+        >
       {/* Light top scrim behind the navbar only (height ~64px + safe area inset) */}
       <div
         className={`absolute inset-x-0 top-0 pointer-events-none ${
@@ -362,6 +379,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayEnvelope }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+        </motion.header>
+      )}
+    </AnimatePresence>
   )
 }
