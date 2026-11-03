@@ -40,7 +40,7 @@ export const Invitation: React.FC = () => {
       <>
         আসসালামু আলাইকুম। মহান আল্লাহর অশেষ রহমতে আমাদের প্রিয় সন্তান{' '}
         <strong className="font-bold text-crimson-700 tracking-normal">
-          ইঞ্জিনিয়ার মোঃ মোস্তাফিজুর রহমান ফাহিম
+          ইঞ্জিনিয়ার মোস্তাফিজুর রহমান ফাহিম
         </strong>{' '}
         ও{' '}
         <strong className="font-bold text-crimson-700 tracking-normal">

@@ -250,7 +250,7 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.6 }}
             lang="ar"
             dir="rtl"
-            className="font-arabic text-sm sm:text-base md:text-lg lg:text-xl text-crimson-700 tracking-wide select-none drop-shadow-sm leading-tight mb-1"
+            className="font-arabic text-sm sm:text-base md:text-sm lg:text-[15px] text-crimson-700 tracking-wide select-none drop-shadow-sm leading-tight mb-1"
           >
             {t.bismillah}
           </motion.div>
@@ -260,17 +260,17 @@ export const Hero: React.FC = () => {
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08 }}
-            className="font-english-sans text-[9px] sm:text-[11px] md:text-xs font-semibold tracking-[0.18em] uppercase text-ink-muted mb-1 drop-shadow-sm"
+            className="font-english-sans text-[9px] sm:text-[11px] md:text-[10px] lg:text-[11px] font-semibold tracking-[0.18em] uppercase text-ink-muted mb-1 drop-shadow-sm"
           >
             {t.heroTagline}
           </motion.p>
 
-          {/* 3. Couple Names "Fahim & Joyee" in Crimson Display */}
+          {/* 3. Couple Names in Crimson Display */}
           <motion.h1
             initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.16 }}
-            className="font-english-display text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-semibold text-crimson-700 tracking-tight leading-tight my-0.5 sm:my-1 drop-shadow-sm"
+            className="font-english-display text-2xl sm:text-3xl md:text-xl lg:text-2xl font-semibold text-crimson-700 tracking-tight leading-snug my-0.5 sm:my-1 drop-shadow-sm"
           >
             {CONTENT.groom.name[lang]}{' '}
             <span className="font-light italic text-gold-700">&</span>{' '}
@@ -282,7 +282,7 @@ export const Hero: React.FC = () => {
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.24 }}
-            className="font-bangla-sans text-[11px] sm:text-xs md:text-sm font-medium text-ink tracking-wide mb-1 sm:mb-1.5 drop-shadow-sm"
+            className="font-bangla-sans text-[11px] sm:text-xs md:text-[11px] lg:text-xs font-medium text-ink tracking-wide mb-1 sm:mb-1.5 drop-shadow-sm"
           >
             {t.subtitle}
           </motion.p>
@@ -292,7 +292,7 @@ export const Hero: React.FC = () => {
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.32 }}
-            className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs md:text-sm font-semibold text-gold-700 drop-shadow-sm mt-0.5"
+            className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs md:text-[11px] lg:text-xs font-semibold text-gold-700 drop-shadow-sm mt-0.5"
           >
             <Calendar className="w-3.5 h-3.5 text-gold-500 inline-block flex-shrink-0" />
             <span>{t.dateLine}</span>
