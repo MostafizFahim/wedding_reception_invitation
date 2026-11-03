@@ -4,7 +4,7 @@ import { Calendar } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { CONTENT } from '../content'
 
-// Ambient falling particles configuration (strictly positioned along margins and upper zone)
+// Ambient falling particles configuration (naturally distributed along corridors and upper arch)
 interface Particle {
   id: number
   type: 'leaf' | 'petal' | 'sparkle'
@@ -15,28 +15,55 @@ interface Particle {
   delay: number
   rotate: number
   desktopOnly?: boolean
+  sway?: 'left' | 'right'
 }
 
 const PARTICLES: Particle[] = [
-  // Left border corridor
-  { id: 1, type: 'leaf', startX: 6, startY: 14, size: 16, duration: 9, delay: 0, rotate: 25 },
-  { id: 2, type: 'petal', startX: 12, startY: 32, size: 14, duration: 11, delay: 2, rotate: -40 },
-  { id: 3, type: 'leaf', startX: 8, startY: 52, size: 15, duration: 10, delay: 4.5, rotate: 60 },
-  { id: 4, type: 'sparkle', startX: 15, startY: 18, size: 10, duration: 4, delay: 1, rotate: 0 },
-  { id: 5, type: 'leaf', startX: 16, startY: 70, size: 13, duration: 12, delay: 6, rotate: -15, desktopOnly: true },
+  // --- Left Margin Corridor ---
+  { id: 1, type: 'leaf', startX: 5, startY: 8, size: 15, duration: 7.8, delay: 0.0, rotate: 20, sway: 'right' },
+  { id: 2, type: 'sparkle', startX: 14, startY: 14, size: 10, duration: 3.8, delay: 0.5, rotate: 0 },
+  { id: 3, type: 'leaf', startX: 10, startY: 20, size: 14, duration: 8.2, delay: 1.2, rotate: -35, sway: 'left' },
+  { id: 4, type: 'petal', startX: 6, startY: 26, size: 14, duration: 8.0, delay: 1.8, rotate: -40, sway: 'right' },
+  { id: 5, type: 'leaf', startX: 12, startY: 34, size: 16, duration: 7.2, delay: 2.5, rotate: 45, sway: 'right' },
+  { id: 6, type: 'leaf', startX: 7, startY: 42, size: 13, duration: 8.5, delay: 0.8, rotate: -20, sway: 'left' },
+  { id: 7, type: 'sparkle', startX: 15, startY: 48, size: 11, duration: 4.2, delay: 2.2, rotate: 0 },
+  { id: 8, type: 'leaf', startX: 9, startY: 54, size: 15, duration: 7.6, delay: 3.4, rotate: 60, sway: 'right' },
+  { id: 9, type: 'petal', startX: 13, startY: 60, size: 15, duration: 8.4, delay: 4.0, rotate: 30, sway: 'left' },
+  { id: 10, type: 'leaf', startX: 6, startY: 66, size: 14, duration: 8.2, delay: 1.6, rotate: -45, sway: 'left' },
+  { id: 11, type: 'leaf', startX: 11, startY: 74, size: 15, duration: 8.8, delay: 4.8, rotate: 25, sway: 'right' },
+  { id: 12, type: 'leaf', startX: 8, startY: 82, size: 13, duration: 7.5, delay: 2.8, rotate: -15, sway: 'left' },
 
-  // Right border corridor
-  { id: 6, type: 'leaf', startX: 88, startY: 12, size: 15, duration: 9.5, delay: 1.2, rotate: -30 },
-  { id: 7, type: 'petal', startX: 82, startY: 34, size: 16, duration: 10.5, delay: 3, rotate: 45 },
-  { id: 8, type: 'leaf', startX: 86, startY: 54, size: 14, duration: 11, delay: 5, rotate: -50 },
-  { id: 9, type: 'sparkle', startX: 84, startY: 22, size: 11, duration: 4.5, delay: 2.2, rotate: 0 },
-  { id: 10, type: 'petal', startX: 80, startY: 68, size: 15, duration: 12.5, delay: 7, rotate: 30, desktopOnly: true },
+  // --- Right Margin Corridor ---
+  { id: 13, type: 'leaf', startX: 90, startY: 7, size: 16, duration: 7.5, delay: 0.4, rotate: -25, sway: 'left' },
+  { id: 14, type: 'sparkle', startX: 84, startY: 12, size: 11, duration: 4.0, delay: 1.0, rotate: 0 },
+  { id: 15, type: 'leaf', startX: 86, startY: 18, size: 14, duration: 8.4, delay: 1.5, rotate: 40, sway: 'right' },
+  { id: 16, type: 'petal', startX: 91, startY: 25, size: 15, duration: 8.2, delay: 2.2, rotate: 45, sway: 'left' },
+  { id: 17, type: 'leaf', startX: 83, startY: 32, size: 15, duration: 7.4, delay: 3.0, rotate: -45, sway: 'left' },
+  { id: 18, type: 'leaf', startX: 88, startY: 40, size: 13, duration: 8.6, delay: 0.9, rotate: 35, sway: 'right' },
+  { id: 19, type: 'sparkle', startX: 85, startY: 46, size: 10, duration: 3.6, delay: 2.6, rotate: 0 },
+  { id: 20, type: 'leaf', startX: 89, startY: 52, size: 16, duration: 7.6, delay: 3.8, rotate: -30, sway: 'left' },
+  { id: 21, type: 'petal', startX: 82, startY: 58, size: 14, duration: 8.5, delay: 4.4, rotate: -25, sway: 'right' },
+  { id: 22, type: 'leaf', startX: 87, startY: 65, size: 14, duration: 8.0, delay: 2.0, rotate: 50, sway: 'right' },
+  { id: 23, type: 'leaf', startX: 92, startY: 72, size: 15, duration: 8.8, delay: 5.2, rotate: -35, sway: 'left' },
+  { id: 24, type: 'leaf', startX: 85, startY: 80, size: 13, duration: 7.8, delay: 3.2, rotate: 20, sway: 'right' },
 
-  // Upper empty / arch zone
-  { id: 11, type: 'sparkle', startX: 30, startY: 8, size: 12, duration: 3.5, delay: 0.5, rotate: 0 },
-  { id: 12, type: 'sparkle', startX: 70, startY: 9, size: 10, duration: 4.2, delay: 1.8, rotate: 0 },
-  { id: 13, type: 'leaf', startX: 24, startY: 22, size: 13, duration: 10, delay: 3.5, rotate: 15, desktopOnly: true },
-  { id: 14, type: 'petal', startX: 74, startY: 20, size: 14, duration: 11.5, delay: 5.5, rotate: -25, desktopOnly: true },
+  // --- Upper Arch Zone (Above Text Overlay) ---
+  { id: 25, type: 'sparkle', startX: 32, startY: 6, size: 12, duration: 3.5, delay: 0.3, rotate: 0 },
+  { id: 26, type: 'sparkle', startX: 68, startY: 7, size: 10, duration: 4.2, delay: 1.7, rotate: 0 },
+  { id: 27, type: 'leaf', startX: 25, startY: 10, size: 14, duration: 7.8, delay: 1.1, rotate: 15, sway: 'right' },
+  { id: 28, type: 'leaf', startX: 74, startY: 11, size: 15, duration: 8.0, delay: 2.4, rotate: -20, sway: 'left' },
+  { id: 29, type: 'leaf', startX: 38, startY: 18, size: 13, duration: 8.2, delay: 3.6, rotate: 30, sway: 'left' },
+  { id: 30, type: 'leaf', startX: 62, startY: 17, size: 14, duration: 7.5, delay: 4.6, rotate: -35, sway: 'right' },
+
+  // --- Desktop-Only Outer Margin Accents ---
+  { id: 31, type: 'leaf', startX: 16, startY: 12, size: 14, duration: 8.0, delay: 1.4, rotate: -15, sway: 'left', desktopOnly: true },
+  { id: 32, type: 'petal', startX: 48, startY: 12, size: 13, duration: 8.4, delay: 2.9, rotate: 20, sway: 'right', desktopOnly: true },
+  { id: 33, type: 'leaf', startX: 80, startY: 14, size: 15, duration: 7.8, delay: 3.3, rotate: 30, sway: 'right', desktopOnly: true },
+  { id: 34, type: 'leaf', startX: 18, startY: 44, size: 13, duration: 8.5, delay: 4.1, rotate: 40, sway: 'right', desktopOnly: true },
+  { id: 35, type: 'leaf', startX: 78, startY: 46, size: 14, duration: 8.1, delay: 5.5, rotate: -40, sway: 'left', desktopOnly: true },
+  { id: 36, type: 'petal', startX: 52, startY: 15, size: 14, duration: 8.2, delay: 4.5, rotate: -20, sway: 'left', desktopOnly: true },
+  { id: 37, type: 'leaf', startX: 15, startY: 72, size: 14, duration: 8.6, delay: 2.1, rotate: -25, sway: 'left', desktopOnly: true },
+  { id: 38, type: 'leaf', startX: 81, startY: 74, size: 15, duration: 8.3, delay: 5.9, rotate: 35, sway: 'right', desktopOnly: true },
 ]
 
 export const Hero: React.FC = () => {
@@ -138,33 +165,37 @@ export const Hero: React.FC = () => {
                   height: p.size,
                 }}
                 animate={{
-                  y: [0, 45, 90],
-                  x: [0, 8, -6],
-                  rotate: [p.rotate, p.rotate + 35, p.rotate + 70],
-                  opacity: [0, 0.85, 0],
+                  y: [0, 55, 110],
+                  x: p.sway === 'left' ? [0, -8, 6] : [0, 8, -6],
+                  rotate:
+                    p.sway === 'left'
+                      ? [p.rotate, p.rotate - 30, p.rotate - 60]
+                      : [p.rotate, p.rotate + 35, p.rotate + 70],
+                  opacity: [0, 0.9, 0.9, 0],
                 }}
                 transition={{
                   duration: p.duration,
                   delay: p.delay,
                   repeat: Infinity,
                   ease: 'easeInOut',
+                  times: [0, 0.15, 0.85, 1],
                 }}
               >
                 {p.type === 'leaf' && (
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="w-full h-full text-gold-500 drop-shadow-sm"
+                    className="w-full h-full text-gold-500 drop-shadow"
                   >
                     <path
                       d="M12 2C7 6 4 12 6 18C8 20 11 21 14 19C19 16 21 8 12 2Z"
                       fill="currentColor"
-                      fillOpacity="0.75"
+                      fillOpacity="0.85"
                     />
                     <path
                       d="M6 18C10 14 13 9 17 5"
                       stroke="#7A5C14"
-                      strokeWidth="0.8"
+                      strokeWidth="1"
                       strokeLinecap="round"
                     />
                   </svg>
@@ -174,12 +205,12 @@ export const Hero: React.FC = () => {
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="w-full h-full text-crimson-700 drop-shadow-sm"
+                    className="w-full h-full text-crimson-700 drop-shadow"
                   >
                     <path
                       d="M12 3C8 6 6 11 8 16C9.5 19.5 14.5 19.5 16 16C18 11 16 6 12 3Z"
                       fill="currentColor"
-                      fillOpacity="0.7"
+                      fillOpacity="0.8"
                     />
                   </svg>
                 )}
