@@ -63,6 +63,10 @@ export interface ContentConfig {
       en: string
       bn: string
     }
+    fullAddress: {
+      en: string
+      bn: string
+    }
   }
 
   groom: {
@@ -346,8 +350,12 @@ export const CONTENT: ContentConfig = {
       bn: 'প্রকৌশলী কনভেনশন হল',
     },
     address: {
-      en: 'Joydebpur, Gazipur',
-      bn: 'জয়দেবপুর, গাজীপুর',
+      en: '6th Floor, Prokoushali Bhaban (Near Railgate), Rajbari Road, Joydebpur, Gazipur.',
+      bn: 'প্রকৌশলী ভবনের ৬ষ্ঠ তলা (রেলগেটের নিকটে), রাজবাড়ী রোড, জয়দেবপুর, গাজীপুর।',
+    },
+    fullAddress: {
+      en: 'Prokoushali Convention Hall, 6th Floor, Prokoushali Bhaban (Near Railgate), Rajbari Road, Joydebpur, Gazipur.',
+      bn: 'প্রকৌশলী কনভেনশন হল, প্রকৌশলী ভবনের ৬ষ্ঠ তলা (রেলগেটের নিকটে), রাজবাড়ী রোড, জয়দেবপুর, গাজীপুর।',
     },
   },
 

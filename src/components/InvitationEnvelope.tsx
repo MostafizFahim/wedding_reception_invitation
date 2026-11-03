@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { Mail, Sparkles, X } from 'lucide-react'
+import { Mail, Sparkles } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { IslamicStar } from '../assets/decorative-patterns'
 
 interface InvitationEnvelopeProps {
   isOpen: boolean
   onOpen: () => void
-  onClose: () => void
+  onClose?: () => void
 }
 
 export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
   isOpen,
   onOpen,
-  onClose,
 }) => {
   const { lang, t } = useLanguage()
   const prefersReducedMotion = useReducedMotion()
@@ -29,12 +28,6 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
       }
     }
   }, [isOpen])
-
-  const handleSkip = useCallback(() => {
-    sessionStorage.setItem('envelope_opened', 'true')
-    setIsOpening(false)
-    onClose()
-  }, [onClose])
 
   const handleStartOpen = useCallback(() => {
     if (isOpening) return
@@ -55,21 +48,19 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
     }, 1450)
   }, [isOpening, prefersReducedMotion, onOpen])
 
-  // Support keyboard accessibility: Esc to skip, Enter to open
+  // Support keyboard accessibility: Enter to open
   useEffect(() => {
     if (!isOpen) return
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleSkip()
-      } else if (e.key === 'Enter' && !isOpening) {
+      if (e.key === 'Enter' && !isOpening) {
         handleStartOpen()
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, isOpening, handleSkip, handleStartOpen])
+  }, [isOpen, isOpening, handleStartOpen])
 
   if (!isOpen) return null
 
@@ -85,37 +76,31 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
         aria-label={t.envelope.tagline}
         className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-crimson-950/75 backdrop-blur-md overflow-hidden select-none"
       >
-        {/* Top Control Bar: Skip button */}
-        <div className="absolute top-4 right-4 z-50">
-          <button
-            type="button"
-            onClick={handleSkip}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-ivory-50/90 hover:bg-ivory-100 text-crimson-700 border border-gold-500/50 text-xs font-semibold shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 cursor-pointer"
-            aria-label="Skip envelope introduction"
-          >
-            <span>{t.envelope.skipButton}</span>
-            <X size={14} className="text-crimson-700" />
-          </button>
-        </div>
-
         {/* Ambient Warm Golden Glow */}
         <div className="absolute -inset-10 bg-radial from-gold-500/20 via-crimson-900/10 to-transparent pointer-events-none blur-3xl" />
 
         {/* Outer Wrapper */}
         <div className="w-full max-w-[340px] sm:max-w-[420px] flex flex-col items-center">
-          {/* Sacred Bismillah on Closed Greeting */}
+          {/* Sacred Bismillah on Ivory Badge for Maximum Legibility & Contrast */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-3 text-ivory-50"
+            className="text-center mb-3"
           >
-            <p lang="ar" dir="rtl" className="font-arabic text-lg sm:text-xl text-gold-300 tracking-wide mb-0.5">
-              {t.envelope.bismillah}
-            </p>
-            <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-ivory-100/90">
-              {t.envelope.tagline}
-            </p>
+            <div className="inline-block px-5 py-2.5 rounded-2xl bg-[#FBF6EA] border border-gold-500/50 shadow-md">
+              <p
+                lang="ar"
+                dir="rtl"
+                style={{ color: '#000000' }}
+                className="font-arabic text-xl sm:text-2xl font-bold tracking-wide leading-relaxed select-none"
+              >
+                {t.envelope.bismillah}
+              </p>
+              <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-ink mt-0.5">
+                {t.envelope.tagline}
+              </p>
+            </div>
           </motion.div>
 
           {/* 3D Envelope Container */}
