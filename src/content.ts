@@ -365,8 +365,8 @@ export const CONTENT: ContentConfig = {
       bn: 'মোস্তাফিজুর রহমান ফাহিম',
     },
     fullName: {
-      en: 'Engineer Mostafizur Rahman Fahim',
-      bn: 'ইঞ্জিনিয়ার মোস্তাফিজুর রহমান ফাহিম',
+      en: 'Mostafizur Rahman Fahim',
+      bn: 'মোস্তাফিজুর রহমান ফাহিম',
     },
     father: {
       en: 'Alhaj Md. Abdur Rashid',
@@ -388,8 +388,8 @@ export const CONTENT: ContentConfig = {
       bn: 'নাঈমা জান্নাত (জয়ী)',
     },
     fullName: {
-      en: 'Engineer Naeema Jannat Joyee',
-      bn: 'ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)',
+      en: 'Naeema Jannat Joyee',
+      bn: 'নাঈমা জান্নাত (জয়ী)',
     },
     father: {
       en: 'Alhaj Md. Abdul Jabbar',
@@ -468,7 +468,7 @@ export const CONTENT: ContentConfig = {
       },
       invitationHeading: "You're invited",
       invitationBody:
-        'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to celebrate the wedding reception of Engineer Mostafizur Rahman Fahim and Engineer Naeema Jannat Joyee. Your presence and duas would make our celebration truly special.',
+        'Assalamu Alaikum. With the blessings of Allah, we warmly invite you to celebrate the wedding reception of Mostafizur Rahman Fahim and Naeema Jannat Joyee. Your presence and duas would make our celebration truly special.',
       familyBlock: {
         groomParentsTitle: "Groom's Parents",
         brideParentsTitle: "Bride's Parents",
@@ -548,7 +548,7 @@ export const CONTENT: ContentConfig = {
       },
       invitationHeading: 'দাওয়াত',
       invitationBody:
-        'আসসালামু আলাইকুম। মহান আল্লাহর অশেষ রহমতে আমাদের প্রিয় সন্তান ইঞ্জিনিয়ার মোস্তাফিজুর রহমান ফাহিম ও ইঞ্জিনিয়ার নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনাকে আন্তরিক আমন্ত্রণ জানাচ্ছি। আপনার উপস্থিতি ও দোয়া আমাদের আনন্দকে পূর্ণতা দেবে।',
+        'আসসালামু আলাইকুম। মহান আল্লাহর অশেষ রহমতে আমাদের প্রিয় সন্তান মোস্তাফিজুর রহমান ফাহিম ও নাঈমা জান্নাত (জয়ী)-র বৌভাত অনুষ্ঠানে আপনাকে আন্তরিক আমন্ত্রণ জানাচ্ছি। আপনার উপস্থিতি ও দোয়া আমাদের আনন্দকে পূর্ণতা দেবে।',
       familyBlock: {
         groomParentsTitle: 'বরের পিতা-মাতা',
         brideParentsTitle: 'কনের পিতা-মাতা',

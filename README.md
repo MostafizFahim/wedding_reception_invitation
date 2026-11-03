@@ -1,6 +1,6 @@
 # ⚜️ Fahim & Joyee — Luxury Wedding Reception (Bou Bhat) Invitation Website
 
-> A bespoke, luxury, mobile-first, bilingual wedding invitation website for **Engineer Mostafizur Rahman Fahim & Engineer Naeema Jannat Joyee**.
+> A bespoke, luxury, mobile-first, bilingual wedding invitation website for **Mostafizur Rahman Fahim & Naeema Jannat Joyee**.
 > Designed in an exquisite **Ivory, Gold & Crimson** palette with a painted golden wedding arch hero, interactive digital invitation envelope, live wedding countdown strip, and authentic bilingual typography.
 
 ---
