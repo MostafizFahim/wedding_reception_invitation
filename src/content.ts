@@ -392,7 +392,7 @@ export const CONTENT: ContentConfig = {
       bn: 'নাঈমা জান্নাত (জয়ী)',
     },
     father: {
-      en: 'Alhaj Md. Abdul Jabbar',
+      en: 'Alhaj Md. Abdul Jobbar',
       bn: 'আলহাজ্ব মোঃ আব্দুল জব্বার',
     },
     mother: {
