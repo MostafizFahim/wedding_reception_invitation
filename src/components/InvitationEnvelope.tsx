@@ -74,45 +74,44 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
       return
     }
 
-    // Sequence (Total 2.4s):
-    // Phase 1 (0.0 - 0.6s): Flap opens (0 -> 180deg). Wax seal fades out.
-    // Halfway (0.3s): Switch flap z-index to 1 (behind card).
+    // Sequence (Approximately 3.2s total):
+    // Phase 1 (0.0s - 0.8s): Flap rotates backward around top edge (0 -> 180deg). Wax seal fades and scales away gently.
+    // Midway (0.4s): Switch flap z-index to 1 (behind card).
     setPhase('opening')
 
     const t1 = window.setTimeout(() => {
       setFlapBehind(true)
-    }, 300)
+    }, 400)
     timeoutsRef.current.push(t1)
 
-    // Phase 2 (0.6 - 1.3s): Card slides UP out of pocket at z-index 2.
+    // Phase 2 (0.8s - 1.8s): Brief pause, then card slowly glides UP out of pocket at z-index 2.
     const t2 = window.setTimeout(() => {
       setPhase('rising')
-    }, 600)
+    }, 800)
     timeoutsRef.current.push(t2)
 
-    // Phase 3 (1.3 - 1.9s): Card reaches top of pocket. Switch to z-index 10.
-    // Card animates forward to center, scales up 1.08, soft shadow, overlaps envelope.
+    // Phase 3 (1.8s - 2.5s): Card clears pocket. Switch to z-index 10 (in front of all envelope layers).
+    // Card glides forward toward center of viewport, subtle scale up (1.05), soft realistic paper shadow.
     const t3 = window.setTimeout(() => {
       setCardFront(true)
       setPhase('forward')
-    }, 1300)
+    }, 1800)
     timeoutsRef.current.push(t3)
 
-    // Phase 4 (1.9 - 2.4s): Envelope layers move down 30%, fade to 0, scale 0.95.
-    // Card remains centered.
+    // Phase 4 (2.5s - 3.2s): Card remains stationary in center. Envelope layers move down 28%, fade to 0, subtle scale down (0.96).
     const t4 = window.setTimeout(() => {
       setPhase('fading')
-    }, 1900)
+    }, 2500)
     timeoutsRef.current.push(t4)
 
-    // Final handoff at 2.4s
+    // Phase 5 (3.2s): Existing handoff to main page
     const t5 = window.setTimeout(() => {
       sessionStorage.setItem('envelope_opened', 'true')
       onOpen()
       setPhase('idle')
       setCardFront(false)
       setFlapBehind(false)
-    }, 2400)
+    }, 3200)
     timeoutsRef.current.push(t5)
   }, [phase, prefersReducedMotion, onOpen, clearAllTimeouts])
 
@@ -155,8 +154,10 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={
-              phase === 'fading'
-                ? { opacity: 0, y: -16, transition: { duration: 0.4 } }
+              prefersReducedMotion
+                ? { opacity: phase === 'forward' ? 0 : 1 }
+                : phase === 'fading'
+                ? { opacity: 0, y: -16, transition: { duration: 0.5, ease: 'easeOut' } }
                 : { opacity: 1, y: 0, transition: { duration: 0.5 } }
             }
             className="text-center mb-3"
@@ -177,41 +178,51 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
           </motion.div>
 
           {/* 3D Envelope Container (Perspective on parent, relative, overflow: visible) */}
-          <div className="relative w-full aspect-[4/3] [perspective:1000px] overflow-visible">
+          <div className="relative w-full aspect-[4/3] [perspective:1200px] overflow-visible">
             {/* 1. The Envelope Base / Backplate (z-index 1) */}
             <motion.div
               style={{ zIndex: 1 }}
               initial={{ y: 0, opacity: 1, scale: 1 }}
               animate={
-                phase === 'fading'
-                  ? { y: '30%', opacity: 0, scale: 0.95 }
+                prefersReducedMotion
+                  ? { opacity: phase === 'forward' ? 0 : 1 }
+                  : phase === 'fading'
+                  ? { y: '28%', opacity: 0, scale: 0.96 }
                   : { y: 0, opacity: 1, scale: 1 }
               }
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0.5 }
+                  : { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
+              }
               className="absolute inset-0 bg-[#F6EEDC] rounded-2xl border-2 border-gold-500/50 shadow-2xl overflow-hidden"
             >
               {/* Subtle Paper Texture Lines */}
               <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/10 via-ivory-50/60 to-gold-300/10" />
             </motion.div>
 
-            {/* 2. Top Triangular Flap (z-index 4 closed, switches to z-index 1 at halfway 0.3s) */}
+            {/* 2. Top Triangular Flap (z-index 4 closed, switches to z-index 1 at halfway 0.4s) */}
             <motion.div
               style={{
                 transformOrigin: 'top center',
                 zIndex: flapBehind ? 1 : 4,
               }}
-              initial={{ rotateX: 0 }}
+              initial={{ rotateX: 0, y: 0, opacity: 1, scale: 1 }}
               animate={
-                phase === 'fading'
-                  ? { rotateX: 180, y: '30%', opacity: 0, scale: 0.95 }
+                prefersReducedMotion
+                  ? { opacity: phase === 'forward' ? 0 : 1 }
+                  : phase === 'fading'
+                  ? { rotateX: 180, y: '28%', opacity: 0, scale: 0.96 }
                   : isOpening
-                  ? { rotateX: 180 }
-                  : { rotateX: 0 }
+                  ? { rotateX: 180, y: 0, opacity: 1, scale: 1 }
+                  : { rotateX: 0, y: 0, opacity: 1, scale: 1 }
               }
               transition={
-                phase === 'fading'
-                  ? { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
-                  : { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+                prefersReducedMotion
+                  ? { duration: 0.5 }
+                  : phase === 'fading'
+                  ? { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
+                  : { duration: 0.8, ease: [0.4, 0, 0.2, 1] }
               }
               className="absolute inset-x-0 top-0 h-[52%] pointer-events-none"
             >
@@ -230,24 +241,31 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               animate={
                 prefersReducedMotion
                   ? {
-                      opacity: phase === 'idle' ? 0.95 : 1,
-                      scale: phase === 'idle' ? 1 : 1.05,
+                      opacity: 1,
+                      scale: phase === 'forward' ? 1.05 : 1,
+                      boxShadow:
+                        phase === 'forward'
+                          ? '0 20px 45px -10px rgba(58, 42, 34, 0.32), 0 0 0 1px rgba(184, 145, 58, 0.35)'
+                          : '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                      transition: { duration: 0.5 },
                     }
                   : phase === 'rising'
                   ? {
                       y: '-68%',
                       scale: 1,
                       opacity: 1,
-                      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                      boxShadow: '0 8px 16px -2px rgba(58, 42, 34, 0.15)',
+                      transition: { duration: 1.0, ease: [0.25, 1, 0.5, 1] },
                     }
                   : phase === 'forward' || phase === 'fading'
                   ? {
-                      y: -10,
-                      scale: 1.08,
+                      y: -8,
+                      scale: 1.05,
                       opacity: 1,
                       rotate: 0,
-                      boxShadow: '0 25px 50px -12px rgba(58, 42, 34, 0.35), 0 0 0 1px rgba(184, 145, 58, 0.45)',
-                      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                      boxShadow:
+                        '0 20px 45px -10px rgba(58, 42, 34, 0.32), 0 0 0 1px rgba(184, 145, 58, 0.35)',
+                      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
                     }
                   : { y: 0, scale: 1, opacity: 0.95 }
               }
@@ -276,11 +294,17 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               style={{ zIndex: 3 }}
               initial={{ y: 0, opacity: 1, scale: 1 }}
               animate={
-                phase === 'fading'
-                  ? { y: '30%', opacity: 0, scale: 0.95 }
+                prefersReducedMotion
+                  ? { opacity: phase === 'forward' ? 0 : 1 }
+                  : phase === 'fading'
+                  ? { y: '28%', opacity: 0, scale: 0.96 }
                   : { y: 0, opacity: 1, scale: 1 }
               }
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0.5 }
+                  : { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
+              }
               className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl"
             >
               {/* Left Triangle Fold */}
@@ -309,9 +333,11 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               <motion.div
                 initial={{ scale: 1, opacity: 1 }}
                 animate={
-                  isOpening
+                  prefersReducedMotion
+                    ? { opacity: phase === 'forward' ? 0 : 1 }
+                    : isOpening
                     ? {
-                        scale: 1.25,
+                        scale: 1.15,
                         opacity: 0,
                         transition: { duration: 0.35, ease: 'easeOut' },
                       }
@@ -334,8 +360,10 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={
-              phase === 'fading'
-                ? { opacity: 0, y: 16, transition: { duration: 0.4 } }
+              prefersReducedMotion
+                ? { opacity: phase === 'forward' ? 0 : 1 }
+                : phase === 'fading'
+                ? { opacity: 0, y: 16, transition: { duration: 0.5, ease: 'easeOut' } }
                 : { opacity: 1, y: 0, transition: { delay: 0.25, duration: 0.5 } }
             }
             className="mt-6 flex flex-col items-center gap-2.5 w-full"
