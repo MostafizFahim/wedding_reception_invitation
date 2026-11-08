@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Mail, Sparkles } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
@@ -10,13 +10,41 @@ interface InvitationEnvelopeProps {
   onClose?: () => void
 }
 
+type AnimationPhase = 'idle' | 'opening' | 'rising' | 'forward' | 'fading'
+
 export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
   isOpen,
   onOpen,
 }) => {
   const { lang, t } = useLanguage()
   const prefersReducedMotion = useReducedMotion()
-  const [isOpening, setIsOpening] = useState(false)
+
+  const [phase, setPhase] = useState<AnimationPhase>('idle')
+  const [flapBehind, setFlapBehind] = useState(false)
+  const [cardFront, setCardFront] = useState(false)
+
+  const timeoutsRef = useRef<number[]>([])
+
+  const clearAllTimeouts = useCallback(() => {
+    timeoutsRef.current.forEach((id) => clearTimeout(id))
+    timeoutsRef.current = []
+  }, [])
+
+  // Clean up timeouts on unmount
+  useEffect(() => {
+    return () => clearAllTimeouts()
+  }, [clearAllTimeouts])
+
+  // Reset states when envelope opens or closes
+  useEffect(() => {
+    if (isOpen) {
+      setPhase('idle')
+      setFlapBehind(false)
+      setCardFront(false)
+    } else {
+      clearAllTimeouts()
+    }
+  }, [isOpen, clearAllTimeouts])
 
   // Prevent background scrolling while envelope overlay is active
   useEffect(() => {
@@ -30,39 +58,81 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
   }, [isOpen])
 
   const handleStartOpen = useCallback(() => {
-    if (isOpening) return
+    if (phase !== 'idle') return
+
+    clearAllTimeouts()
 
     if (prefersReducedMotion) {
-      sessionStorage.setItem('envelope_opened', 'true')
-      onOpen()
+      setPhase('forward')
+      setCardFront(true)
+      const tId = window.setTimeout(() => {
+        sessionStorage.setItem('envelope_opened', 'true')
+        onOpen()
+        setPhase('idle')
+      }, 600)
+      timeoutsRef.current.push(tId)
       return
     }
 
-    setIsOpening(true)
+    // Sequence (Total 2.4s):
+    // Phase 1 (0.0 - 0.6s): Flap opens (0 -> 180deg). Wax seal fades out.
+    // Halfway (0.3s): Switch flap z-index to 1 (behind card).
+    setPhase('opening')
 
-    // Sequence: Wax seal opens -> Flap opens -> Card slides -> Modal fades
-    setTimeout(() => {
+    const t1 = window.setTimeout(() => {
+      setFlapBehind(true)
+    }, 300)
+    timeoutsRef.current.push(t1)
+
+    // Phase 2 (0.6 - 1.3s): Card slides UP out of pocket at z-index 2.
+    const t2 = window.setTimeout(() => {
+      setPhase('rising')
+    }, 600)
+    timeoutsRef.current.push(t2)
+
+    // Phase 3 (1.3 - 1.9s): Card reaches top of pocket. Switch to z-index 10.
+    // Card animates forward to center, scales up 1.08, soft shadow, overlaps envelope.
+    const t3 = window.setTimeout(() => {
+      setCardFront(true)
+      setPhase('forward')
+    }, 1300)
+    timeoutsRef.current.push(t3)
+
+    // Phase 4 (1.9 - 2.4s): Envelope layers move down 30%, fade to 0, scale 0.95.
+    // Card remains centered.
+    const t4 = window.setTimeout(() => {
+      setPhase('fading')
+    }, 1900)
+    timeoutsRef.current.push(t4)
+
+    // Final handoff at 2.4s
+    const t5 = window.setTimeout(() => {
       sessionStorage.setItem('envelope_opened', 'true')
       onOpen()
-      setIsOpening(false)
-    }, 1450)
-  }, [isOpening, prefersReducedMotion, onOpen])
+      setPhase('idle')
+      setCardFront(false)
+      setFlapBehind(false)
+    }, 2400)
+    timeoutsRef.current.push(t5)
+  }, [phase, prefersReducedMotion, onOpen, clearAllTimeouts])
 
   // Support keyboard accessibility: Enter to open
   useEffect(() => {
     if (!isOpen) return
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && !isOpening) {
+      if (e.key === 'Enter' && phase === 'idle') {
         handleStartOpen()
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, isOpening, handleStartOpen])
+  }, [isOpen, phase, handleStartOpen])
 
   if (!isOpen) return null
+
+  const isOpening = phase !== 'idle'
 
   return (
     <AnimatePresence>
@@ -80,12 +150,15 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
         <div className="absolute -inset-10 bg-radial from-gold-500/20 via-crimson-900/10 to-transparent pointer-events-none blur-3xl" />
 
         {/* Outer Wrapper */}
-        <div className="w-full max-w-[340px] sm:max-w-[420px] flex flex-col items-center">
+        <div className="w-full max-w-[310px] min-[390px]:max-w-[340px] sm:max-w-[420px] flex flex-col items-center overflow-visible">
           {/* Sacred Bismillah on Ivory Badge for Maximum Legibility & Contrast */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            animate={
+              phase === 'fading'
+                ? { opacity: 0, y: -16, transition: { duration: 0.4 } }
+                : { opacity: 1, y: 0, transition: { duration: 0.5 } }
+            }
             className="text-center mb-3"
           >
             <div className="inline-block px-5 py-2.5 rounded-2xl bg-[#FBF6EA] border border-gold-500/50 shadow-md">
@@ -103,23 +176,82 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
             </div>
           </motion.div>
 
-          {/* 3D Envelope Container */}
-          <div className="relative w-full aspect-[4/3] [perspective:1000px]">
-            {/* The Envelope Base / Backplate */}
-            <div className="absolute inset-0 bg-[#F6EEDC] rounded-2xl border-2 border-gold-500/50 shadow-2xl overflow-hidden">
+          {/* 3D Envelope Container (Perspective on parent, relative, overflow: visible) */}
+          <div className="relative w-full aspect-[4/3] [perspective:1000px] overflow-visible">
+            {/* 1. The Envelope Base / Backplate (z-index 1) */}
+            <motion.div
+              style={{ zIndex: 1 }}
+              initial={{ y: 0, opacity: 1, scale: 1 }}
+              animate={
+                phase === 'fading'
+                  ? { y: '30%', opacity: 0, scale: 0.95 }
+                  : { y: 0, opacity: 1, scale: 1 }
+              }
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              className="absolute inset-0 bg-[#F6EEDC] rounded-2xl border-2 border-gold-500/50 shadow-2xl overflow-hidden"
+            >
               {/* Subtle Paper Texture Lines */}
               <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/10 via-ivory-50/60 to-gold-300/10" />
-            </div>
+            </motion.div>
 
-            {/* The Inner Invitation Card (Slides Upward when Opening) */}
+            {/* 2. Top Triangular Flap (z-index 4 closed, switches to z-index 1 at halfway 0.3s) */}
             <motion.div
-              initial={{ y: 0, opacity: 0.9 }}
+              style={{
+                transformOrigin: 'top center',
+                zIndex: flapBehind ? 1 : 4,
+              }}
+              initial={{ rotateX: 0 }}
               animate={
-                isOpening
-                  ? { y: -72, opacity: 1, transition: { delay: 0.45, duration: 0.7, ease: [0.22, 1, 0.36, 1] } }
-                  : { y: 0, opacity: 0.9 }
+                phase === 'fading'
+                  ? { rotateX: 180, y: '30%', opacity: 0, scale: 0.95 }
+                  : isOpening
+                  ? { rotateX: 180 }
+                  : { rotateX: 0 }
               }
-              className="absolute inset-x-4 top-4 bottom-4 bg-[#FBF6EA] rounded-xl border border-gold-500/60 shadow-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center z-10"
+              transition={
+                phase === 'fading'
+                  ? { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
+                  : { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+              }
+              className="absolute inset-x-0 top-0 h-[52%] pointer-events-none"
+            >
+              <svg className="w-full h-full drop-shadow-md" viewBox="0 0 400 156" preserveAspectRatio="none">
+                <polygon points="0,0 400,0 200,156" fill="#F2E6CE" />
+                <path d="M0,0 L200,156 L400,0" stroke="#DFCFAB" strokeWidth="1.5" fill="none" />
+              </svg>
+            </motion.div>
+
+            {/* 3. The Inner Invitation Card (Starts at z-index 2, switches to z-index 10 at phase 3) */}
+            <motion.div
+              style={{
+                zIndex: cardFront ? 10 : 2,
+              }}
+              initial={{ y: 0, scale: 1, opacity: 0.95 }}
+              animate={
+                prefersReducedMotion
+                  ? {
+                      opacity: phase === 'idle' ? 0.95 : 1,
+                      scale: phase === 'idle' ? 1 : 1.05,
+                    }
+                  : phase === 'rising'
+                  ? {
+                      y: '-68%',
+                      scale: 1,
+                      opacity: 1,
+                      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                    }
+                  : phase === 'forward' || phase === 'fading'
+                  ? {
+                      y: -10,
+                      scale: 1.08,
+                      opacity: 1,
+                      rotate: 0,
+                      boxShadow: '0 25px 50px -12px rgba(58, 42, 34, 0.35), 0 0 0 1px rgba(184, 145, 58, 0.45)',
+                      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                    }
+                  : { y: 0, scale: 1, opacity: 0.95 }
+              }
+              className="absolute inset-x-3 sm:inset-x-4 top-3 sm:top-4 bottom-3 sm:bottom-4 max-w-[88vw] max-h-[80svh] bg-[#FBF6EA] rounded-xl border border-gold-500/60 shadow-lg p-3 sm:p-5 flex flex-col items-center justify-center text-center select-none"
             >
               {/* Card Gold Trim Border */}
               <div className="w-full h-full rounded-lg border border-gold-500/35 p-3 flex flex-col items-center justify-between">
@@ -139,8 +271,18 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               </div>
             </motion.div>
 
-            {/* Front Pocket: Left & Right Geometric Folds */}
-            <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-2xl">
+            {/* 4. Front Pocket: Left & Right Geometric Folds (z-index 3) */}
+            <motion.div
+              style={{ zIndex: 3 }}
+              initial={{ y: 0, opacity: 1, scale: 1 }}
+              animate={
+                phase === 'fading'
+                  ? { y: '30%', opacity: 0, scale: 0.95 }
+                  : { y: 0, opacity: 1, scale: 1 }
+              }
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl"
+            >
               {/* Left Triangle Fold */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
                 <polygon points="0,0 0,300 200,165" fill="#EFE3CA" />
@@ -157,30 +299,13 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
                   Fahim &amp; Joyee
                 </span>
               </div>
-            </div>
-
-            {/* Top Triangular Flap (Folds Open Upward 3D) */}
-            <motion.div
-              style={{ transformOrigin: 'top center' }}
-              initial={{ rotateX: 0 }}
-              animate={
-                isOpening
-                  ? {
-                      rotateX: 180,
-                      transition: { duration: 0.65, delay: 0.15, ease: [0.4, 0, 0.2, 1] },
-                    }
-                  : { rotateX: 0 }
-              }
-              className="absolute inset-x-0 top-0 h-[52%] z-30 pointer-events-none"
-            >
-              <svg className="w-full h-full drop-shadow-md" viewBox="0 0 400 156" preserveAspectRatio="none">
-                <polygon points="0,0 400,0 200,156" fill="#F2E6CE" />
-                <path d="M0,0 L200,156 L400,0" stroke="#DFCFAB" strokeWidth="1.5" fill="none" />
-              </svg>
             </motion.div>
 
-            {/* Centered Wax Seal with Initials F & J positioned dead-center */}
-            <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none">
+            {/* 5. Centered Wax Seal (z-index 4/5 while closed, fades out during Phase 1) */}
+            <motion.div
+              style={{ zIndex: flapBehind ? 1 : 5 }}
+              className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            >
               <motion.div
                 initial={{ scale: 1, opacity: 1 }}
                 animate={
@@ -202,14 +327,17 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
                   </span>
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Primary Action Button: Open Invitation */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.5 }}
+            animate={
+              phase === 'fading'
+                ? { opacity: 0, y: 16, transition: { duration: 0.4 } }
+                : { opacity: 1, y: 0, transition: { delay: 0.25, duration: 0.5 } }
+            }
             className="mt-6 flex flex-col items-center gap-2.5 w-full"
           >
             <motion.button
