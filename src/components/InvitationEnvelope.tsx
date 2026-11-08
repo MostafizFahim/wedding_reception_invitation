@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion, useAnimationControls } from 'framer-motion'
 import { Mail, Sparkles } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { IslamicStar } from '../assets/decorative-patterns'
@@ -10,8 +10,6 @@ interface InvitationEnvelopeProps {
   onClose?: () => void
 }
 
-type AnimationPhase = 'idle' | 'opening' | 'rising' | 'forward' | 'fading'
-
 export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
   isOpen,
   onOpen,
@@ -19,10 +17,22 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
   const { lang, t } = useLanguage()
   const prefersReducedMotion = useReducedMotion()
 
-  const [phase, setPhase] = useState<AnimationPhase>('idle')
-  const [flapBehind, setFlapBehind] = useState(false)
-  const [cardFront, setCardFront] = useState(false)
+  const [isOpening, setIsOpening] = useState(false)
 
+  // Motion controls for coordinated, uninterrupted animations
+  const flapControls = useAnimationControls()
+  const cardControls = useAnimationControls()
+  const baseControls = useAnimationControls()
+  const pocketControls = useAnimationControls()
+  const sealControls = useAnimationControls()
+  const uiControls = useAnimationControls()
+
+  // Direct DOM refs for discrete stacking changes without React re-render interruptions
+  const flapRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const isCancelledRef = useRef(false)
+  const isRunningRef = useRef(false)
   const timeoutsRef = useRef<number[]>([])
 
   const clearAllTimeouts = useCallback(() => {
@@ -30,21 +40,70 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
     timeoutsRef.current = []
   }, [])
 
-  // Clean up timeouts on unmount
-  useEffect(() => {
-    return () => clearAllTimeouts()
-  }, [clearAllTimeouts])
+  // Cancellable sleep utility
+  const sleep = useCallback((ms: number) => {
+    return new Promise<void>((resolve, reject) => {
+      const id = window.setTimeout(() => {
+        if (isCancelledRef.current) {
+          reject(new Error('Animation cancelled'))
+        } else {
+          resolve()
+        }
+      }, ms)
+      timeoutsRef.current.push(id)
+    })
+  }, [])
 
-  // Reset states when envelope opens or closes
+  // Reset or cancel animations when isOpen changes or unmounts
   useEffect(() => {
     if (isOpen) {
-      setPhase('idle')
-      setFlapBehind(false)
-      setCardFront(false)
+      isCancelledRef.current = false
+      isRunningRef.current = false
+      setIsOpening(false)
+
+      // Reset layer stacking
+      if (flapRef.current) flapRef.current.style.zIndex = '4'
+      if (cardRef.current) cardRef.current.style.zIndex = '2'
+
+      // Initialize all motion controls to their baseline closed state
+      flapControls.set({ rotateX: 0, y: 0, opacity: 1, scale: 1 })
+      cardControls.set({
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        rotate: 0,
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+      })
+      baseControls.set({ y: 0, opacity: 1, scale: 1 })
+      pocketControls.set({ y: 0, opacity: 1, scale: 1 })
+      sealControls.set({ scale: 1, opacity: 1 })
+      uiControls.set({ opacity: 1, y: 0 })
     } else {
+      isCancelledRef.current = true
+      isRunningRef.current = false
+      clearAllTimeouts()
+      flapControls.stop()
+      cardControls.stop()
+      baseControls.stop()
+      pocketControls.stop()
+      sealControls.stop()
+      uiControls.stop()
+    }
+
+    return () => {
+      isCancelledRef.current = true
       clearAllTimeouts()
     }
-  }, [isOpen, clearAllTimeouts])
+  }, [
+    isOpen,
+    clearAllTimeouts,
+    flapControls,
+    cardControls,
+    baseControls,
+    pocketControls,
+    sealControls,
+    uiControls,
+  ])
 
   // Prevent background scrolling while envelope overlay is active
   useEffect(() => {
@@ -57,81 +116,170 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
     }
   }, [isOpen])
 
-  const handleStartOpen = useCallback(() => {
-    if (phase !== 'idle') return
-
+  // Continuous, seamless 3.4-second opening sequence
+  const handleStartOpen = useCallback(async () => {
+    if (isRunningRef.current || isOpening) return
+    isRunningRef.current = true
+    setIsOpening(true)
     clearAllTimeouts()
 
+    // Reduced motion mode: gentle 0.5s crossfade
     if (prefersReducedMotion) {
-      setPhase('forward')
-      setCardFront(true)
-      const tId = window.setTimeout(() => {
+      try {
+        if (cardRef.current) cardRef.current.style.zIndex = '10'
+        await Promise.all([
+          baseControls.start({ opacity: 0, transition: { duration: 0.5 } }),
+          pocketControls.start({ opacity: 0, transition: { duration: 0.5 } }),
+          flapControls.start({ opacity: 0, transition: { duration: 0.5 } }),
+          sealControls.start({ opacity: 0, transition: { duration: 0.5 } }),
+          uiControls.start({ opacity: 0, transition: { duration: 0.5 } }),
+          cardControls.start({
+            opacity: 1,
+            scale: 1.03,
+            boxShadow:
+              '0 20px 45px -10px rgba(58, 42, 34, 0.32), 0 0 0 1px rgba(184, 145, 58, 0.35)',
+            transition: { duration: 0.5 },
+          }),
+        ])
         sessionStorage.setItem('envelope_opened', 'true')
         onOpen()
-        setPhase('idle')
-      }, 600)
-      timeoutsRef.current.push(tId)
+      } catch {
+        // cancelled
+      } finally {
+        isRunningRef.current = false
+        setIsOpening(false)
+      }
       return
     }
 
-    // Sequence (Approximately 3.2s total):
-    // Phase 1 (0.0s - 0.8s): Flap rotates backward around top edge (0 -> 180deg). Wax seal fades and scales away gently.
-    // Midway (0.4s): Switch flap z-index to 1 (behind card).
-    setPhase('opening')
+    try {
+      // -------------------------------------------------------------
+      // 0.0s – 0.8s: Flap opens smoothly (0 -> 180deg)
+      // Wax seal fades and scales away gently (0.35s)
+      // -------------------------------------------------------------
+      flapControls.start({
+        rotateX: 180,
+        transition: { duration: 0.8, ease: [0.4, 0.0, 0.2, 1] as const },
+      })
+      sealControls.start({
+        scale: 1.15,
+        opacity: 0,
+        transition: { duration: 0.35, ease: 'easeOut' },
+      })
 
-    const t1 = window.setTimeout(() => {
-      setFlapBehind(true)
-    }, 400)
-    timeoutsRef.current.push(t1)
+      // At 0.4s: Flap is edge-on (90deg). Switch z-index to 1 (behind card).
+      // Continuous rotation is unaffected; no React re-render.
+      await sleep(400)
+      if (flapRef.current) {
+        flapRef.current.style.zIndex = '1'
+      }
 
-    // Phase 2 (0.8s - 1.8s): Brief pause, then card slowly glides UP out of pocket at z-index 2.
-    const t2 = window.setTimeout(() => {
-      setPhase('rising')
-    }, 800)
-    timeoutsRef.current.push(t2)
+      // -------------------------------------------------------------
+      // 0.8s – 1.0s: Flap settles, short natural pause (200ms)
+      // (400ms sleep above + 600ms sleep here = 1000ms = 1.0s mark)
+      // -------------------------------------------------------------
+      await sleep(600)
 
-    // Phase 3 (1.8s - 2.5s): Card clears pocket. Switch to z-index 10 (in front of all envelope layers).
-    // Card glides forward toward center of viewport, subtle scale up (1.05), soft realistic paper shadow.
-    const t3 = window.setTimeout(() => {
-      setCardFront(true)
-      setPhase('forward')
-    }, 1800)
-    timeoutsRef.current.push(t3)
+      // -------------------------------------------------------------
+      // 1.0s – 1.9s: Card gradually emerges (0.9s duration)
+      // Card is at z-index 2 behind front pocket at z-index 3.
+      // -------------------------------------------------------------
+      await cardControls.start({
+        y: '-68%',
+        opacity: 1,
+        boxShadow: '0 8px 16px -2px rgba(58, 42, 34, 0.15)',
+        transition: { duration: 0.9, ease: [0.25, 1, 0.5, 1] as const },
+      })
 
-    // Phase 4 (2.5s - 3.2s): Card remains stationary in center. Envelope layers move down 28%, fade to 0, subtle scale down (0.96).
-    const t4 = window.setTimeout(() => {
-      setPhase('fading')
-    }, 2500)
-    timeoutsRef.current.push(t4)
+      // -------------------------------------------------------------
+      // 1.9s – 2.0s: Smooth layering transition (100ms pause)
+      // Card is completely stationary at y: '-68%'.
+      // Discrete z-index change from 2 to 10 ONLY - NO transform changes!
+      // -------------------------------------------------------------
+      if (cardRef.current) {
+        cardRef.current.style.zIndex = '10'
+      }
+      await sleep(100)
 
-    // Phase 5 (3.2s): Existing handoff to main page
-    const t5 = window.setTimeout(() => {
+      // -------------------------------------------------------------
+      // 2.0s – 2.6s: Card moves forward and settles (0.6s duration)
+      // Continuous interpolation from y: '-68%' to y: -8px, scale: 1.03
+      // -------------------------------------------------------------
+      await cardControls.start({
+        y: -8,
+        scale: 1.03,
+        rotate: 0,
+        opacity: 1,
+        boxShadow:
+          '0 20px 45px -10px rgba(58, 42, 34, 0.32), 0 0 0 1px rgba(184, 145, 58, 0.35)',
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+      })
+
+      // -------------------------------------------------------------
+      // 2.6s – 3.4s: Envelope moves down and fades away (0.8s duration)
+      // The card remains 100% stationary in viewport center!
+      // -------------------------------------------------------------
+      const envelopeExit = {
+        y: '28%',
+        opacity: 0,
+        scale: 0.96,
+        transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] as const },
+      }
+
+      await Promise.all([
+        baseControls.start(envelopeExit),
+        pocketControls.start(envelopeExit),
+        flapControls.start({
+          rotateX: 180,
+          ...envelopeExit,
+        }),
+        uiControls.start({
+          opacity: 0,
+          y: 16,
+          transition: { duration: 0.6, ease: 'easeOut' },
+        }),
+      ])
+
+      // -------------------------------------------------------------
+      // 3.4s: Handoff to main invitation page
+      // -------------------------------------------------------------
       sessionStorage.setItem('envelope_opened', 'true')
       onOpen()
-      setPhase('idle')
-      setCardFront(false)
-      setFlapBehind(false)
-    }, 3200)
-    timeoutsRef.current.push(t5)
-  }, [phase, prefersReducedMotion, onOpen, clearAllTimeouts])
+    } catch {
+      // Cancelled cleanly on unmount or reset
+    } finally {
+      isRunningRef.current = false
+      setIsOpening(false)
+    }
+  }, [
+    isOpening,
+    prefersReducedMotion,
+    onOpen,
+    sleep,
+    clearAllTimeouts,
+    flapControls,
+    cardControls,
+    baseControls,
+    pocketControls,
+    sealControls,
+    uiControls,
+  ])
 
   // Support keyboard accessibility: Enter to open
   useEffect(() => {
     if (!isOpen) return
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && phase === 'idle') {
+      if (e.key === 'Enter' && !isRunningRef.current) {
         handleStartOpen()
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, phase, handleStartOpen])
+  }, [isOpen, handleStartOpen])
 
   if (!isOpen) return null
-
-  const isOpening = phase !== 'idle'
 
   return (
     <AnimatePresence>
@@ -152,14 +300,8 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
         <div className="w-full max-w-[310px] min-[390px]:max-w-[340px] sm:max-w-[420px] flex flex-col items-center overflow-visible">
           {/* Sacred Bismillah on Ivory Badge for Maximum Legibility & Contrast */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={
-              prefersReducedMotion
-                ? { opacity: phase === 'forward' ? 0 : 1 }
-                : phase === 'fading'
-                ? { opacity: 0, y: -16, transition: { duration: 0.5, ease: 'easeOut' } }
-                : { opacity: 1, y: 0, transition: { duration: 0.5 } }
-            }
+            animate={uiControls}
+            initial={{ opacity: 1, y: 0 }}
             className="text-center mb-3"
           >
             <div className="inline-block px-5 py-2.5 rounded-2xl bg-[#FBF6EA] border border-gold-500/50 shadow-md">
@@ -181,20 +323,9 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
           <div className="relative w-full aspect-[4/3] [perspective:1200px] overflow-visible">
             {/* 1. The Envelope Base / Backplate (z-index 1) */}
             <motion.div
-              style={{ zIndex: 1 }}
+              animate={baseControls}
               initial={{ y: 0, opacity: 1, scale: 1 }}
-              animate={
-                prefersReducedMotion
-                  ? { opacity: phase === 'forward' ? 0 : 1 }
-                  : phase === 'fading'
-                  ? { y: '28%', opacity: 0, scale: 0.96 }
-                  : { y: 0, opacity: 1, scale: 1 }
-              }
-              transition={
-                prefersReducedMotion
-                  ? { duration: 0.5 }
-                  : { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
-              }
+              style={{ zIndex: 1 }}
               className="absolute inset-0 bg-[#F6EEDC] rounded-2xl border-2 border-gold-500/50 shadow-2xl overflow-hidden"
             >
               {/* Subtle Paper Texture Lines */}
@@ -203,27 +334,13 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
 
             {/* 2. Top Triangular Flap (z-index 4 closed, switches to z-index 1 at halfway 0.4s) */}
             <motion.div
+              ref={flapRef}
+              animate={flapControls}
+              initial={{ rotateX: 0, y: 0, opacity: 1, scale: 1 }}
               style={{
                 transformOrigin: 'top center',
-                zIndex: flapBehind ? 1 : 4,
+                zIndex: 4,
               }}
-              initial={{ rotateX: 0, y: 0, opacity: 1, scale: 1 }}
-              animate={
-                prefersReducedMotion
-                  ? { opacity: phase === 'forward' ? 0 : 1 }
-                  : phase === 'fading'
-                  ? { rotateX: 180, y: '28%', opacity: 0, scale: 0.96 }
-                  : isOpening
-                  ? { rotateX: 180, y: 0, opacity: 1, scale: 1 }
-                  : { rotateX: 0, y: 0, opacity: 1, scale: 1 }
-              }
-              transition={
-                prefersReducedMotion
-                  ? { duration: 0.5 }
-                  : phase === 'fading'
-                  ? { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
-                  : { duration: 0.8, ease: [0.4, 0, 0.2, 1] }
-              }
               className="absolute inset-x-0 top-0 h-[52%] pointer-events-none"
             >
               <svg className="w-full h-full drop-shadow-md" viewBox="0 0 400 156" preserveAspectRatio="none">
@@ -232,43 +349,14 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               </svg>
             </motion.div>
 
-            {/* 3. The Inner Invitation Card (Starts at z-index 2, switches to z-index 10 at phase 3) */}
+            {/* 3. The Inner Invitation Card (Starts at z-index 2, switches to z-index 10 at 1.9s) */}
             <motion.div
+              ref={cardRef}
+              animate={cardControls}
+              initial={{ y: 0, scale: 1, opacity: 1, rotate: 0 }}
               style={{
-                zIndex: cardFront ? 10 : 2,
+                zIndex: 2,
               }}
-              initial={{ y: 0, scale: 1, opacity: 0.95 }}
-              animate={
-                prefersReducedMotion
-                  ? {
-                      opacity: 1,
-                      scale: phase === 'forward' ? 1.05 : 1,
-                      boxShadow:
-                        phase === 'forward'
-                          ? '0 20px 45px -10px rgba(58, 42, 34, 0.32), 0 0 0 1px rgba(184, 145, 58, 0.35)'
-                          : '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                      transition: { duration: 0.5 },
-                    }
-                  : phase === 'rising'
-                  ? {
-                      y: '-68%',
-                      scale: 1,
-                      opacity: 1,
-                      boxShadow: '0 8px 16px -2px rgba(58, 42, 34, 0.15)',
-                      transition: { duration: 1.0, ease: [0.25, 1, 0.5, 1] },
-                    }
-                  : phase === 'forward' || phase === 'fading'
-                  ? {
-                      y: -8,
-                      scale: 1.05,
-                      opacity: 1,
-                      rotate: 0,
-                      boxShadow:
-                        '0 20px 45px -10px rgba(58, 42, 34, 0.32), 0 0 0 1px rgba(184, 145, 58, 0.35)',
-                      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-                    }
-                  : { y: 0, scale: 1, opacity: 0.95 }
-              }
               className="absolute inset-x-3 sm:inset-x-4 top-3 sm:top-4 bottom-3 sm:bottom-4 max-w-[88vw] max-h-[80svh] bg-[#FBF6EA] rounded-xl border border-gold-500/60 shadow-lg p-3 sm:p-5 flex flex-col items-center justify-center text-center select-none"
             >
               {/* Card Gold Trim Border */}
@@ -291,20 +379,9 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
 
             {/* 4. Front Pocket: Left & Right Geometric Folds (z-index 3) */}
             <motion.div
-              style={{ zIndex: 3 }}
+              animate={pocketControls}
               initial={{ y: 0, opacity: 1, scale: 1 }}
-              animate={
-                prefersReducedMotion
-                  ? { opacity: phase === 'forward' ? 0 : 1 }
-                  : phase === 'fading'
-                  ? { y: '28%', opacity: 0, scale: 0.96 }
-                  : { y: 0, opacity: 1, scale: 1 }
-              }
-              transition={
-                prefersReducedMotion
-                  ? { duration: 0.5 }
-                  : { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
-              }
+              style={{ zIndex: 3 }}
               className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl"
             >
               {/* Left Triangle Fold */}
@@ -325,24 +402,14 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
               </div>
             </motion.div>
 
-            {/* 5. Centered Wax Seal (z-index 4/5 while closed, fades out during Phase 1) */}
-            <motion.div
-              style={{ zIndex: flapBehind ? 1 : 5 }}
+            {/* 5. Centered Wax Seal (z-index 5, fades out during Phase 1) */}
+            <div
+              style={{ zIndex: 5 }}
               className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             >
               <motion.div
+                animate={sealControls}
                 initial={{ scale: 1, opacity: 1 }}
-                animate={
-                  prefersReducedMotion
-                    ? { opacity: phase === 'forward' ? 0 : 1 }
-                    : isOpening
-                    ? {
-                        scale: 1.15,
-                        opacity: 0,
-                        transition: { duration: 0.35, ease: 'easeOut' },
-                      }
-                    : { scale: 1, opacity: 1 }
-                }
                 className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#8F2336] via-[#7A1F2E] to-[#5E1520] text-gold-300 border-2 border-gold-300/85 shadow-xl flex items-center justify-center p-1 pointer-events-auto"
               >
                 {/* Wax Seal Outer Ruffled Rim */}
@@ -353,19 +420,13 @@ export const InvitationEnvelope: React.FC<InvitationEnvelopeProps> = ({
                   </span>
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Primary Action Button: Open Invitation */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={
-              prefersReducedMotion
-                ? { opacity: phase === 'forward' ? 0 : 1 }
-                : phase === 'fading'
-                ? { opacity: 0, y: 16, transition: { duration: 0.5, ease: 'easeOut' } }
-                : { opacity: 1, y: 0, transition: { delay: 0.25, duration: 0.5 } }
-            }
+            animate={uiControls}
+            initial={{ opacity: 1, y: 0 }}
             className="mt-6 flex flex-col items-center gap-2.5 w-full"
           >
             <motion.button
